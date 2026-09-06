@@ -63,7 +63,10 @@ o a `.env.local` (ambos ignorados por git), nunca a este archivo.
       | Il vostro Mike di fiduccia | `il-vostro-mike-di-fiducia` | |
       Nota: el nombre lleva "fiduccia" (doble c) y el slug "fiducia".
       ¿Mantengo el nombre tal cual o corrijo a "fiducia"?
+- [ ] **Audio de los podcast.** El brief pide `audioUrl` (texto). Así está hecho, pero desde el admin
+      no se puede subir un MP3: hay que pegar la URL de R2. ¿Lo dejamos así (fase 3 rellena las URLs)
+      o prefieres un campo de subida de archivo que lo mande a R2 solo?
 - [ ] **Zona horaria de los slots de shows.** Asumo que "06:00-07:00" es hora de
       Milán (Europe/Rome). Guardo los slots como `HH:mm` locales, no en UTC. Confírmalo.
-- [ ] **Usuario admin de Payload.** Lo creo con `admin@milanobeatradio.it` y una
-      contraseña temporal que dejo en `secrets.local.md`. Si prefieres otro email, dímelo.
+- [x] **Usuario admin de Payload (local).** Creado por el seed: `admin@milanobeatradio.it`,
+      contraseña en `secrets.local.md`. En producción se creará uno nuevo con el email que me digas.

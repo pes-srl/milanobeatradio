@@ -4,8 +4,12 @@
 > Léelo entero antes de tocar nada. Si una decisión no está aquí, PREGUNTA, no improvises.
 
 ## ESTADO ACTUAL
-**Fase 0 — arrancada 2026-09-07.** Paso 1 (CLAUDE.md + TASKS-HUMANAS.md) hecho, pendiente de revisión.
-Pasos 2–9 sin empezar. Sin `git init` todavía. `./migration/` no existe aún (export.xml y uploads pendientes de la parte humana).
+**Fase 0 — COMPLETADA el 2026-09-07** (pendiente de validación del cliente).
+Hecho: scaffold Next 15.4.11 + Payload 3.88 + Postgres + R2 (código listo, credenciales pendientes),
+11 colecciones, reproductor persistente verificado con Playwright, seed demo, migración inicial, README.
+Export de WordPress ya descargado en `migration/export.xml` (18 MB). Inventario real en MIGRATION-NOTES.md.
+Local: Postgres 17 de Homebrew (`mbr_dev`), sin Supabase todavía. Ver TASKS-HUMANAS.md para lo bloqueante.
+Siguiente: respuestas del cliente (color, Next 16, drafts, roles) → fase 1 diseño, o fase 3 mediateca → R2.
 
 Fases:
 - Fase 0: scaffold, Payload, colecciones, reproductor persistente, seed demo, README ← **AQUÍ**
@@ -211,23 +215,23 @@ Nunca `<img>` a pelo. Sin librerías de animación pesadas: CSS y View Transitio
 # FASE 0 — checklist
 
 1. [x] `CLAUDE.md` + `TASKS-HUMANAS.md` → mostrar y PARAR la primera vez.
-2. [ ] Scaffold Next.js 15 + TS strict + Tailwind v4.
+2. [x] Scaffold Next.js 15 + TS strict + Tailwind v4.
        Estructura: `app/(site)` público, `app/(payload)` admin.
-3. [ ] Payload 3 con adaptador Postgres → Supabase pooler. Que arranque en local y
+3. [x] Payload 3 con adaptador Postgres → Supabase pooler. Que arranque en local y
        que las migraciones corran.
-4. [ ] `@payloadcms/storage-s3` → R2. Colección `media` con tamaños generados:
+4. [x] `@payloadcms/storage-s3` → R2. Colección `media` con tamaños generados:
        thumb 400, card 800, hero 1920, salida WebP, servido desde R2_PUBLIC_URL.
-5. [ ] TODAS las colecciones del modelo de datos, con slugs únicos, un grupo `seo`
+5. [x] TODAS las colecciones del modelo de datos, con slugs únicos, un grupo `seo`
        reutilizable (title / description / ogImage), drafts y versiones activados,
        admin en italiano.
-6. [ ] Reproductor persistente completo: PlayerProvider, hook useNowPlaying
+6. [x] Reproductor persistente completo: PlayerProvider, hook useNowPlaying
        (poll 15 s, pausado si `document.hidden`, Zod), barra inferior con play/pause,
        volumen, título en marquesina, contador de oyentes, badge LIVE cuando
        `live.is_live`, y Media Session API para los controles del sistema en móvil.
-7. [ ] Tres rutas placeholder SIN diseño (`/`, `/eventi`, `/flash-news`) que
+7. [x] Tres rutas placeholder SIN diseño (`/`, `/eventi`, `/flash-news`) que
        demuestren que el audio sobrevive a la navegación.
-8. [ ] Script `pnpm seed:demo`: 2 registros de cada colección.
-9. [ ] README con el arranque local, los flags del driver de Postgres y por qué.
+8. [x] Script `pnpm seed:demo`: 2 registros de cada colección.
+9. [x] README con el arranque local, los flags del driver de Postgres y por qué.
 
 NO hacer en fase 0: diseño de páginas, import del XML, subida de la mediateca,
 contadores de vistas, Control Room, SEO avanzado, formularios.
@@ -239,6 +243,20 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
   adelante, anotarlo en `MIGRATION-NOTES.md` en vez de "arreglarlo".
 - Al terminar cada fase: explicar cómo verificar a mano cada punto, qué variables
   hay que rellenar, y actualizar la sección ESTADO ACTUAL de este archivo.
+
+# DECISIONES TOMADAS EN FASE 0 (no rediscutir salvo que el cliente lo pida)
+- Next **15.4.11**, no 15.5: Payload 3.88 solo soporta 15.4.x o 16.2+. Cambio a 16 = decisión del cliente.
+- `"type": "module"` en package.json: obligatorio para que Payload cargue el config como ESM.
+- Taxonomías (categories, eventTypes, podcastFilters, genres) SIN drafts/versiones: son tablas de lookup.
+  Todo lo demás (posts, events, podcasts, shows, staff, partners) con drafts + autosave + versiones.
+- `partners` usa `orderable: true` de Payload (drag-sort nativo, campo `_order`) en vez de un `order` manual.
+- `shows.slots[].dayOfWeek` guarda '0'..'6' con la convención JS (0 = Domenica). Horas `HH:mm` locales Europe/Rome.
+- `events.startDate/endDate` con `timezone: true` (campo `_tz` companion) y Europe/Rome añadido a la lista de Payload.
+- `podcasts.audioUrl` es un texto URL como pide el brief; no hay upload de mp3 desde el admin (pregunta abierta).
+- Dev local: drizzle push sobre `mbr_dev`. Migraciones en `src/migrations/`, verificadas sobre una base vacía.
+- `seed:demo` corre con `tsx` (con `payload run` el script se cerraba en silencio).
+- El indicador de dev de Next se movió arriba a la derecha: tapaba el botón Play en móvil.
+- Los tests e2e de fase 0 están en el scratchpad, no en el repo (se formalizarán en fase 1 si se quiere).
 
 # AVISOS PARA FASES POSTERIORES (no perder)
 - **Fase 2, XML:** los campos custom de Pro.Radio (fechas de evento, venue, lat/lng,
