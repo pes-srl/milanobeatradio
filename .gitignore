@@ -1,0 +1,28 @@
+# secrets
+secrets.local.md
+.env
+.env.*
+!.env.example
+
+# migration data (large / private)
+migration/export*.xml
+migration/uploads/
+migration/downloads/
+
+# node
+node_modules/
+.pnpm-store/
+
+# next / payload
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+media/
+
+# os / editor
+.DS_Store
+.vscode/
+.idea/
+*.log
