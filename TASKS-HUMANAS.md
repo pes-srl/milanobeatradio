@@ -13,57 +13,47 @@ o a `.env.local` (ambos ignorados por git), nunca a este archivo.
 - [x] Poppins: fuente libre (OFL), la sirvo self-hosted desde el paquete `@fontsource/poppins`.
 - [x] Partner "Coming Soon": es un partner real (comingsoon.it). Se migra activo.
 
-## BLOQUEANTE PARA FASE 0 (pasos 3 y 4 no se pueden verificar del todo sin esto)
+## BLOQUEANTE AHORA MISMO (3 cosas pequeñas)
 
-- [ ] **Supabase.** Crear proyecto (región Frankfurt). Copiar de
-      Project Settings → Database → Connection string → **Transaction pooler**
-      (puerto **6543**, no el directo 5432). Pegarla en `.env.local` como `DATABASE_URI`.
-      Mientras tanto uso un Postgres local de desarrollo (mismo adaptador, misma config)
-      para que las migraciones corran. Cuando me des la URI, las ejecuto contra Supabase.
-- [ ] **Cloudflare R2.** Bucket `mbr-media`, dominio público
-      `media.milanobeatradio.it`, API Token con Object Read & Write limitado al bucket.
-      Necesito en `.env.local`: `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`.
-      Sin esto la colección media se prueba con disco local; el código de R2 queda listo.
-- [ ] **Repo remoto.** He hecho `git init` local. Dime la URL de GitHub cuando exista y
-      hago el push.
+- [ ] **Contraseña de la base de datos de Supabase.** Tengo el proyecto (`kscrbnarievdaaxbbudo`),
+      la región (eu-west-1) y la cadena del pooler montada en `.env.local`, pero la contraseña de
+      Postgres no está entre las claves que me pasaste (anon/service_role son de la API, no de la DB).
+      Supabase → Project Settings → Database → "Reset database password" → pégala en `.env.local`
+      sustituyendo `[DB-PASSWORD]`. Hasta entonces el proyecto corre contra el Postgres local.
+- [ ] **Token de R2 con escritura.** El token `Token-R2-Bucket-MBR` es de solo lectura
+      ("read and list objects"): lo probé y `PUT` devuelve AccessDenied. Crea otro con permiso
+      **Object Read & Write** (puede limitarse al bucket `mbr-media`) y pégame Access Key + Secret.
+      El token `cfat_…` de la API de Cloudflare no hace falta para nada: puedes revocarlo.
+- [ ] **Dominio público del bucket.** Cloudflare → R2 → `mbr-media` → Settings → Public access →
+      Custom domain `media.milanobeatradio.it`. Sin esto las imágenes suben pero no se ven.
+- [ ] **Repo remoto.** He hecho `git init` local. Dime la URL de GitHub cuando exista y hago el push.
 
 ## NECESARIO PARA FASES POSTERIORES (puedes ir preparándolo)
 
 - [ ] **Vercel Pro** conectado al repo. Fase 1 en adelante (primer deploy).
-- [ ] **Resend.** API key + dominio `milanobeatradio.it` verificado para enviar
-      desde `noreply@milanobeatradio.it`. Fase 4 (formularios).
-- [ ] **Email destino de los formularios** (`CONTACT_TO_EMAIL`). Contact Form 7
-      no lo revela; solo tú lo sabes. ¿Es el mismo para /contatti y /promuoviti,
-      o dos distintos?
+- [ ] **Resend: verificar el dominio.** API key recibida. Falta añadir en Resend el dominio
+      `milanobeatradio.it` (registros DNS en Cloudflare) para poder enviar desde `noreply@`.
+      Lo necesita ya el "Password dimenticata?" del admin, no solo los formularios.
+- [x] **Email destino de los formularios**: `info@milanobeatradio.it` (ambos formularios).
 - [ ] **Enlace real de la app móvil** (App Store / Google Play), si existe.
       La home y "Chi siamo" la anuncian ("ASCOLTACI DALLA NOSTRA APP - SCARICALA").
       Si no hay app publicada, dímelo y quitamos ese bloque en vez de enlazar a nada.
 
 ## DECISIONES QUE NECESITO DE TI
 
-- [ ] **Color de marca.** El brief dice acento magenta #E6007E, pero el logo oficial es
-      VERDE (#3DAE49 aprox.) y negro, y no hay magenta en ningún asset. ¿Magenta es una
-      decisión nueva de rebranding o hay que usar el verde del logo? Hoy no afecta
-      (fase 0 no tiene diseño), pero lo necesito antes de fase 1.
+- [x] **Color de marca**: morado #C824E3 + negro (decidido 2026-09-07).
 - [x] **Versión de Next.** Decidido: Next 16.3.4 (hecho el 2026-09-07).
 - [x] **Borradores del XML.** Decidido: se ignoran por completo, en todos los CPT. Solo `publish`.
 - [ ] **Slug del show "Back2 the Classic"**: en el origen es `detroit-sessions` (herencia
       de la demo). ¿Lo dejo así o creo `back2-the-classic` + 301?
-- [ ] **Roles del staff.** No aparecen en el sitio actual. Necesito uno por persona:
-      | Persona | Slug | Role |
-      |---|---|---|
-      | Criss Dell'Orto | `criss` | |
-      | Luca | `luca` | |
-      | Emilio | `emilio` | |
-      | Tati | `tati` | |
-      | Selene Amelio | `selene-amelio` | |
-      | Il vostro Mike di fiduccia | `il-vostro-mike-di-fiducia` | |
-      Nota: el nombre lleva "fiduccia" (doble c) y el slug "fiducia".
-      ¿Mantengo el nombre tal cual o corrijo a "fiducia"?
-- [ ] **Audio de los podcast.** El brief pide `audioUrl` (texto). Así está hecho, pero desde el admin
-      no se puede subir un MP3: hay que pegar la URL de R2. ¿Lo dejamos así (fase 3 rellena las URLs)
-      o prefieres un campo de subida de archivo que lo mande a R2 solo?
-- [ ] **Zona horaria de los slots de shows.** Asumo que "06:00-07:00" es hora de
-      Milán (Europe/Rome). Guardo los slots como `HH:mm` locales, no en UTC. Confírmalo.
+- [x] **Nombre "fiduccia"**: se corrige a "fiducia".
+- [x] **Usuarios del admin**: migrados de wp-admin/users.php (5 reales; Igor y proradio son del
+      proveedor del tema y se excluyen). Contraseñas temporales en `secrets.local.md`.
+- [ ] **Roles del STAFF (otra cosa distinta de los usuarios).** Los usuarios son quien entra al panel.
+      El staff es la página pública /staff con Criss, Luca, Emilio, Tati, Selene y Mike: solo dos
+      de ellos son usuarios. Sigue faltando qué poner debajo de cada nombre (ej. "Speaker",
+      "Direttore artistico", "DJ"). Si no lo tienes, lo dejo vacío y la ficha no muestra rol.
+- [x] **Audio de los podcast**: URL pegada a mano + opción de subir el archivo (decidido 2026-09-07).
+- [x] **Zona horaria del palinsesto**: hora de Milán (confirmado 2026-09-07).
 - [x] **Usuario admin de Payload (local).** Creado por el seed: `admin@milanobeatradio.it`,
       contraseña en `secrets.local.md`. En producción se creará uno nuevo con el email que me digas.

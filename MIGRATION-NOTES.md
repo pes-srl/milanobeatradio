@@ -47,7 +47,7 @@ usar un parser JS/py). Verificar contra los datos del lunes del brief.
 REAL, no un placeholder) · Phonogram · PES · 3B Meteo · Luce Verde. SCF, Baianita,
 FM World Talkmedia, SIAE, Wimpy, Milano Hub Factrory: sin URL.
 
-**members**: 6 publicados con los slugs exactos del brief (`criss`, `luca`, `emilio`, `tati`,
+**members**: 6 publicados con los slugs exactos del brief. "fiduccia" → "fidu­cia" al importar (decisión cliente) (`criss`, `luca`, `emilio`, `tati`,
 `selene-amelio`, `il-vostro-mike-di-fiducia`).
 
 ## Assets encontrados en uploads
@@ -63,3 +63,15 @@ FM World Talkmedia, SIAE, Wimpy, Milano Hub Factrory: sin URL.
 No hay acceso FTP/SSH. Estrategia para fase 3: descargar por HTTP solo las URLs de attachment
 referenciadas por los registros que se migran (filtrado de huérfanos desde el XML), y subir a R2.
 Los 2,28 GB completos no se necesitan.
+
+## Usuarios de WordPress (`<wp:author>`)
+| login | nombre | email | rol WP | posts publicados | migra |
+|---|---|---|---|---|---|
+| criss | Criss Dell'Orto | c.dellorto@pes-srl.it | Amministratore | 0 | sí (admin) |
+| Redazione MBR | Redazione | redazione@milanobeatradio.it | Amministratore | 68 | sí (admin) |
+| Selene | Selene Amelio | amelio.selene@gmail.com | Editore | 51 | sí (editor) |
+| Alice Fusari | Alice Fusari | alice@fusarinet.it | Editore | 2 | sí (editor) |
+| Tommaso | Tommaso Canziani | tommaso.canziani01@icatt.it | Editore | 1 | sí (editor) |
+| Igor | — | info@qantumthemes.com | Amministratore | 0 | NO (proveedor del tema) |
+| proradio | — | support@pro.radio | Amministratore | 0 | NO (proveedor del tema) |
+En fase 2, `<dc:creator>` de cada post se mapea a `users.legacyLogin`.

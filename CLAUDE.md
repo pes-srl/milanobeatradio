@@ -9,7 +9,9 @@ Hecho: scaffold Next 16.3.4 + Payload 3.88 + Postgres + R2 (código listo, crede
 11 colecciones, reproductor persistente verificado con Playwright, seed demo, migración inicial, README.
 Export de WordPress ya descargado en `migration/export.xml` (18 MB). Inventario real en MIGRATION-NOTES.md.
 Local: Postgres 17 de Homebrew (`mbr_dev`), sin Supabase todavía. Ver TASKS-HUMANAS.md para lo bloqueante.
-Siguiente: respuestas del cliente (color, roles, slug show, audio podcast) → fase 1 diseño, o fase 3 mediateca → R2.
+Credenciales recibidas el 2026-09-07 (R2, Supabase, Resend) en `.env.local`; lista para Vercel en VERCEL-ENV.md.
+BLOQUEOS: falta la contraseña de la DB de Supabase; el token R2 es de solo lectura; dominio público R2 sin activar.
+Siguiente: fase 1 diseño (color confirmado) o fase 3 mediateca → R2 (cuando haya token de escritura).
 
 Fases:
 - Fase 0: scaffold, Payload, colecciones, reproductor persistente, seed demo, README ← **AQUÍ**
@@ -63,7 +65,7 @@ PAYLOAD_SECRET
 R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY
 R2_BUCKET=mbr-media
 R2_PUBLIC_URL=https://media.milanobeatradio.it
-RESEND_API_KEY / CONTACT_TO_EMAIL
+RESEND_API_KEY / RESEND_FROM_EMAIL / CONTACT_TO_EMAIL
 NEXT_PUBLIC_AZURACAST_BASE=https://canali.pesstream.eu
 NEXT_PUBLIC_AZURACAST_STATION=mbr
 NEXT_PUBLIC_SITE_URL=https://milanobeatradio.it
@@ -99,7 +101,8 @@ Las fechas del origen vienen en formato italiano DD/MM/YYYY: parsea con cuidado
 y guarda en UTC con zona Europe/Rome.
 
 **podcasts** — 14 registros. title, slug, description, cover,
-audioUrl (a R2), duration, publishedAt, filters (rel).
+audioUrl (URL pegada, opción principal) + audioFile (upload a media/R2, alternativa; al menos uno),
+duration, publishedAt, filters (rel). DECISIÓN CLIENTE 2026-09-07.
 DECISIÓN CLAVE: "INTERVISTE" **no es un tipo de contenido**, es un filtro de
 podcast. Los 14 registros se llaman todos `INTERVISTA "…"`. La página /interviste
 es una vista filtrada de podcasts. NO crees una colección aparte.
@@ -113,10 +116,11 @@ El palinsesto es semanal recurrente. Datos reales del lunes para validar:
 06:00-07:00 Playlist MBR · 07:00-07:30 Back2 the Classic ·
 07:30-08:00 Playlist MBR · 08:30-14:00 Playlist MBR · 14:30-18:00 Playlist MBR.
 Hay huecos entre franjas: el modelo debe permitirlos, no asumas continuidad.
-Los 7 días de la semana existen (Lunedì → Domenica).
+Los 7 días de la semana existen (Lunedì → Domenica). Horas = hora de Milán (confirmado 2026-09-07).
 
 **staff** — 6 registros: Criss Dell'Orto (slug `criss`) · Luca · Emilio · Tati ·
-Selene Amelio · "Il vostro Mike di fiduccia" (slug `il-vostro-mike-di-fiducia`).
+Selene Amelio · "Il vostro Mike di fiducia" (slug `il-vostro-mike-di-fiducia`).
+DECISIÓN CLIENTE 2026-09-07: el nombre se CORRIGE a "fiducia" (el origen tiene "fiduccia").
 title, slug, role, bio (richText), photo, socials{instagram,facebook,tiktok,spotify}.
 Los roles NO están en la web actual: déjalos vacíos (ver TASKS-HUMANAS.md).
 
@@ -198,7 +202,8 @@ facebook.com/milanobeatradio
 ---
 
 # DISEÑO
-Fondo negro. Acento magenta #E6007E. Tipografía Poppins self-hosted en woff2.
+Fondo negro. Color primario de marca **morado #C824E3** (confirmado por el cliente el 2026-09-07;
+el brief original decía magenta #E6007E y el logo antiguo es verde: ambos descartados). Tipografía Poppins self-hosted en woff2.
 Headings en MAYÚSCULAS con tracking amplio. Cards con overlay en gradiente,
 etiqueta de categoría con borde magenta arriba, título abajo.
 Mobile-first: la mayoría del tráfico de una radio de eventos es móvil.
@@ -260,6 +265,15 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
 - `seed:demo` corre con `tsx` (con `payload run` el script se cerraba en silencio).
 - El indicador de dev de Next se movió arriba a la derecha: tapaba el botón Play en móvil.
 - Los tests e2e de fase 0 están en el scratchpad, no en el repo (se formalizarán en fase 1 si se quiere).
+
+- **Usuarios del admin** (`users`): rol `admin` | `editor`. Migrados desde `<wp:author>` del XML con
+  `pnpm import:users`: criss y Redazione MBR = admin; Alice Fusari, Selene, Tommaso = editor.
+  `Igor` (QantumThemes) y `proradio` (pro.radio) son cuentas del proveedor del tema: NO se migran.
+  Contraseñas temporales en secrets.local.md; reset por email vía Resend (`@payloadcms/email-resend`).
+  `users.legacyLogin` sirve en fase 2 para atribuir cada post a su autor (`<dc:creator>`).
+- **Supabase**: proyecto `kscrbnarievdaaxbbudo`, región eu-west-1 (Irlanda), pooler `aws-1-eu-west-1`.
+  Las API keys de Supabase (anon/service_role) NO las usa la app; solo `DATABASE_URI`.
+- **R2**: account `595c1f7a9800ae3da29771e7c46a2e9a`, bucket `mbr-media`, jurisdicción EU.
 
 # AVISOS PARA FASES POSTERIORES (no perder)
 - **Fase 2, XML:** los campos custom de Pro.Radio (fechas de evento, venue, lat/lng,
