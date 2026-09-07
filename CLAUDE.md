@@ -30,8 +30,9 @@
   build de producción + lint + typecheck en verde.
 
 ### Qué FALTA (por orden de importancia)
-1. **Contraseña de la base de datos de Supabase** (bloquea el despliegue). Ver TASKS-HUMANAS.md.
-   Hasta entonces todo corre contra Postgres local de Homebrew (`mbr_dev`).
+1. **Desplegar en Vercel.** El repo ya existe: github.com/mirkodgzconsulting/milanobeatradio (privado).
+   Falta importarlo en Vercel (plan Pro: hay sponsors, es uso comercial), pegar las variables de
+   VERCEL-ENV.md y poner como build command `pnpm migrate && pnpm build`.
 2. **Dominio propio de R2** (`media.milanobeatradio.it`). Ahora se usa la Public Development URL,
    que Cloudflare no recomienda para producción. Al cambiarlo: una variable de entorno + añadir el
    hostname en `next.config.ts`. No hay que volver a migrar nada.
@@ -318,6 +319,16 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
   en `scripts/import-wp.ts` saca esas imágenes fuera del párrafo antes de guardar.
 - Formularios: Server Action + Zod + honeypot (`website`) + rate limit en memoria (5/min por IP).
   Sin reCAPTCHA, como pedía el brief. `CONTACT_TO_EMAIL=info@milanobeatradio.it` para ambos.
+
+# DESPLIEGUE — estado
+- Supabase: proyecto `MilanoBeatRadio`, ref `kscrbnarievdaaxbbudo`, región eu-west-1 (Irlanda).
+  Host del pooler: `aws-1-eu-west-1.pooler.supabase.com`. La app usa SIEMPRE el 6543
+  (transaction pooler); el 5432 solo se usó una vez para cargar el volcado inicial.
+- Migración de datos: `pg_dump --data-only` + carga en una sola transacción. OJO: `--disable-triggers`
+  NO funciona en Supabase (requiere superusuario). Tras cargar hay que reajustar las secuencias de
+  id con `setval`, o el primer alta desde el admin falla por clave duplicada.
+- Repo: github.com/mirkodgzconsulting/milanobeatradio (privado). Verificado antes de subir que
+  ni `.env*` ni `secrets.local.md` ni ningún secreto está en el historial.
 
 # CONTADORES EN VIVO (vistas / like / share) — decisiones
 - El endpoint es `app/(site)/api/stats/route.ts` (POST). Convive sin problema con el comodín
