@@ -1,11 +1,12 @@
 import { z } from 'zod'
+import { env } from './env'
 
 /**
  * AzuraCast (external, read-only). Base + station come from public env vars so the
  * client can poll directly; no proxy through our server.
  */
-const BASE = (process.env.NEXT_PUBLIC_AZURACAST_BASE ?? 'https://canali.pesstream.eu').replace(/\/$/, '')
-const STATION = process.env.NEXT_PUBLIC_AZURACAST_STATION ?? 'mbr'
+const BASE = env(process.env.NEXT_PUBLIC_AZURACAST_BASE, 'https://canali.pesstream.eu').replace(/\/$/, '')
+const STATION = env(process.env.NEXT_PUBLIC_AZURACAST_STATION, 'mbr')
 
 export const STREAM_URL = `${BASE}/listen/${STATION}/stream`
 export const NOW_PLAYING_URL = `${BASE}/api/nowplaying/${STATION}`

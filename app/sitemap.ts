@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next'
+import { siteUrl } from '@/src/lib/env'
 import { getEvents, getPodcasts, getPosts, getShows, getStaff } from '@/src/lib/queries'
 
-const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://milanobeatradio.it').replace(/\/$/, '')
+const BASE = siteUrl()
 
 export const revalidate = 3600
 

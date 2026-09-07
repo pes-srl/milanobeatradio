@@ -9,6 +9,7 @@ import { en } from '@payloadcms/translations/languages/en'
 import { it } from '@payloadcms/translations/languages/it'
 import sharp from 'sharp'
 
+import { env, siteUrl } from './src/lib/env'
 import { collections } from './src/collections'
 import { Site } from './src/globals/Site'
 
@@ -25,7 +26,7 @@ const r2PublicUrl = (process.env.R2_PUBLIC_URL ?? '').replace(/\/$/, '')
 
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET ?? '',
-  serverURL: process.env.NEXT_PUBLIC_SITE_URL,
+  serverURL: siteUrl(),
   typescript: { outputFile: path.resolve(dirname, 'src/payload-types.ts') },
 
   admin: {
@@ -50,7 +51,7 @@ export default buildConfig({
   email: process.env.RESEND_API_KEY
     ? resendAdapter({
         apiKey: process.env.RESEND_API_KEY,
-        defaultFromAddress: process.env.RESEND_FROM_EMAIL ?? 'noreply@milanobeatradio.it',
+        defaultFromAddress: env(process.env.RESEND_FROM_EMAIL, 'noreply@milanobeatradio.it'),
         defaultFromName: 'Milano Beat Radio',
       })
     : undefined,

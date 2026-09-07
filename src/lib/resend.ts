@@ -1,7 +1,9 @@
+import { env } from './env'
+
 /** Minimal Resend client (no SDK dependency beyond the one Payload already installs). */
 export async function sendEmail(opts: { to: string; subject: string; text: string; replyTo?: string }) {
   const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.RESEND_FROM_EMAIL ?? 'noreply@milanobeatradio.it'
+  const from = env(process.env.RESEND_FROM_EMAIL, 'noreply@milanobeatradio.it')
   if (!apiKey) {
     console.log('[email:dev]', { from, ...opts })
     return

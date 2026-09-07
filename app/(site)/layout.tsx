@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { poppins } from '@/src/lib/fonts'
+import { siteUrl } from '@/src/lib/env'
 import { imageUrl } from '@/src/lib/media'
 import { getSite } from '@/src/lib/queries'
 import { PlayerProvider } from '@/src/player/PlayerProvider'
@@ -11,7 +12,7 @@ import './globals.css'
 export const metadata: Metadata = {
   title: { default: 'Milano Beat Radio', template: '%s · Milano Beat Radio' },
   description: 'Your Event and Party Station — la radio di eventi, vita notturna e cultura di Milano.',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  metadataBase: new URL(siteUrl()),
   openGraph: { type: 'website', locale: 'it_IT', siteName: 'Milano Beat Radio' },
 }
 

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
+import { siteUrl } from '@/src/lib/env'
 
-const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://milanobeatradio.it').replace(/\/$/, '')
+const BASE = siteUrl()
 
 export default function robots(): MetadataRoute.Robots {
   return {
