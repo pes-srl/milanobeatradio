@@ -1,6 +1,6 @@
 # Milano Beat Radio — sito + CMS
 
-Next.js 15 (App Router) + Payload CMS 3 embedded, Postgres (Supabase), media on Cloudflare R2, deploy on Vercel.
+Next.js 16 (App Router) + Payload CMS 3 embedded, Postgres (Supabase), media on Cloudflare R2, deploy on Vercel.
 Project memory and rules live in [CLAUDE.md](./CLAUDE.md). Open questions for the client: [TASKS-HUMANAS.md](./TASKS-HUMANAS.md).
 
 ## Local setup
@@ -29,9 +29,10 @@ Demo admin user created by the seed: `admin@milanobeatradio.it` (password in `se
 
 | Script | What it does |
 |---|---|
-| `pnpm dev` | Next dev server. In development Payload syncs the schema with drizzle **push** (no migration files needed). |
+| `pnpm dev` | Next dev server (Turbopack). In development Payload syncs the schema with drizzle **push** (no migration files needed). |
 | `pnpm build` | Production build. |
 | `pnpm typecheck` | `tsc --noEmit` (strict). |
+| `pnpm lint` | `eslint .` with Next 16 flat config (`next lint` no longer exists). |
 | `pnpm generate:types` | Regenerates `src/payload-types.ts` after changing a collection. |
 | `pnpm generate:importmap` | Regenerates `app/(payload)/admin/importMap.js` after adding admin components. |
 | `pnpm migrate:create <name>` | Writes a migration to `src/migrations/` from the current schema diff. |

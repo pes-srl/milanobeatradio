@@ -5,11 +5,11 @@
 
 ## ESTADO ACTUAL
 **Fase 0 — COMPLETADA el 2026-09-07** (pendiente de validación del cliente).
-Hecho: scaffold Next 15.4.11 + Payload 3.88 + Postgres + R2 (código listo, credenciales pendientes),
+Hecho: scaffold Next 16.3.4 + Payload 3.88 + Postgres + R2 (código listo, credenciales pendientes),
 11 colecciones, reproductor persistente verificado con Playwright, seed demo, migración inicial, README.
 Export de WordPress ya descargado en `migration/export.xml` (18 MB). Inventario real en MIGRATION-NOTES.md.
 Local: Postgres 17 de Homebrew (`mbr_dev`), sin Supabase todavía. Ver TASKS-HUMANAS.md para lo bloqueante.
-Siguiente: respuestas del cliente (color, Next 16, drafts, roles) → fase 1 diseño, o fase 3 mediateca → R2.
+Siguiente: respuestas del cliente (color, roles, slug show, audio podcast) → fase 1 diseño, o fase 3 mediateca → R2.
 
 Fases:
 - Fase 0: scaffold, Payload, colecciones, reproductor persistente, seed demo, README ← **AQUÍ**
@@ -29,7 +29,7 @@ de la ciudad. Claim actual: "Your Event and Party Station".
 Idioma del sitio: ITALIANO. Código y comentarios: inglés.
 
 ## Stack fijado (no negociable sin preguntar)
-- Next.js 15 App Router, TypeScript strict, Tailwind CSS v4
+- Next.js 16 App Router (decidido por el cliente el 2026-09-07; era 15), TypeScript strict, Tailwind CSS v4
 - Payload CMS 3 embebido en la misma app. Payload es el MOTOR
   (esquema, auth, media, versiones, editor rico). Nunca acceso directo a
   Postgres desde el admin: todo por Local API para no saltarse hooks.
@@ -75,7 +75,9 @@ NEXT_PUBLIC_SITE_URL=https://milanobeatradio.it
 
 Volúmenes reales medidos en el sitio actual.
 
-**posts** — 122 registros. Es la sección FLASH NEWS.
+**posts** — 122 registros publicados. Es la sección FLASH NEWS.
+DECISIÓN CLIENTE 2026-09-07: los BORRADORES de cualquier CPT (392 posts, 1 evento, 14 members, 1 sponsor)
+se IGNORAN por completo. Solo se migra `<wp:status>publish`.
 title, slug, excerpt, content (richText), cover (media), category (rel),
 publishedAt, seo. Categorías reales con uso: FlashNews 102, Cultura 45,
 Events 22, Arte 12, Comunità 12, Cinema 4, DJ 3, Club 2, Letteratura 2,
@@ -245,7 +247,8 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
   hay que rellenar, y actualizar la sección ESTADO ACTUAL de este archivo.
 
 # DECISIONES TOMADAS EN FASE 0 (no rediscutir salvo que el cliente lo pida)
-- Next **15.4.11**, no 15.5: Payload 3.88 solo soporta 15.4.x o 16.2+. Cambio a 16 = decisión del cliente.
+- **Next 16.3.4** (cliente decidió saltar de 15.4 a 16 el 2026-09-07). Payload 3.88 soporta 15.4.x o 16.2+; 15.5 NO.
+  Next 16: `next lint` ya no existe (`lint` = `eslint .`, config plana), Turbopack por defecto, `middleware` se llama `proxy`.
 - `"type": "module"` en package.json: obligatorio para que Payload cargue el config como ESM.
 - Taxonomías (categories, eventTypes, podcastFilters, genres) SIN drafts/versiones: son tablas de lookup.
   Todo lo demás (posts, events, podcasts, shows, staff, partners) con drafts + autosave + versiones.
@@ -270,3 +273,13 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
   desde el XML (filtrado de huérfanos); ahí está el ahorro de factura.
 - Ficheros locales que NO van a git: `migration/export.xml`, `migration/uploads/`,
   `secrets.local.md`, `.env*`.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

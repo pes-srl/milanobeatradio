@@ -45,11 +45,8 @@ o a `.env.local` (ambos ignorados por git), nunca a este archivo.
       VERDE (#3DAE49 aprox.) y negro, y no hay magenta en ningún asset. ¿Magenta es una
       decisión nueva de rebranding o hay que usar el verde del logo? Hoy no afecta
       (fase 0 no tiene diseño), pero lo necesito antes de fase 1.
-- [ ] **Versión de Next.** Payload 3.88 solo soporta Next 15.4.x o 16.2+. Next 15.5 NO
-      está soportado. He usado **Next 15.4.11** para respetar "Next 15". Si prefieres
-      saltar a Next 16 dímelo antes de fase 1; el cambio es pequeño ahora, no después.
-- [ ] **392 posts en borrador** en el XML (además de los 122 publicados). ¿Se migran
-      como draft en Payload o se descartan?
+- [x] **Versión de Next.** Decidido: Next 16.3.4 (hecho el 2026-09-07).
+- [x] **Borradores del XML.** Decidido: se ignoran por completo, en todos los CPT. Solo `publish`.
 - [ ] **Slug del show "Back2 the Classic"**: en el origen es `detroit-sessions` (herencia
       de la demo). ¿Lo dejo así o creo `back2-the-classic` + 301?
 - [ ] **Roles del staff.** No aparecen en el sitio actual. Necesito uno por persona:

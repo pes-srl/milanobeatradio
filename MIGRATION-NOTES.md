@@ -8,11 +8,11 @@ se decide con el cliente en fase 2.
 
 | CPT | Brief | XML publish | XML draft/pending | Nota |
 |---|---|---|---|---|
-| post | 122 | 122 | 392 draft | Los 392 borradores NO están en el brief. ¿Migrar como draft o descartar? |
+| post | 122 | 122 | 392 draft | DECIDIDO 2026-09-07: los borradores se ignoran. Solo `publish`. |
 | event | 5 | 5 | 1 draft | |
 | podcast | 14 | 14 | 0 | |
 | shows | 6 | 6 | 0 | |
-| members | 6 | 6 | 11 draft + 3 pending | Solo los 6 publicados coinciden con el brief. |
+| members | 6 | 6 | 11 draft + 3 pending | Solo los 6 publicados. Draft/pending se ignoran (decisión cliente). |
 | qtsponsor | 11 | 11 | 1 draft | |
 | chart | 0 | 0 | 9 pending | El brief decía 0; hay 9 pendientes. Sigue sin migrarse. |
 | radiochannel | 3 | 3 | 0 | No se migra (AzuraCast). |
