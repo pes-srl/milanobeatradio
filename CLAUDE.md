@@ -3,31 +3,45 @@
 > Este archivo es la memoria persistente del proyecto entre sesiones.
 > Léelo entero antes de tocar nada. Si una decisión no está aquí, PREGUNTA, no improvises.
 
-## ESTADO ACTUAL
-**Fases 0, 1, 2 y 3 (mediateca local) COMPLETADAS el 2026-09-07.**
-Sitio real funcionando en local con datos reales: 122 Flash News, 5 eventi, 14 podcast,
-6 show con palinsesto reale, 6 staff, 11 partner, privacy policy — todo importado del
-XML de WordPress. Diseño de todas las páginas hecho a partir de capturas del sitio real
-(migration/reference/, no versionado). Color de marca: morado #C824E3 (decisión cliente).
-Reproductor persistente verificado con Playwright en navegación real entre 6 páginas.
-Formularios contatti/promuoviti con Server Actions + Zod + honeypot + rate limit + Resend.
-Usuarios reales del WordPress migrados con roles admin/editor.
-Fase 3 (R2 real) COMPLETADA el 2026-09-07: los 407 documentos de media están en el bucket
-`mbr-media` (R2_ENABLED=true). Se usa la Public Development URL de R2
-(`https://pub-df0e74f6b3f940c5a570551308d6944f.r2.dev`) como R2_PUBLIC_URL porque el dominio
-público personalizado `media.milanobeatradio.it` todavía no está conectado al bucket
-(ver TASKS-HUMANAS.md) — cuando se conecte, basta con cambiar esa variable, no hace falta
-volver a migrar nada.
-Bloqueo restante para producción: falta la contraseña de la base de datos de Supabase
-(ver TASKS-HUMANAS.md). Con eso, queda desplegar en Vercel.
+## ESTADO ACTUAL — actualizado 2026-09-07
 
-Fases:
-- Fase 0: scaffold, Payload, colecciones, reproductor persistente, seed demo, README ← **AQUÍ**
-- Fase 1: diseño de páginas ← HECHO 2026-09-07, ver más abajo
-- Fase 2: import del XML (posts, events, podcasts, shows, staff, partners) ← HECHO 2026-09-07
-- Fase 3: migración de mediateca a R2 con filtrado de huérfanos ← hecho en local, falta subir a R2 real
-- Fase 4: formularios, SEO avanzado, Control Room, contadores
-- Fase 5: redirecciones 301/410 (sacar los 122 slugs de /post-sitemap.xml, nunca a mano)
+### Qué está HECHO y verificado
+- **Fase 0** — scaffold Next 16.3.4 + Payload 3.88 + Postgres + R2, 12 colecciones, Site global,
+  reproductor persistente, migraciones, seed demo, README.
+- **Fase 1** — diseño completo de todas las páginas, reconstruido a partir de capturas del sitio
+  real (`migration/reference/`, no versionado). Color de marca morado #C824E3.
+- **Fase 2** — import real del XML: 122 Flash News · 5 eventi · 14 podcast · 6 show con
+  palinsesto real · 6 staff · 11 partner · 1 pagina (privacy). Solo `publish`, borradores ignorados.
+- **Fase 3** — mediateca completa en R2: 407 documentos de imagen + los 14 MP3 de los podcast
+  (217 MB) movidos del WordPress viejo. Ya nada del sitio depende del servidor antiguo.
+- **Fase 4 (parcial)** — formularios contatti/promuoviti (Server Actions + Zod + honeypot +
+  rate limit + Resend), sitemap.xml (164 URLs) y robots.txt.
+- Usuarios reales del WordPress migrados con roles admin/editor.
+- Verificado con Playwright: audio nunca se corta al navegar, cero errores de hidratación,
+  build de producción + lint + typecheck en verde.
+
+### Qué FALTA (por orden de importancia)
+1. **Contraseña de la base de datos de Supabase** (bloquea el despliegue). Ver TASKS-HUMANAS.md.
+   Hasta entonces todo corre contra Postgres local de Homebrew (`mbr_dev`).
+2. **Fase 5 — redirecciones 301/410.** No empezada. Los 122 posts viven en la raíz del sitio viejo
+   (`/slug/`) y ahora están en `/flash-news/slug`. Cada colección migrada guarda su `legacyPath`
+   justo para esto, así que los 301 se generan desde la base de datos, no a mano. Las ~35 páginas
+   demo del tema deben devolver 410.
+3. **Dominio propio de R2** (`media.milanobeatradio.it`). Ahora se usa la Public Development URL,
+   que Cloudflare no recomienda para producción. Al cambiarlo: una variable de entorno + añadir el
+   hostname en `next.config.ts`. No hay que volver a migrar nada.
+4. **Verificar el dominio en Resend** para que los formularios y el "password dimenticata" del
+   admin envíen de verdad.
+5. **Repo remoto + Vercel Pro.** `git init` local hecho, faltan la URL de GitHub y el proyecto en Vercel.
+6. **Datos que solo tiene el cliente**: roles del staff para la página pública, enlaces reales de la
+   app en las stores, y decidir el slug del show `detroit-sessions`.
+7. **Del brief original, nunca priorizado**: contadores de visitas y "Control Room". No están hechos
+   ni planificados; decidir si entran en el alcance.
+
+### Notas de estado que conviene recordar
+- Los eventos importados tienen fechas anteriores a hoy (sept. 2026), por eso la home muestra pocos
+  en "City Events": el filtro de próximos funciona bien, faltan eventos futuros reales.
+- `podcasts.audioUrl` conserva la URL vieja como referencia histórica; el sitio reproduce `audioFile`.
 
 ---
 
