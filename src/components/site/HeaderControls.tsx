@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { usePlayer } from '@/src/player/PlayerProvider'
@@ -11,10 +11,13 @@ type Props = { instagram?: string | null; facebook?: string | null }
 
 /** Header button cluster (social · menu · play · volume) + off-canvas menu. Client-only: needs the player. */
 export function HeaderControls({ instagram, facebook }: Props) {
-  const { status, toggle, muted, toggleMute } = usePlayer()
+  const { status, toggle, muted, toggleMute, volume, setVolume } = usePlayer()
   const [open, setOpen] = useState(false)
+  const [volumeOpen, setVolumeOpen] = useState(false)
+  const volumeRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const isOn = status === 'playing' || status === 'loading'
+  const level = muted ? 0 : volume
 
   // Close the menu on navigation. Adjusting state during render (not an effect) per
   // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
@@ -23,6 +26,23 @@ export function HeaderControls({ instagram, facebook }: Props) {
     setLastPathname(pathname)
     setOpen(false)
   }
+
+  // Close the volume slider on outside click or Escape.
+  useEffect(() => {
+    if (!volumeOpen) return
+    const onPointerDown = (e: PointerEvent) => {
+      if (!volumeRef.current?.contains(e.target as Node)) setVolumeOpen(false)
+    }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setVolumeOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [volumeOpen])
 
   // Lock body scroll while the menu is open.
   useEffect(() => {
@@ -36,12 +56,12 @@ export function HeaderControls({ instagram, facebook }: Props) {
     <>
       <div className="flex items-center gap-2">
         {instagram && (
-          <a href={instagram} target="_blank" rel="noreferrer" className="hdr-btn hidden md:grid" aria-label="Instagram">
+          <a href={instagram} target="_blank" rel="noreferrer" className="hdr-btn hidden md:inline-flex" aria-label="Instagram">
             <IconInstagram size={20} />
           </a>
         )}
         {facebook && (
-          <a href={facebook} target="_blank" rel="noreferrer" className="hdr-btn hidden md:grid" aria-label="Facebook">
+          <a href={facebook} target="_blank" rel="noreferrer" className="hdr-btn hidden text-white md:inline-flex" aria-label="Facebook">
             <IconFacebook size={20} />
           </a>
         )}
@@ -58,9 +78,34 @@ export function HeaderControls({ instagram, facebook }: Props) {
           )}
           <span className="font-bold">{isOn ? 'Pausa' : 'Play'}</span>
         </button>
-        <button type="button" onClick={toggleMute} className="hdr-btn hidden md:grid" aria-label={muted ? 'Riattiva audio' : 'Silenzia'}>
-          {muted ? <IconMute size={20} /> : <IconVolume size={20} />}
-        </button>
+        <div ref={volumeRef} className="relative hidden md:block">
+          <button
+            type="button"
+            onClick={() => setVolumeOpen((v) => !v)}
+            onDoubleClick={toggleMute}
+            className={`hdr-btn hdr-btn--solid ${volumeOpen ? 'rounded-b-none' : ''}`}
+            aria-label="Volume"
+            aria-expanded={volumeOpen}
+          >
+            {level === 0 ? <IconMute size={20} /> : <IconVolume size={20} />}
+          </button>
+          {volumeOpen && (
+            <div className="volume-panel">
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step={0.01}
+                value={level}
+                onChange={(e) => setVolume(Number(e.target.value))}
+                className="volume-range"
+                style={{ '--fill': `${level * 100}%` } as CSSProperties}
+                aria-label="Volume"
+                aria-valuetext={`${Math.round(level * 100)}%`}
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Off-canvas menu */}

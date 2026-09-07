@@ -32,9 +32,65 @@ body {
   @apply inline-block border border-brand px-1.5 py-px text-[11px] font-semibold leading-tight text-white;
 }
 
-/* Outlined square button used in the header (social · menu · play · volume). */
-.hdr-btn {
-  @apply grid h-11 min-w-11 place-items-center rounded-md border-2 border-white text-brand transition hover:bg-white/10;
+/* In the components layer so per-instance utilities (text-white on Play/Facebook) win. */
+@layer components {
+  /* Outlined square button used in the header (social · menu · play). */
+  .hdr-btn {
+    @apply inline-flex h-11 min-w-11 items-center justify-center rounded-md border-2 border-white text-brand transition hover:bg-white/10;
+  }
+
+  /* Same shape, filled with the brand purple: the volume toggle. */
+  .hdr-btn--solid {
+    @apply border-brand bg-brand text-white hover:bg-brand-dark;
+  }
+
+  /* Vertical volume slider hanging under the volume button. */
+  .volume-panel {
+    @apply absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-b-md bg-black px-3 py-4;
+  }
+}
+.volume-range {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 1rem;
+  height: 11rem;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+.volume-range::-webkit-slider-runnable-track {
+  width: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(to top, var(--color-brand) var(--fill), rgba(255, 255, 255, 0.25) var(--fill));
+}
+.volume-range::-moz-range-track {
+  width: 0.5rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.25);
+}
+.volume-range::-moz-range-progress {
+  width: 0.5rem;
+  border-radius: 9999px;
+  background: var(--color-brand);
+}
+.volume-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  margin-left: -0.25rem;
+  border-radius: 9999px;
+  background: #fff;
+}
+.volume-range::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+  border: 0;
+  border-radius: 9999px;
+  background: #fff;
+}
+.volume-range:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 4px;
 }
 
 /* Pill button: white border, white text (Ascolta · Carica altro). */

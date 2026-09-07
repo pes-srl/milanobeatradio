@@ -42,9 +42,9 @@ export async function Header() {
 
           <HeaderControls instagram={site?.instagram} facebook={site?.facebook} />
 
-          <nav aria-label="Principale" className="hidden items-center gap-8 lg:flex">
+          <nav aria-label="Principale" className="hidden items-center gap-5 lg:flex xl:gap-8">
             {MAIN_NAV.map((item) => (
-              <Link key={item.href} href={item.href} className="text-[15px] font-semibold uppercase tracking-wide text-white transition hover:text-brand">
+              <Link key={item.href} href={item.href} className="whitespace-nowrap text-[15px] font-bold uppercase tracking-wide text-white transition hover:text-brand xl:text-base 2xl:text-lg">
                 {item.label}
               </Link>
             ))}
