@@ -72,3 +72,9 @@ export const IconAndroid = (p: P) => (
 export const IconApple = (p: P) => (
   <svg {...base(p)}><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.6-1-2.6-3.9zM14 5.5c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.6 2.8-1.4z" /></svg>
 )
+export const IconEye = (p: P) => (
+  <svg {...base(p)} fill="none" stroke="currentColor" strokeWidth={2}><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" /><circle cx="12" cy="12" r="2.8" /></svg>
+)
+export const IconHeart = (p: P) => (
+  <svg {...base(p)} fill="none" stroke="currentColor" strokeWidth={2} strokeLinejoin="round"><path d="M12 20s-7.5-4.7-7.5-9.8A4.2 4.2 0 0112 7.4a4.2 4.2 0 017.5 2.8c0 5.1-7.5 9.8-7.5 9.8z" /></svg>
+)

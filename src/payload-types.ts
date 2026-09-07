@@ -184,6 +184,14 @@ export interface Post {
   author?: (number | null) | User;
   publishedAt?: string | null;
   /**
+   * Historical counters imported from WordPress. Not incremented automatically.
+   */
+  stats?: {
+    views?: number | null;
+    likes?: number | null;
+    shares?: number | null;
+  };
+  /**
    * Path on the old site, used for 301 redirects.
    */
   legacyPath?: string | null;
@@ -342,6 +350,14 @@ export interface Event {
   externalUrl?: string | null;
   eventType?: (number | null) | EventType;
   /**
+   * Historical counters imported from WordPress. Not incremented automatically.
+   */
+  stats?: {
+    views?: number | null;
+    likes?: number | null;
+    shares?: number | null;
+  };
+  /**
    * Path on the old site, used for 301 redirects.
    */
   legacyPath?: string | null;
@@ -407,6 +423,14 @@ export interface Podcast {
   duration?: number | null;
   publishedAt?: string | null;
   filters?: (number | PodcastFilter)[] | null;
+  /**
+   * Historical counters imported from WordPress. Not incremented automatically.
+   */
+  stats?: {
+    views?: number | null;
+    likes?: number | null;
+    shares?: number | null;
+  };
   /**
    * Path on the old site, used for 301 redirects.
    */
@@ -480,6 +504,14 @@ export interface Show {
       }[]
     | null;
   /**
+   * Historical counters imported from WordPress. Not incremented automatically.
+   */
+  stats?: {
+    views?: number | null;
+    likes?: number | null;
+    shares?: number | null;
+  };
+  /**
    * Path on the old site, used for 301 redirects.
    */
   legacyPath?: string | null;
@@ -547,6 +579,14 @@ export interface Staff {
     linkedin?: string | null;
     tiktok?: string | null;
     spotify?: string | null;
+  };
+  /**
+   * Historical counters imported from WordPress. Not incremented automatically.
+   */
+  stats?: {
+    views?: number | null;
+    likes?: number | null;
+    shares?: number | null;
   };
   /**
    * Path on the old site, used for 301 redirects.
@@ -840,6 +880,13 @@ export interface PostsSelect<T extends boolean = true> {
   category?: T;
   author?: T;
   publishedAt?: T;
+  stats?:
+    | T
+    | {
+        views?: T;
+        likes?: T;
+        shares?: T;
+      };
   legacyPath?: T;
   seo?:
     | T
@@ -873,6 +920,13 @@ export interface EventsSelect<T extends boolean = true> {
   lng?: T;
   externalUrl?: T;
   eventType?: T;
+  stats?:
+    | T
+    | {
+        views?: T;
+        likes?: T;
+        shares?: T;
+      };
   legacyPath?: T;
   seo?:
     | T
@@ -899,6 +953,13 @@ export interface PodcastsSelect<T extends boolean = true> {
   duration?: T;
   publishedAt?: T;
   filters?: T;
+  stats?:
+    | T
+    | {
+        views?: T;
+        likes?: T;
+        shares?: T;
+      };
   legacyPath?: T;
   seo?:
     | T
@@ -931,6 +992,13 @@ export interface ShowsSelect<T extends boolean = true> {
         end?: T;
         id?: T;
       };
+  stats?:
+    | T
+    | {
+        views?: T;
+        likes?: T;
+        shares?: T;
+      };
   legacyPath?: T;
   seo?:
     | T
@@ -961,6 +1029,13 @@ export interface StaffSelect<T extends boolean = true> {
         linkedin?: T;
         tiktok?: T;
         spotify?: T;
+      };
+  stats?:
+    | T
+    | {
+        views?: T;
+        likes?: T;
+        shares?: T;
       };
   legacyPath?: T;
   seo?:

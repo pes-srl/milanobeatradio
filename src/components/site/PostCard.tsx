@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Category, Post } from '@/src/payload-types'
-import { IconCalendar, IconLink } from '@/src/components/icons'
-import { fmtDate } from '@/src/lib/format'
+import { IconLink } from '@/src/components/icons'
 import { imageAlt, imageUrl } from '@/src/lib/media'
+import { StatsRow } from './StatsRow'
 
 type Props = { post: Post; priority?: boolean; variant?: 'grid' | 'feature' | 'small' }
 
@@ -46,12 +46,7 @@ export function PostCard({ post, priority = false, variant = 'grid' }: Props) {
             {post.title}
           </Link>
         </h3>
-        {variant === 'grid' && post.publishedAt && (
-          <p className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-white/90">
-            <IconCalendar size={13} className="text-brand" />
-            {fmtDate(post.publishedAt)}
-          </p>
-        )}
+        {variant === 'grid' && <StatsRow date={post.publishedAt} stats={post.stats} className="mt-3" />}
       </div>
     </article>
   )

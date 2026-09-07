@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Podcast, PodcastFilter } from '@/src/payload-types'
-import { IconCalendar, IconPlayOutline } from '@/src/components/icons'
-import { fmtDate } from '@/src/lib/format'
+import { IconPlayOutline } from '@/src/components/icons'
 import { imageAlt, imageUrl } from '@/src/lib/media'
+import { StatsRow } from './StatsRow'
 
 export function PodcastCard({ podcast, priority = false }: { podcast: Podcast; priority?: boolean }) {
   const href = `/podcast/${podcast.slug}`
@@ -25,12 +25,7 @@ export function PodcastCard({ podcast, priority = false }: { podcast: Podcast; p
         <h3 className="mt-2 text-lg font-medium leading-snug">
           <Link href={href} className="pointer-events-auto hover:text-brand">{podcast.title}</Link>
         </h3>
-        {podcast.publishedAt && (
-          <p className="mt-2 flex items-center gap-1.5 text-xs font-semibold">
-            <IconCalendar size={13} className="text-brand" />
-            {fmtDate(podcast.publishedAt)}
-          </p>
-        )}
+        <StatsRow date={podcast.publishedAt} stats={podcast.stats} className="mt-2" />
       </div>
     </article>
   )

@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
+import { statsField } from '@/src/fields/stats'
 import { versions } from './shared'
 
 const social = (name: string, label: string) => ({
@@ -51,6 +52,7 @@ export const Staff: CollectionConfig = {
         social('spotify', 'Spotify'),
       ],
     },
+    statsField,
     {
       name: 'legacyPath',
       type: 'text',

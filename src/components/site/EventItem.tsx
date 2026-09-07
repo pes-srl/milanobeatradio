@@ -4,6 +4,7 @@ import type { Event } from '@/src/payload-types'
 import { IconCalendarAdd } from '@/src/components/icons'
 import { fmtDay, fmtMonthYear, googleCalendarUrl } from '@/src/lib/format'
 import { imageAlt, imageUrl } from '@/src/lib/media'
+import { StatsRow } from './StatsRow'
 
 /** Event list item as on the original: big day, month, venue — city, title, artists, calendar icon. */
 export function EventItem({ event, priority = false }: { event: Event; priority?: boolean }) {
@@ -44,6 +45,7 @@ export function EventItem({ event, priority = false }: { event: Event; priority?
           </Link>
         </h3>
         {event.artists && <p className="mt-2 text-brand">{event.artists}</p>}
+        <StatsRow stats={event.stats} className="mt-2" />
       </div>
     </article>
   )

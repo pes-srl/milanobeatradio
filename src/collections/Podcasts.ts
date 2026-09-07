@@ -2,6 +2,7 @@ import type { CollectionConfig, TextFieldValidation } from 'payload'
 import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
+import { statsField } from '@/src/fields/stats'
 import { versions } from './shared'
 
 /**
@@ -79,6 +80,7 @@ export const Podcasts: CollectionConfig = {
       label: { it: 'Filtri', en: 'Filters' },
       admin: { position: 'sidebar' },
     },
+    statsField,
     {
       name: 'legacyPath',
       type: 'text',

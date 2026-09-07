@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
+import { statsField } from '@/src/fields/stats'
 import { dayOfWeekOptions, validateHHMM, versions } from './shared'
 
 /**
@@ -89,6 +90,7 @@ export const Shows: CollectionConfig = {
         },
       ],
     },
+    statsField,
     {
       name: 'legacyPath',
       type: 'text',

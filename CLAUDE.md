@@ -22,6 +22,10 @@
   regenerarlo y commitearlo tras cualquier import o cambio de slug.
   Verificado una por una: 149/149 redirecciones y 37/37 páginas 410, sin bucles.
 - Usuarios reales del WordPress migrados con roles admin/editor.
+- **Contadores de interacción migrados**: vistas, me gusta y compartidos de Pro.Radio
+  (`proradio_reaktions_*`) en posts, eventi, podcast, show y staff. Totales reales:
+  32.616 vistas · 1.376 like · 132 share en los 122 posts. Se muestran en las tarjetas
+  igual que en el sitio viejo. Son valores HISTÓRICOS: no se incrementan solos.
 - Verificado con Playwright: audio nunca se corta al navegar, cero errores de hidratación,
   build de producción + lint + typecheck en verde.
 

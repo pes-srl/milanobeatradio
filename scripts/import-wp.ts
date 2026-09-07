@@ -205,6 +205,16 @@ const plainLexical = (ctx: Ctx, html: string) => {
   return convertHTMLToLexical({ editorConfig: ctx.editorConfig, html: paragraphs.map((p) => `<p>${p.replace(/</g, '&lt;')}</p>`).join(''), JSDOM })
 }
 
+/**
+ * Engagement counters from the Pro.Radio theme. Historical values only: they are
+ * imported once so the numbers on the new cards match what readers saw before.
+ */
+const readStats = (item: Item) => ({
+  views: Number(item.meta.proradio_reaktions_views ?? 0) || 0,
+  likes: Number(item.meta.proradio_reaktions_votes_count ?? 0) || 0,
+  shares: Number(item.meta.proradio_reaktions_shares_count ?? 0) || 0,
+})
+
 const textOf = (html: string) => decodeEntities(html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim())
 const excerptOf = (item: Item) => textOf(item.excerpt || item.content).slice(0, 280)
 
@@ -316,6 +326,7 @@ async function stepStaff(ctx: Ctx) {
         facebook: m.meta.QT_facebook && m.meta.QT_facebook !== '#' ? m.meta.QT_facebook : undefined,
         linkedin: m.meta.QT_linkedin && m.meta.QT_linkedin !== '#' ? m.meta.QT_linkedin : undefined,
       },
+      stats: readStats(m),
       _status: 'published',
     }, m.content)
     ctx.log(`staff ${title} → ${id}`)
@@ -352,6 +363,7 @@ async function stepShows(ctx: Ctx) {
       cover: await importMedia(ctx, attachmentUrl(s.meta._thumbnail_id), s.title),
       genres: await termIds(ctx, s, 'genre', 'genres'),
       slots: (slots.get(s.id) ?? []).sort((a, b) => a.dayOfWeek.localeCompare(b.dayOfWeek) || a.start.localeCompare(b.start)),
+      stats: readStats(s),
       _status: 'published',
     }, s.content)
     ctx.log(`show ${s.title} (${(slots.get(s.id) ?? []).length} slots) → ${id}`)
@@ -371,6 +383,7 @@ async function stepPosts(ctx: Ctx) {
       cover: await importMedia(ctx, attachmentUrl(p.meta._thumbnail_id), p.title),
       category: await termIds(ctx, p, 'category', 'categories'),
       author: userIds.get(p.creator),
+      stats: readStats(p),
       publishedAt: gmtIso(p.dateGmt),
       seo: { description: p.meta.rank_math_description?.slice(0, 160) || undefined, title: p.meta.rank_math_title?.replace(/%.*$/, '').trim().slice(0, 70) || undefined },
       _status: 'published',
@@ -401,6 +414,7 @@ async function stepEvents(ctx: Ctx) {
       address: m.proradio_address || undefined,
       externalUrl: m.proradio_link || undefined,
       eventType: (await termIds(ctx, e, 'eventtype', 'event-types'))[0],
+      stats: readStats(e),
       publishedAt: gmtIso(e.dateGmt),
       _status: 'published',
     }, e.content)
@@ -424,6 +438,7 @@ async function stepPodcasts(ctx: Ctx) {
       audioUrl: audio, // still on the old host: phase 3 moves the mp3 to R2 and rewrites this
       publishedAt: p.meta._podcast_date ? romeIso(p.meta._podcast_date) : gmtIso(p.dateGmt),
       filters: await termIds(ctx, p, 'podcastfilter', 'podcast-filters'),
+      stats: readStats(p),
       _status: 'published',
     }, p.content)
     ctx.log(`podcast ${p.title.slice(0, 50)} → ${id}`)

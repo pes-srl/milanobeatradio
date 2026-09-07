@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
+import { statsField } from '@/src/fields/stats'
 import { versions } from './shared'
 
 const rome = { pickerAppearance: 'dayAndTime' as const, displayFormat: 'dd/MM/yyyy HH:mm' }
@@ -78,6 +79,7 @@ export const Events: CollectionConfig = {
       label: { it: 'Tipo evento', en: 'Event type' },
       admin: { position: 'sidebar' },
     },
+    statsField,
     {
       name: 'legacyPath',
       type: 'text',

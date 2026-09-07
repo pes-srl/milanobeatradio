@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
+import { statsField } from '@/src/fields/stats'
 import { versions } from './shared'
 
 /** FLASH NEWS. Public URL: /flash-news/[slug]. */
@@ -60,6 +61,7 @@ export const Posts: CollectionConfig = {
         ],
       },
     },
+    statsField,
     {
       name: 'legacyPath',
       type: 'text',
