@@ -4,6 +4,7 @@ import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { en } from '@payloadcms/translations/languages/en'
 import { it } from '@payloadcms/translations/languages/it'
 import sharp from 'sharp'
@@ -42,6 +43,16 @@ export default buildConfig({
   i18n: { supportedLanguages: { it, en }, fallbackLanguage: 'it' },
 
   editor: lexicalEditor(),
+
+  // Transactional email (admin password reset now, contact forms in phase 4).
+  // Without RESEND_API_KEY Payload logs emails to the console instead of sending.
+  email: process.env.RESEND_API_KEY
+    ? resendAdapter({
+        apiKey: process.env.RESEND_API_KEY,
+        defaultFromAddress: process.env.RESEND_FROM_EMAIL ?? 'noreply@milanobeatradio.it',
+        defaultFromName: 'Milano Beat Radio',
+      })
+    : undefined,
   sharp,
   collections,
 

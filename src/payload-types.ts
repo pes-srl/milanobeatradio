@@ -203,6 +203,7 @@ export interface Media {
    * Filled by the migration.
    */
   legacyUrl?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -348,9 +349,10 @@ export interface Podcast {
   } | null;
   cover?: (number | null) | Media;
   /**
-   * Public MP3 URL on R2.
+   * Paste the public MP3 URL. Alternatively upload the file below.
    */
-  audioUrl: string;
+  audioUrl?: string | null;
+  audioFile?: (number | null) | Media;
   duration?: number | null;
   publishedAt?: string | null;
   filters?: (number | PodcastFilter)[] | null;
@@ -518,7 +520,12 @@ export interface Partner {
  */
 export interface User {
   id: number;
-  name?: string | null;
+  name: string;
+  role: 'admin' | 'editor';
+  /**
+   * Used by the migration to attribute posts.
+   */
+  legacyLogin?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -807,6 +814,7 @@ export interface PodcastsSelect<T extends boolean = true> {
   description?: T;
   cover?: T;
   audioUrl?: T;
+  audioFile?: T;
   duration?: T;
   publishedAt?: T;
   filters?: T;
@@ -902,6 +910,7 @@ export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   legacyUrl?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -998,6 +1007,8 @@ export interface GenresSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  role?: T;
+  legacyLogin?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

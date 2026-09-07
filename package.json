@@ -14,10 +14,12 @@
     "generate:importmap": "payload generate:importmap",
     "migrate": "payload migrate",
     "migrate:create": "payload migrate:create",
-    "seed:demo": "tsx scripts/seed-demo.ts"
+    "seed:demo": "tsx scripts/seed-demo.ts",
+    "import:users": "tsx scripts/import-users.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.88.0",
+    "@payloadcms/email-resend": "3.88.0",
     "@payloadcms/next": "3.88.0",
     "@payloadcms/richtext-lexical": "3.88.0",
     "@payloadcms/storage-s3": "3.88.0",
