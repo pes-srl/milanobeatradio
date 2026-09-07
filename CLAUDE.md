@@ -22,10 +22,10 @@
   regenerarlo y commitearlo tras cualquier import o cambio de slug.
   Verificado una por una: 149/149 redirecciones y 37/37 páginas 410, sin bucles.
 - Usuarios reales del WordPress migrados con roles admin/editor.
-- **Contadores de interacción migrados**: vistas, me gusta y compartidos de Pro.Radio
-  (`proradio_reaktions_*`) en posts, eventi, podcast, show y staff. Totales reales:
-  32.616 vistas · 1.376 like · 132 share en los 122 posts. Se muestran en las tarjetas
-  igual que en el sitio viejo. Son valores HISTÓRICOS: no se incrementan solos.
+- **Contadores de interacción migrados Y EN VIVO**: vistas, me gusta y compartidos de
+  Pro.Radio (`proradio_reaktions_*`) en posts, eventi, podcast, show y staff. Punto de
+  partida real: 32.616 vistas · 1.376 like · 132 share en los 122 posts. Ahora se
+  incrementan de verdad (ver más abajo).
 - Verificado con Playwright: audio nunca se corta al navegar, cero errores de hidratación,
   build de producción + lint + typecheck en verde.
 
@@ -318,6 +318,26 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
   en `scripts/import-wp.ts` saca esas imágenes fuera del párrafo antes de guardar.
 - Formularios: Server Action + Zod + honeypot (`website`) + rate limit en memoria (5/min por IP).
   Sin reCAPTCHA, como pedía el brief. `CONTACT_TO_EMAIL=info@milanobeatradio.it` para ambos.
+
+# CONTADORES EN VIVO (vistas / like / share) — decisiones
+- El endpoint es `app/(site)/api/stats/route.ts` (POST). Convive sin problema con el comodín
+  `/api/[...slug]` de Payload: Next resuelve antes la ruta estática. Verificado.
+- **Escribe con SQL directo por `payload.db.pool`, no con `payload.update`.** Es la única
+  excepción a la regla de "todo por Local API", y es deliberada: todas las colecciones tienen
+  drafts + autosave, así que un `update` por cada visita crearía una fila de versión por
+  visita y reventaría la tabla `_*_v`. Además `SET col = col + 1` es atómico; leer-y-escribir
+  pierde visitas con tráfico concurrente.
+- Los nombres de tabla y columna salen de listas fijas en `src/lib/stats.ts`, nunca del cuerpo
+  de la petición: no hay forma de inyectar SQL. Probado con `posts; DROP TABLE posts;--`.
+- Defensas: filtro de user-agent de bots, límite de 60 peticiones/minuto por IP, validación Zod,
+  y `GREATEST(..., 0)` para que un contador nunca baje de cero.
+- Anti-inflado: una vista por documento y por pestaña (sessionStorage), enviada 1,2 s después
+  de cargar para no contar rebotes. El like se recuerda en localStorage y es reversible.
+- Trampa de React que costó un rato: en modo estricto los efectos corren dos veces. Marcar la
+  visita ANTES de programar el envío hacía que la segunda ejecución la diera por hecha y no se
+  enviara nunca. La marca va DENTRO del temporizador.
+- `useSyncExternalStore` para leer localStorage en el like: leerlo en un efecto rompe la regla
+  `react-hooks/set-state-in-effect` y provoca parpadeo tras la hidratación.
 
 # FASE 5 — decisiones de redirecciones (no rediscutir salvo que el cliente lo pida)
 - Todas las claves del mapa se guardan SIN barra final: Next normaliza `/foo/` a `/foo` antes de

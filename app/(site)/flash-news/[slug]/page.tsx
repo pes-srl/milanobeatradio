@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PageHero } from '@/src/components/site/PageHero'
 import { RichText } from '@/src/components/site/RichText'
-import { ShareButton } from '@/src/components/site/ShareButton'
+import { StatsBar } from '@/src/components/site/StatsBar'
 import { fmtDate } from '@/src/lib/format'
 import { imageUrl } from '@/src/lib/media'
 import { getPost } from '@/src/lib/queries'
@@ -31,10 +31,12 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     <>
       <PageHero title={post.title} image={post.cover} kicker={cat?.name} size="lg" uppercase={false} />
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-8">
-        {post.publishedAt && <p className="mb-8 text-sm font-semibold text-white/60">{fmtDate(post.publishedAt)}</p>}
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-5">
+          {post.publishedAt && <p className="text-sm font-semibold text-white/60">{fmtDate(post.publishedAt)}</p>}
+          <StatsBar collection="posts" id={post.id} title={post.title} views={post.stats?.views} likes={post.stats?.likes} shares={post.stats?.shares} />
+        </div>
         <RichText data={post.content} />
       </article>
-      <ShareButton title={post.title} />
     </>
   )
 }

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PageHero } from '@/src/components/site/PageHero'
 import { RichText } from '@/src/components/site/RichText'
-import { ShareButton } from '@/src/components/site/ShareButton'
+import { StatsBar } from '@/src/components/site/StatsBar'
 import { IconCalendarAdd, IconExternal, IconPin } from '@/src/components/icons'
 import { fmtLong, fmtTime, googleCalendarUrl } from '@/src/lib/format'
 import { imageUrl } from '@/src/lib/media'
@@ -38,6 +38,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         </article>
 
         <aside className="space-y-6">
+          <StatsBar collection="events" id={event.id} title={event.title} views={event.stats?.views} likes={event.stats?.likes} shares={event.stats?.shares} />
           {address && (
             <div className="flex items-start gap-3 text-sm">
               <IconPin size={18} className="mt-0.5 shrink-0 text-brand" />
@@ -59,7 +60,6 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           )}
         </aside>
       </div>
-      <ShareButton title={event.title} />
     </>
   )
 }

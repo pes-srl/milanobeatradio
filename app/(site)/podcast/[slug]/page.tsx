@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { PageHero } from '@/src/components/site/PageHero'
 import { RichText } from '@/src/components/site/RichText'
 import { PodcastPlayer } from '@/src/components/site/PodcastPlayer'
-import { ShareButton } from '@/src/components/site/ShareButton'
+import { StatsBar } from '@/src/components/site/StatsBar'
 import { fmtDate } from '@/src/lib/format'
 import { imageUrl } from '@/src/lib/media'
 import { getPodcast } from '@/src/lib/queries'
@@ -30,7 +30,10 @@ export default async function PodcastPage({ params }: { params: Promise<{ slug: 
     <>
       <PageHero title={podcast.title} image={podcast.cover} kicker={filter?.name} size="lg" uppercase={false} />
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-8">
-        {podcast.publishedAt && <p className="mb-6 text-sm font-semibold text-white/60">{fmtDate(podcast.publishedAt)}</p>}
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+          {podcast.publishedAt && <p className="text-sm font-semibold text-white/60">{fmtDate(podcast.publishedAt)}</p>}
+          <StatsBar collection="podcasts" id={podcast.id} title={podcast.title} views={podcast.stats?.views} likes={podcast.stats?.likes} shares={podcast.stats?.shares} />
+        </div>
         {src && (
           <div className="mb-10 rounded-lg bg-white/5 p-4">
             <PodcastPlayer src={src} title={podcast.title} />
@@ -38,7 +41,6 @@ export default async function PodcastPage({ params }: { params: Promise<{ slug: 
         )}
         {podcast.description && <RichText data={podcast.description} />}
       </article>
-      <ShareButton title={podcast.title} />
     </>
   )
 }

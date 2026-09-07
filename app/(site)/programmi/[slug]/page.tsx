@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { PageHero } from '@/src/components/site/PageHero'
 import { RichText } from '@/src/components/site/RichText'
 import { SocialLinks } from '@/src/components/site/SocialLinks'
-import { ShareButton } from '@/src/components/site/ShareButton'
+import { StatsBar } from '@/src/components/site/StatsBar'
 import { imageUrl } from '@/src/lib/media'
 import { getShow } from '@/src/lib/queries'
 import type { Genre, Staff } from '@/src/payload-types'
@@ -31,6 +31,9 @@ export default async function ShowPage({ params }: { params: Promise<{ slug: str
         {show.subtitle && <p className="mt-4 text-lg italic text-white/90">{show.subtitle}</p>}
       </PageHero>
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-8">
+        <div className="mb-8 border-b border-white/10 pb-5">
+          <StatsBar collection="shows" id={show.id} title={show.title} views={show.stats?.views} likes={show.stats?.likes} shares={show.stats?.shares} />
+        </div>
         {show.description && <RichText data={show.description} />}
         {hosts.length > 0 && (
           <div className="mt-12 border-t border-white/10 pt-8">
@@ -46,7 +49,6 @@ export default async function ShowPage({ params }: { params: Promise<{ slug: str
           </div>
         )}
       </article>
-      <ShareButton title={show.title} />
     </>
   )
 }
