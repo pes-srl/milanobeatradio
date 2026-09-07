@@ -17,7 +17,8 @@
     "seed:demo": "tsx scripts/seed-demo.ts",
     "import:users": "tsx scripts/import-users.ts",
     "import:wp": "tsx scripts/import-wp.ts",
-    "migrate:media-to-r2": "tsx scripts/migrate-media-to-r2.ts"
+    "migrate:media-to-r2": "tsx scripts/migrate-media-to-r2.ts",
+    "migrate:podcast-audio": "tsx scripts/migrate-podcast-audio.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.88.0",
