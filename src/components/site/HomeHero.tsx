@@ -3,17 +3,39 @@ import type { Site } from '@/src/payload-types'
 import { imageAlt, imageUrl } from '@/src/lib/media'
 import { AscoltaButton } from './AscoltaButton'
 
-/** Full-height hero with a CSS crossfade/Ken Burns slideshow and the brand captions. */
+/** Slideshow timing copied from the original Elementor background slideshow. */
+const SLIDE_MS = 5000
+const FADE_MS = 500
+
+/** Full-height hero with a CSS crossfade slideshow and the brand captions. */
 export function HomeHero({ site }: { site: Site | null }) {
-  const slides = (site?.heroSlides ?? []).map((s) => s.image).filter((m) => imageUrl(m, 'hero')).slice(0, 10)
-  const total = slides.length * 5
+  const slides = (site?.heroSlides ?? []).map((s) => s.image).filter((m) => imageUrl(m, 'hero'))
+  const total = slides.length * SLIDE_MS
+  const animated = slides.length > 1
+  // Keyframes are generated here because the fade windows depend on how many
+  // slides the editor loaded: each one is on screen SLIDE_MS and hands over in FADE_MS.
+  const pct = (ms: number) => ((ms / total) * 100).toFixed(3)
+  const keyframes = `@keyframes hero-slide{0%{opacity:0}${pct(FADE_MS)}%{opacity:1}${pct(SLIDE_MS)}%{opacity:1}${pct(SLIDE_MS + FADE_MS)}%{opacity:0}100%{opacity:0}}`
 
   return (
     <section className="relative flex min-h-[calc(100svh-138px)] items-center justify-center overflow-hidden bg-black text-center">
-      <div className="absolute inset-0" style={{ ['--slide-total' as string]: `${total || 5}s` }}>
+      {animated && <style dangerouslySetInnerHTML={{ __html: keyframes }} />}
+      <div className="absolute inset-0" style={{ ['--slide-total' as string]: `${total}ms` }}>
         {slides.map((m, i) => (
-          <div key={i} className="slide" style={{ ['--slide-delay' as string]: `${i * 5}s` }}>
-            <Image src={imageUrl(m, 'hero')!} alt={imageAlt(m, '')} fill priority={i === 0} sizes="100vw" className="object-cover grayscale" />
+          <div
+            key={i}
+            className={animated ? 'slide' : 'absolute inset-0'}
+            style={{ ['--slide-delay' as string]: `${i * SLIDE_MS}ms` }}
+          >
+            <Image
+              src={imageUrl(m, 'hero')!}
+              alt={imageAlt(m, '')}
+              fill
+              priority={i === 0}
+              fetchPriority={i === 0 ? undefined : 'low'}
+              sizes="100vw"
+              className="object-cover"
+            />
           </div>
         ))}
         <div className="absolute inset-0 bg-black/45" />

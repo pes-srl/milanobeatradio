@@ -310,8 +310,11 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
 - `/interviste` filtra por el slug real del término WordPress `intervista` (singular), no `interviste`.
 - La página `/mbr-events` usa la imagen de cabecera tal cual: el texto ("MBR EVENTS", "Molto più di
   un DJ set") ya está incrustado en el gráfico original. No superponer texto propio encima.
-- Hero de la home: slideshow CSS puro (crossfade + Ken Burns), sin librería, con las 13 imágenes
-  reales del origen en el orden que usaba Elementor.
+- Hero de la home: slideshow CSS puro, sin librería, con las 13 imágenes reales del origen en el
+  orden que usaba Elementor. Mismos tiempos que el Background Slideshow original: 5 s por imagen,
+  crossfade de 500 ms, en bucle, overlay negro al 45 %. Sin Ken Burns y sin filtro grayscale:
+  el original no los tiene y varias fotos son en color. Los @keyframes se generan en
+  `HomeHero.tsx` porque los porcentajes dependen del número de slides que cargue el editor.
 - Fix importante de Next 16: rechaza optimizar imágenes remotas que resuelven a IP privada (SSRF).
   `imageUrl()` en `src/lib/media.ts` convierte cualquier URL absoluta same-origin en relativa.
 - Fix importante del importador: una imagen dentro de un párrafo genera un nodo `upload` (bloque
