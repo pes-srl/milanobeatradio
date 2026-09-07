@@ -20,12 +20,12 @@ o a `.env.local` (ambos ignorados por git), nunca a este archivo.
       Postgres no está entre las claves que me pasaste (anon/service_role son de la API, no de la DB).
       Supabase → Project Settings → Database → "Reset database password" → pégala en `.env.local`
       sustituyendo `[DB-PASSWORD]`. Hasta entonces el proyecto corre contra el Postgres local.
-- [ ] **Token de R2 con escritura.** El token `Token-R2-Bucket-MBR` es de solo lectura
-      ("read and list objects"): lo probé y `PUT` devuelve AccessDenied. Crea otro con permiso
-      **Object Read & Write** (puede limitarse al bucket `mbr-media`) y pégame Access Key + Secret.
-      El token `cfat_…` de la API de Cloudflare no hace falta para nada: puedes revocarlo.
-- [ ] **Dominio público del bucket.** Cloudflare → R2 → `mbr-media` → Settings → Public access →
-      Custom domain `media.milanobeatradio.it`. Sin esto las imágenes suben pero no se ven.
+- [x] **Token de R2 con escritura**: confirmado, tiene permiso completo (probado con subida real).
+- [ ] **Dominio público del bucket** `media.milanobeatradio.it`. Activaste la "Public Development URL"
+      (`pub-df0e74f6b3f940c5a570551308d6944f.r2.dev`), que ya uso y funciona, pero Cloudflare avisa
+      de que tiene límite de peticiones y no la recomienda para producción. Para el dominio propio:
+      Cloudflare → R2 → `mbr-media` → Settings → Public access → Custom domain → escribe
+      `media.milanobeatradio.it`. Cuando lo actives, solo tengo que cambiar una variable de entorno.
 - [ ] **Repo remoto.** He hecho `git init` local. Dime la URL de GitHub cuando exista y hago el push.
 
 ## NECESARIO PARA FASES POSTERIORES (puedes ir preparándolo)

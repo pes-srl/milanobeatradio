@@ -9,10 +9,11 @@ cuando no es secreto, y de dónde sale.
 | `DATABASE_URI` | `postgres://postgres.kscrbnarievdaaxbbudo:<DB-PASSWORD>@aws-1-eu-west-1.pooler.supabase.com:6543/postgres` | **Falta la contraseña de la base de datos.** Supabase → Project Settings → Database. Puerto 6543 (transaction pooler), NO 5432. |
 | `PAYLOAD_SECRET` | *(el de `.env.local`)* | 64 hex. Si se cambia, todas las sesiones del admin caducan. |
 | `R2_ACCOUNT_ID` | `595c1f7a9800ae3da29771e7c46a2e9a` | Cloudflare account. |
-| `R2_ACCESS_KEY_ID` | *(el de `.env.local`)* | **El token actual es de solo lectura.** Hace falta uno "Object Read & Write". |
-| `R2_SECRET_ACCESS_KEY` | *(el de `.env.local`)* | Idem. |
+| `R2_ENABLED` | `true` | |
+| `R2_ACCESS_KEY_ID` | *(el de `.env.local`)* | Confirmado con permiso de escritura. |
+| `R2_SECRET_ACCESS_KEY` | *(el de `.env.local`)* | |
 | `R2_BUCKET` | `mbr-media` | |
-| `R2_PUBLIC_URL` | `https://media.milanobeatradio.it` | Hay que activar el dominio público en el bucket. |
+| `R2_PUBLIC_URL` | `https://pub-df0e74f6b3f940c5a570551308d6944f.r2.dev` | Provisional: es la Public Development URL. Cuando conectes el dominio `media.milanobeatradio.it` al bucket, cambia este valor y añade su hostname a `next.config.ts`. |
 | `RESEND_API_KEY` | *(el de `.env.local`)* | Resend. El dominio `milanobeatradio.it` debe estar verificado en Resend para enviar. |
 | `RESEND_FROM_EMAIL` | `noreply@milanobeatradio.it` | Remitente. |
 | `CONTACT_TO_EMAIL` | `info@milanobeatradio.it` | Destino de los formularios contatti y promuoviti. |

@@ -12,9 +12,14 @@ XML de WordPress. Diseño de todas las páginas hecho a partir de capturas del s
 Reproductor persistente verificado con Playwright en navegación real entre 6 páginas.
 Formularios contatti/promuoviti con Server Actions + Zod + honeypot + rate limit + Resend.
 Usuarios reales del WordPress migrados con roles admin/editor.
-Bloqueos para producción: falta contraseña de Supabase y token de R2 con escritura
-(ver TASKS-HUMANAS.md). Mediateca sigue en disco local (407 documentos, ~193 MB).
-Siguiente: cuando lleguen esas credenciales, migrar a Supabase/R2 y desplegar en Vercel.
+Fase 3 (R2 real) COMPLETADA el 2026-09-07: los 407 documentos de media están en el bucket
+`mbr-media` (R2_ENABLED=true). Se usa la Public Development URL de R2
+(`https://pub-df0e74f6b3f940c5a570551308d6944f.r2.dev`) como R2_PUBLIC_URL porque el dominio
+público personalizado `media.milanobeatradio.it` todavía no está conectado al bucket
+(ver TASKS-HUMANAS.md) — cuando se conecte, basta con cambiar esa variable, no hace falta
+volver a migrar nada.
+Bloqueo restante para producción: falta la contraseña de la base de datos de Supabase
+(ver TASKS-HUMANAS.md). Con eso, queda desplegar en Vercel.
 
 Fases:
 - Fase 0: scaffold, Payload, colecciones, reproductor persistente, seed demo, README ← **AQUÍ**
