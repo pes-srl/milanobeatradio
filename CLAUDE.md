@@ -16,6 +16,11 @@
   (217 MB) movidos del WordPress viejo. Ya nada del sitio depende del servidor antiguo.
 - **Fase 4 (parcial)** — formularios contatti/promuoviti (Server Actions + Zod + honeypot +
   rate limit + Resend), sitemap.xml (164 URLs) y robots.txt.
+- **Fase 5 — redirecciones.** `proxy.ts` sirve 149 redirects 308 y 37 páginas con 410, más el
+  borrado del parámetro `?swcfpc=1`. El mapa (`src/redirects.generated.json`) lo genera
+  `pnpm generate:redirects` desde `legacyPath` de la base de datos, nunca a mano: hay que
+  regenerarlo y commitearlo tras cualquier import o cambio de slug.
+  Verificado una por una: 149/149 redirecciones y 37/37 páginas 410, sin bucles.
 - Usuarios reales del WordPress migrados con roles admin/editor.
 - Verificado con Playwright: audio nunca se corta al navegar, cero errores de hidratación,
   build de producción + lint + typecheck en verde.
@@ -23,19 +28,15 @@
 ### Qué FALTA (por orden de importancia)
 1. **Contraseña de la base de datos de Supabase** (bloquea el despliegue). Ver TASKS-HUMANAS.md.
    Hasta entonces todo corre contra Postgres local de Homebrew (`mbr_dev`).
-2. **Fase 5 — redirecciones 301/410.** No empezada. Los 122 posts viven en la raíz del sitio viejo
-   (`/slug/`) y ahora están en `/flash-news/slug`. Cada colección migrada guarda su `legacyPath`
-   justo para esto, así que los 301 se generan desde la base de datos, no a mano. Las ~35 páginas
-   demo del tema deben devolver 410.
-3. **Dominio propio de R2** (`media.milanobeatradio.it`). Ahora se usa la Public Development URL,
+2. **Dominio propio de R2** (`media.milanobeatradio.it`). Ahora se usa la Public Development URL,
    que Cloudflare no recomienda para producción. Al cambiarlo: una variable de entorno + añadir el
    hostname en `next.config.ts`. No hay que volver a migrar nada.
-4. **Verificar el dominio en Resend** para que los formularios y el "password dimenticata" del
+3. **Verificar el dominio en Resend** para que los formularios y el "password dimenticata" del
    admin envíen de verdad.
-5. **Repo remoto + Vercel Pro.** `git init` local hecho, faltan la URL de GitHub y el proyecto en Vercel.
-6. **Datos que solo tiene el cliente**: roles del staff para la página pública, enlaces reales de la
+4. **Repo remoto + Vercel Pro.** `git init` local hecho, faltan la URL de GitHub y el proyecto en Vercel.
+5. **Datos que solo tiene el cliente**: roles del staff para la página pública, enlaces reales de la
    app en las stores, y decidir el slug del show `detroit-sessions`.
-7. **Del brief original, nunca priorizado**: contadores de visitas y "Control Room". No están hechos
+6. **Del brief original, nunca priorizado**: contadores de visitas y "Control Room". No están hechos
    ni planificados; decidir si entran en el alcance.
 
 ### Notas de estado que conviene recordar
@@ -313,6 +314,16 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
   en `scripts/import-wp.ts` saca esas imágenes fuera del párrafo antes de guardar.
 - Formularios: Server Action + Zod + honeypot (`website`) + rate limit en memoria (5/min por IP).
   Sin reCAPTCHA, como pedía el brief. `CONTACT_TO_EMAIL=info@milanobeatradio.it` para ambos.
+
+# FASE 5 — decisiones de redirecciones (no rediscutir salvo que el cliente lo pida)
+- Todas las claves del mapa se guardan SIN barra final: Next normaliza `/foo/` a `/foo` antes de
+  que corra `proxy.ts`. Guardarlas con barra provocaba que rutas que no cambian de nombre
+  (`/flash-news/`, `/interviste/`, `/programmi/`, `/promuoviti/`, `/mbr-events/`) se redirigieran
+  a sí mismas en bucle infinito. Esas simplemente no llevan redirección.
+- `/home-07/` era la portada real del WordPress viejo, así que va a `/` con 301, no a 410.
+- `/milano-beat-radio-store/` no está en la lista de demos del brief y su contenido es real pero
+  sin equivalente: se manda a la home con 301 en vez de matarla. Confirmar con el cliente.
+- Los CPT no migrados (`qtvideo`, `radiochannel`, `chart`) se matan por prefijo con 410.
 
 # AVISOS PARA FASES POSTERIORES (no perder)
 - **Fase 2, XML:** los campos custom de Pro.Radio (fechas de evento, venue, lat/lng,
