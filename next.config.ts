@@ -18,6 +18,8 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       { protocol: 'https', hostname: 'media.milanobeatradio.it' },
+      // R2 public dev URL (temporary, until media.milanobeatradio.it is connected as a custom domain).
+      { protocol: 'https', hostname: 'pub-df0e74f6b3f940c5a570551308d6944f.r2.dev' },
       // AzuraCast album art for the "now playing" widget
       { protocol: 'https', hostname: 'canali.pesstream.eu' },
       // Local dev only: media served from Payload's own API when R2 is disabled.
