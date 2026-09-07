@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand accent from the brief. NOTE: the official logo is green; see TASKS-HUMANAS.md. */
-  --color-brand: #e6007e;
+  /* Brand palette confirmed by the client on 2026-09-07: primary purple + black. */
+  --color-brand: #c824e3;
+  --color-brand-dark: #9a1bb0;
   --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }
 

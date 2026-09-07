@@ -82,7 +82,7 @@ async function run() {
   const published = { _status: 'published' as const }
 
   // --- media ---------------------------------------------------------------
-  const cover1 = await upsertMedia(payload, 'demo-cover-1.png', '[DEMO] Copertina magenta', '#E6007E', [1600, 900])
+  const cover1 = await upsertMedia(payload, 'demo-cover-1.png', '[DEMO] Copertina viola', '#C824E3', [1600, 900])
   const cover2 = await upsertMedia(payload, 'demo-cover-2.png', '[DEMO] Copertina verde', '#3DAE49', [1600, 900])
 
   // --- taxonomies ----------------------------------------------------------
@@ -211,8 +211,10 @@ async function run() {
   // --- admin user ----------------------------------------------------------
   const email = 'admin@milanobeatradio.it'
   const users = await payload.find({ collection: 'users', where: { email: { equals: email } }, limit: 1 })
-  if (!users.docs[0]) {
-    await payload.create({ collection: 'users', data: { email, password: 'Mbr-dev-2026!', name: 'Admin (dev)' } })
+  if (users.docs[0]) {
+    await payload.update({ collection: 'users', id: users.docs[0].id, data: { name: 'Admin (dev)', role: 'admin' } })
+  } else {
+    await payload.create({ collection: 'users', data: { email, password: 'Mbr-dev-2026!', name: 'Admin (dev)', role: 'admin' } })
     payload.logger.info(`Created admin user ${email} (password in secrets.local.md)`)
   }
 
