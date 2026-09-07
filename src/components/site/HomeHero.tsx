@@ -6,6 +6,7 @@ import { AscoltaButton } from './AscoltaButton'
 /** Slideshow timing copied from the original Elementor background slideshow. */
 const SLIDE_MS = 5000
 const FADE_MS = 500
+const ZOOM = 1.04
 
 /** Full-height hero with a CSS crossfade slideshow and the brand captions. */
 export function HomeHero({ site }: { site: Site | null }) {
@@ -15,7 +16,11 @@ export function HomeHero({ site }: { site: Site | null }) {
   // Keyframes are generated here because the fade windows depend on how many
   // slides the editor loaded: each one is on screen SLIDE_MS and hands over in FADE_MS.
   const pct = (ms: number) => ((ms / total) * 100).toFixed(3)
-  const keyframes = `@keyframes hero-slide{0%{opacity:0}${pct(FADE_MS)}%{opacity:1}${pct(SLIDE_MS)}%{opacity:1}${pct(SLIDE_MS + FADE_MS)}%{opacity:0}100%{opacity:0}}`
+  const keyframes =
+    `@keyframes hero-slide{0%{opacity:0}${pct(FADE_MS)}%{opacity:1}${pct(SLIDE_MS)}%{opacity:1}${pct(SLIDE_MS + FADE_MS)}%{opacity:0}100%{opacity:0}}` +
+    // Barely-there drift while the slide is on screen; it snaps back at the end of the
+    // loop, when this slide is fully transparent.
+    `@keyframes hero-zoom{0%{transform:scale(1)}${pct(SLIDE_MS + FADE_MS)}%,100%{transform:scale(${ZOOM})}}`
 
   return (
     <section className="relative flex min-h-[calc(100svh-138px)] items-center justify-center overflow-hidden bg-black text-center">

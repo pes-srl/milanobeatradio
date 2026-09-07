@@ -133,13 +133,17 @@ body {
   to { transform: translateX(-50%); }
 }
 
-/* Hero slideshow: pure-CSS crossfade. Keyframes live in HomeHero.tsx because the
-   fade windows depend on the number of slides. */
+/* Hero slideshow: pure-CSS crossfade plus a very slow zoom. Keyframes live in
+   HomeHero.tsx because both windows depend on the number of slides. */
 .slide {
   position: absolute;
   inset: 0;
   opacity: 0;
   animation: hero-slide var(--slide-total) linear infinite;
+  animation-delay: var(--slide-delay);
+}
+.slide > img {
+  animation: hero-zoom var(--slide-total) linear infinite;
   animation-delay: var(--slide-delay);
 }
 
@@ -175,7 +179,7 @@ body {
 .prose-mbr hr { @apply my-8 border-white/10; }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee__track, .logos__track, .slide { animation: none; }
+  .marquee__track, .logos__track, .slide, .slide > img { animation: none; }
   .marquee__track > span + span { display: none; }
   .slide:first-child { opacity: 1; }
 }

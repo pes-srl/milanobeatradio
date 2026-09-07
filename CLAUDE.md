@@ -312,9 +312,11 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
   un DJ set") ya está incrustado en el gráfico original. No superponer texto propio encima.
 - Hero de la home: slideshow CSS puro, sin librería, con las 13 imágenes reales del origen en el
   orden que usaba Elementor. Mismos tiempos que el Background Slideshow original: 5 s por imagen,
-  crossfade de 500 ms, en bucle, overlay negro al 45 %. Sin Ken Burns y sin filtro grayscale:
-  el original no los tiene y varias fotos son en color. Los @keyframes se generan en
-  `HomeHero.tsx` porque los porcentajes dependen del número de slides que cargue el editor.
+  crossfade de 500 ms, en bucle, overlay negro al 45 %. Sin filtro grayscale: el original no lo
+  tiene y varias fotos son en color. Zoom Ken Burns muy leve (scale 1 → 1,04 durante los 5,5 s
+  que la slide está a la vista, pedido por el cliente el 2026-09-08); el original no lo tiene.
+  Los @keyframes se generan en `HomeHero.tsx` porque los porcentajes dependen del número de
+  slides que cargue el editor.
 - Fix importante de Next 16: rechaza optimizar imágenes remotas que resuelven a IP privada (SSRF).
   `imageUrl()` en `src/lib/media.ts` convierte cualquier URL absoluta same-origin en relativa.
 - Fix importante del importador: una imagen dentro de un párrafo genera un nodo `upload` (bloque
