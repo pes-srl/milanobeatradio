@@ -8,6 +8,7 @@ secrets.local.md
 migration/export*.xml
 migration/uploads/
 migration/downloads/
+migration/reference/
 
 # node
 node_modules/

@@ -115,7 +115,7 @@ async function run() {
     title: 'Playlist MBR',
     description: rich('[DEMO] TODO: descrizione dal sito reale (fase 2).'),
     cover: cover1,
-    genre: genreHouse,
+    genres: [genreHouse],
     hosts: [criss],
     slots: [
       { dayOfWeek: '1', start: '06:00', end: '07:00' },
@@ -129,7 +129,7 @@ async function run() {
     title: 'Back2 the Classic',
     description: rich('I Classici della nostra vita'),
     cover: cover2,
-    genre: genreClassic,
+    genres: [genreClassic],
     hosts: [luca],
     slots: [{ dayOfWeek: '1', start: '07:00', end: '07:30' }],
     ...published,
