@@ -4,20 +4,23 @@
 > Léelo entero antes de tocar nada. Si una decisión no está aquí, PREGUNTA, no improvises.
 
 ## ESTADO ACTUAL
-**Fase 0 — COMPLETADA el 2026-09-07** (pendiente de validación del cliente).
-Hecho: scaffold Next 16.3.4 + Payload 3.88 + Postgres + R2 (código listo, credenciales pendientes),
-11 colecciones, reproductor persistente verificado con Playwright, seed demo, migración inicial, README.
-Export de WordPress ya descargado en `migration/export.xml` (18 MB). Inventario real en MIGRATION-NOTES.md.
-Local: Postgres 17 de Homebrew (`mbr_dev`), sin Supabase todavía. Ver TASKS-HUMANAS.md para lo bloqueante.
-Credenciales recibidas el 2026-09-07 (R2, Supabase, Resend) en `.env.local`; lista para Vercel en VERCEL-ENV.md.
-BLOQUEOS: falta la contraseña de la DB de Supabase; el token R2 es de solo lectura; dominio público R2 sin activar.
-Siguiente: fase 1 diseño (color confirmado) o fase 3 mediateca → R2 (cuando haya token de escritura).
+**Fases 0, 1, 2 y 3 (mediateca local) COMPLETADAS el 2026-09-07.**
+Sitio real funcionando en local con datos reales: 122 Flash News, 5 eventi, 14 podcast,
+6 show con palinsesto reale, 6 staff, 11 partner, privacy policy — todo importado del
+XML de WordPress. Diseño de todas las páginas hecho a partir de capturas del sitio real
+(migration/reference/, no versionado). Color de marca: morado #C824E3 (decisión cliente).
+Reproductor persistente verificado con Playwright en navegación real entre 6 páginas.
+Formularios contatti/promuoviti con Server Actions + Zod + honeypot + rate limit + Resend.
+Usuarios reales del WordPress migrados con roles admin/editor.
+Bloqueos para producción: falta contraseña de Supabase y token de R2 con escritura
+(ver TASKS-HUMANAS.md). Mediateca sigue en disco local (407 documentos, ~193 MB).
+Siguiente: cuando lleguen esas credenciales, migrar a Supabase/R2 y desplegar en Vercel.
 
 Fases:
 - Fase 0: scaffold, Payload, colecciones, reproductor persistente, seed demo, README ← **AQUÍ**
-- Fase 1: diseño de páginas
-- Fase 2: import del XML (posts, events, podcasts, shows, staff, partners)
-- Fase 3: migración de mediateca a R2 con filtrado de huérfanos
+- Fase 1: diseño de páginas ← HECHO 2026-09-07, ver más abajo
+- Fase 2: import del XML (posts, events, podcasts, shows, staff, partners) ← HECHO 2026-09-07
+- Fase 3: migración de mediateca a R2 con filtrado de huérfanos ← hecho en local, falta subir a R2 real
 - Fase 4: formularios, SEO avanzado, Control Room, contadores
 - Fase 5: redirecciones 301/410 (sacar los 122 slugs de /post-sitemap.xml, nunca a mano)
 
@@ -274,6 +277,23 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
 - **Supabase**: proyecto `kscrbnarievdaaxbbudo`, región eu-west-1 (Irlanda), pooler `aws-1-eu-west-1`.
   Las API keys de Supabase (anon/service_role) NO las usa la app; solo `DATABASE_URI`.
 - **R2**: account `595c1f7a9800ae3da29771e7c46a2e9a`, bucket `mbr-media`, jurisdicción EU.
+
+# FASE 1 — decisiones de diseño (no rediscutir salvo que el cliente lo pida)
+- El diseño se hizo a partir de capturas reales de milanobeatradio.it (`migration/reference/`,
+  no versionado): estructura, jerarquía y proporciones iguales; CSS/assets reconstruidos desde cero
+  (licencia del tema Pro.Radio lo prohíbe).
+- `/interviste` filtra por el slug real del término WordPress `intervista` (singular), no `interviste`.
+- La página `/mbr-events` usa la imagen de cabecera tal cual: el texto ("MBR EVENTS", "Molto più di
+  un DJ set") ya está incrustado en el gráfico original. No superponer texto propio encima.
+- Hero de la home: slideshow CSS puro (crossfade + Ken Burns), sin librería, con las 13 imágenes
+  reales del origen en el orden que usaba Elementor.
+- Fix importante de Next 16: rechaza optimizar imágenes remotas que resuelven a IP privada (SSRF).
+  `imageUrl()` en `src/lib/media.ts` convierte cualquier URL absoluta same-origin en relativa.
+- Fix importante del importador: una imagen dentro de un párrafo genera un nodo `upload` (bloque
+  `<figure>`) anidado en un `<p>`, HTML inválido que rompe la hidratación. `hoistUploadsOutOfParagraphs`
+  en `scripts/import-wp.ts` saca esas imágenes fuera del párrafo antes de guardar.
+- Formularios: Server Action + Zod + honeypot (`website`) + rate limit en memoria (5/min por IP).
+  Sin reCAPTCHA, como pedía el brief. `CONTACT_TO_EMAIL=info@milanobeatradio.it` para ambos.
 
 # AVISOS PARA FASES POSTERIORES (no perder)
 - **Fase 2, XML:** los campos custom de Pro.Radio (fechas de evento, venue, lat/lng,
