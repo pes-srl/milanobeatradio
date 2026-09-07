@@ -1,28 +1,34 @@
 import type { Metadata } from 'next'
 import { poppins } from '@/src/lib/fonts'
+import { imageUrl } from '@/src/lib/media'
+import { getSite } from '@/src/lib/queries'
 import { PlayerProvider } from '@/src/player/PlayerProvider'
 import { PlayerBar } from '@/src/player/PlayerBar'
-import { SiteNav } from '@/src/components/SiteNav'
+import { Header } from '@/src/components/site/Header'
+import { Footer } from '@/src/components/site/Footer'
 import './globals.css'
 
 export const metadata: Metadata = {
   title: { default: 'Milano Beat Radio', template: '%s · Milano Beat Radio' },
-  description: 'Your Event and Party Station',
+  description: 'Your Event and Party Station — la radio di eventi, vita notturna e cultura di Milano.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  openGraph: { type: 'website', locale: 'it_IT', siteName: 'Milano Beat Radio' },
 }
 
 /**
  * Root layout of the public site. <PlayerProvider> (and its <audio>) lives HERE and
  * nowhere else, so client-side navigation never unmounts it. Do not move it into a page.
  */
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+export default async function SiteLayout({ children }: { children: React.ReactNode }) {
+  const site = await getSite().catch(() => null)
   return (
     <html lang="it" className={poppins.variable}>
-      <body className="min-h-dvh pb-20">
+      <body className="min-h-dvh pb-[70px]">
         <PlayerProvider>
-          <SiteNav />
-          <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
-          <PlayerBar />
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <PlayerBar logoUrl={imageUrl(site?.logo, 'thumb')} />
         </PlayerProvider>
       </body>
     </html>

@@ -3,16 +3,58 @@
 @theme {
   /* Brand palette confirmed by the client on 2026-09-07: primary purple + black. */
   --color-brand: #c824e3;
-  --color-brand-dark: #9a1bb0;
+  --color-brand-dark: #8d14a3;
+  --color-topbar: #1c0636;
+  --color-ink: #0a0a0a;
+  --color-paper: #f2f2f2;
+  --color-pink: #e0246f;
+  --color-violet: #6f2dbd;
   --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --tracking-title: 0.08em;
 }
 
 html {
   color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-black text-white font-sans antialiased;
+  @apply bg-ink text-white font-sans font-light antialiased;
+}
+
+/* Section titles: big, uppercase, wide tracking (FLASH NEWS · CITY EVENTS · PARTNERS). */
+.title-xl {
+  @apply font-medium uppercase tracking-title text-4xl sm:text-5xl lg:text-6xl;
+}
+
+/* Category label: thin brand-colored border, small bold text. */
+.tag {
+  @apply inline-block border border-brand px-1.5 py-px text-[11px] font-semibold leading-tight text-white;
+}
+
+/* Outlined square button used in the header (social · menu · play · volume). */
+.hdr-btn {
+  @apply grid h-11 min-w-11 place-items-center rounded-md border-2 border-white text-brand transition hover:bg-white/10;
+}
+
+/* Pill button: white border, white text (Ascolta · Carica altro). */
+.btn-pill {
+  @apply inline-flex items-center gap-2 rounded-full border-2 border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-black;
+}
+
+/* Bordered "caption" banners in the hero (ASCOLTACI ANCHE SENZA APP…). */
+.caption {
+  @apply inline-block px-3 py-1 font-normal uppercase leading-tight text-white;
+  transform: skewX(-6deg);
+}
+.caption > span {
+  display: inline-block;
+  transform: skewX(6deg);
+}
+
+/* Card image overlay: bottom gradient so the title always reads. */
+.overlay {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.85) 100%);
 }
 
 /* Marquee for the now-playing title: pure CSS, no animation library. */
@@ -34,7 +76,65 @@ body {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+
+/* Hero slideshow: crossfade + slow zoom (Ken Burns) with CSS only. */
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: slide var(--slide-total) linear infinite;
+  animation-delay: var(--slide-delay);
+}
+.slide > img {
+  animation: kenburns var(--slide-total) linear infinite;
+  animation-delay: var(--slide-delay);
+}
+/* Up to 10 slides · 5 s each · 1 s crossfade (total 50 s, delay i×5 s). */
+@keyframes slide {
+  0% { opacity: 0; }
+  2% { opacity: 1; }
+  10% { opacity: 1; }
+  12% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes kenburns {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+
+/* Partner logos strip. */
+.logos__track {
+  display: flex;
+  gap: 4rem;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+/* Diagonal purple wedge behind the footer. */
+.footer-wedge {
+  background:
+    linear-gradient(160deg, transparent 0 55%, #4a1670 55% 70%, #1c0636 70% 100%);
+}
+
+/* Rich text (articles). */
+.prose-mbr {
+  @apply text-[17px] leading-relaxed text-white/90;
+}
+.prose-mbr p { @apply my-4; }
+.prose-mbr a { @apply text-brand underline-offset-2 hover:underline; }
+.prose-mbr strong { @apply font-semibold text-white; }
+.prose-mbr h2 { @apply mt-10 mb-3 text-2xl font-semibold; }
+.prose-mbr h3 { @apply mt-8 mb-2 text-xl font-semibold; }
+.prose-mbr h4 { @apply mt-6 mb-2 text-lg font-semibold; }
+.prose-mbr ul { @apply my-4 list-disc pl-6; }
+.prose-mbr ol { @apply my-4 list-decimal pl-6; }
+.prose-mbr blockquote { @apply my-6 border-l-2 border-brand pl-4 italic text-white/70; }
+.prose-mbr figure { @apply my-8; }
+.prose-mbr figcaption { @apply mt-2 text-center text-sm font-medium text-white/70; }
+.prose-mbr hr { @apply my-8 border-white/10; }
+
 @media (prefers-reduced-motion: reduce) {
-  .marquee__track { animation: none; }
+  .marquee__track, .logos__track, .slide, .slide > img { animation: none; }
   .marquee__track > span + span { display: none; }
+  .slide:first-child { opacity: 1; }
 }
