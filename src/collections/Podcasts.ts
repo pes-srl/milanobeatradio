@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, TextFieldValidation } from 'payload'
 import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
@@ -7,6 +7,10 @@ import { versions } from './shared'
 /**
  * Podcasts. "Interviste" is NOT a separate content type: it is a podcast filter,
  * and /interviste is a filtered view of this collection.
+ *
+ * Audio source (client decision 2026-09-07): a pasted URL (`audioUrl`) is the primary
+ * option, an uploaded file (`audioFile`, stored on R2 through the media collection)
+ * is the alternative. At least one of the two is required.
  */
 export const Podcasts: CollectionConfig = {
   slug: 'podcasts',
@@ -32,11 +36,26 @@ export const Podcasts: CollectionConfig = {
     {
       name: 'audioUrl',
       type: 'text',
-      label: { it: 'URL audio (R2)', en: 'Audio URL (R2)' },
-      required: true,
-      admin: { description: { it: 'URL pubblico del file MP3 su R2.', en: 'Public MP3 URL on R2.' } },
-      validate: (value: unknown) =>
-        typeof value === 'string' && /^https?:\/\/\S+$/.test(value) ? true : 'Inserisci un URL valido (https://…).',
+      label: { it: 'URL audio (MP3)', en: 'Audio URL (MP3)' },
+      admin: {
+        description: {
+          it: 'Incolla l’URL pubblico del file MP3. In alternativa carica il file qui sotto.',
+          en: 'Paste the public MP3 URL. Alternatively upload the file below.',
+        },
+      },
+      validate: ((value, { siblingData }) => {
+        const hasFile = Boolean((siblingData as { audioFile?: unknown })?.audioFile)
+        if (!value && !hasFile) return 'Inserisci un URL audio oppure carica un file.'
+        if (value && !/^https?:\/\/\S+$/.test(value)) return 'URL non valido (https://…).'
+        return true
+      }) satisfies TextFieldValidation,
+    },
+    {
+      name: 'audioFile',
+      type: 'upload',
+      relationTo: 'media',
+      label: { it: 'Oppure carica il file audio', en: 'Or upload the audio file' },
+      filterOptions: { mimeType: { contains: 'audio' } },
     },
     {
       name: 'duration',
