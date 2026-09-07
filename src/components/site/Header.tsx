@@ -31,7 +31,7 @@ export async function Header() {
       </div>
 
       <div className="sticky top-0 z-40 bg-black">
-        <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between gap-4 px-4 sm:h-[90px] sm:px-8 lg:h-[112px]">
+        <div className="mx-auto flex h-[88px] max-w-[1440px] items-center justify-between gap-3 px-4 sm:h-[96px] sm:gap-4 sm:px-8 lg:h-[112px]">
           <Link href="/" className="shrink-0" aria-label="Milano Beat Radio — Home">
             {logo ? (
               <Image
@@ -39,9 +39,9 @@ export async function Header() {
                 alt="Milano Beat Radio"
                 width={96}
                 height={96}
-                sizes="(max-width: 1024px) 56px, 92px"
+                sizes="(max-width: 1024px) 68px, 92px"
                 priority
-                className="size-14 lg:size-[92px]"
+                className="size-[68px] lg:size-[92px]"
               />
             ) : (
               <span className="text-sm font-bold uppercase tracking-[0.2em]">MBR</span>
