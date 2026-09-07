@@ -214,6 +214,7 @@ export interface Media {
    * Filled by the migration.
    */
   legacyUrl?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1014,6 +1015,7 @@ export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   legacyUrl?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
