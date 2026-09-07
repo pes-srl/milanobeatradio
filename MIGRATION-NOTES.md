@@ -75,3 +75,9 @@ Los 2,28 GB completos no se necesitan.
 | Igor | — | info@qantumthemes.com | Amministratore | 0 | NO (proveedor del tema) |
 | proradio | — | support@pro.radio | Amministratore | 0 | NO (proveedor del tema) |
 En fase 2, `<dc:creator>` de cada post se mapea a `users.legacyLogin`.
+
+## Import reale eseguito 2026-09-07
+122 post, 5 eventi, 14 podcast, 6 show, 6 staff, 11 partner, 1 pagina (privacy) importati con successo.
+407 documenti media creati (portrait/hero/card/thumb in WebP), ~193 MB in locale (in attesa del token R2 in scrittura).
+Nessun media irrecuperabile: le voci "non scaricabile" viste durante lo sviluppo erano di run precedenti
+con il token R2 di sola lettura attivo (AccessDenied), non problemi reali con i file di origine.
