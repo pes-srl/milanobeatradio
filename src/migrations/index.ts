@@ -1,5 +1,7 @@
 import * as migration_20260906_234608_initial from './20260906_234608_initial';
 import * as migration_20260907_094728_users_roles_podcast_audio_file from './20260907_094728_users_roles_podcast_audio_file';
+import * as migration_20260907_101241_content_model_phase2 from './20260907_101241_content_model_phase2';
+import * as migration_20260907_101243_drop_show_genre from './20260907_101243_drop_show_genre';
 
 export const migrations = [
   {
@@ -10,6 +12,16 @@ export const migrations = [
   {
     up: migration_20260907_094728_users_roles_podcast_audio_file.up,
     down: migration_20260907_094728_users_roles_podcast_audio_file.down,
-    name: '20260907_094728_users_roles_podcast_audio_file'
+    name: '20260907_094728_users_roles_podcast_audio_file',
+  },
+  {
+    up: migration_20260907_101241_content_model_phase2.up,
+    down: migration_20260907_101241_content_model_phase2.down,
+    name: '20260907_101241_content_model_phase2',
+  },
+  {
+    up: migration_20260907_101243_drop_show_genre.up,
+    down: migration_20260907_101243_drop_show_genre.down,
+    name: '20260907_101243_drop_show_genre'
   },
 ];

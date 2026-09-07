@@ -29,7 +29,7 @@ export const Staff: CollectionConfig = {
       name: 'role',
       type: 'text',
       label: { it: 'Ruolo', en: 'Role' },
-      admin: { description: { it: 'TODO: ruoli non presenti nel vecchio sito.', en: 'TODO: roles missing in the legacy site.' } },
+      admin: { description: { it: 'Es. Founder, Station Manager, Photographer.', en: 'E.g. Founder, Station Manager, Photographer.' } },
     },
     { name: 'bio', type: 'richText', label: { it: 'Biografia', en: 'Bio' } },
     {
@@ -46,9 +46,17 @@ export const Staff: CollectionConfig = {
       fields: [
         social('instagram', 'Instagram'),
         social('facebook', 'Facebook'),
+        social('linkedin', 'LinkedIn'),
         social('tiktok', 'TikTok'),
         social('spotify', 'Spotify'),
       ],
+    },
+    {
+      name: 'legacyPath',
+      type: 'text',
+      label: { it: 'URL WordPress (legacy)', en: 'Legacy WordPress path' },
+      index: true,
+      admin: { readOnly: true, position: 'sidebar', description: { it: 'Percorso sul vecchio sito, usato per i redirect 301.', en: 'Path on the old site, used for 301 redirects.' } },
     },
     seoField,
   ],

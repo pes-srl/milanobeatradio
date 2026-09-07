@@ -1,5 +1,6 @@
 import { Events } from './Events'
 import { Media } from './Media'
+import { Pages } from './Pages'
 import { Partners } from './Partners'
 import { Podcasts } from './Podcasts'
 import { Posts } from './Posts'
@@ -16,6 +17,7 @@ export const collections = [
   Shows,
   Staff,
   Partners,
+  Pages,
   Media,
   // taxonomies
   Categories,

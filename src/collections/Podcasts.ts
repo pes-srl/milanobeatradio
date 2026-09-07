@@ -79,6 +79,13 @@ export const Podcasts: CollectionConfig = {
       label: { it: 'Filtri', en: 'Filters' },
       admin: { position: 'sidebar' },
     },
+    {
+      name: 'legacyPath',
+      type: 'text',
+      label: { it: 'URL WordPress (legacy)', en: 'Legacy WordPress path' },
+      index: true,
+      admin: { readOnly: true, position: 'sidebar', description: { it: 'Percorso sul vecchio sito, usato per i redirect 301.', en: 'Path on the old site, used for 301 redirects.' } },
+    },
     seoField,
   ],
 }

@@ -10,6 +10,7 @@ import { it } from '@payloadcms/translations/languages/it'
 import sharp from 'sharp'
 
 import { collections } from './src/collections'
+import { Site } from './src/globals/Site'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -19,7 +20,7 @@ const isLocalDb = /localhost|127\.0\.0\.1/.test(databaseUri)
 const isProduction = process.env.NODE_ENV === 'production'
 
 // R2 is enabled only when credentials exist; otherwise media falls back to ./media on disk (dev).
-const r2Enabled = Boolean(process.env.R2_ACCOUNT_ID && process.env.R2_ACCESS_KEY_ID && process.env.R2_SECRET_ACCESS_KEY)
+const r2Enabled = process.env.R2_ENABLED !== 'false' && Boolean(process.env.R2_ACCOUNT_ID && process.env.R2_ACCESS_KEY_ID && process.env.R2_SECRET_ACCESS_KEY)
 const r2PublicUrl = (process.env.R2_PUBLIC_URL ?? '').replace(/\/$/, '')
 
 export default buildConfig({
@@ -55,6 +56,7 @@ export default buildConfig({
     : undefined,
   sharp,
   collections,
+  globals: [Site],
 
   /**
    * Supabase Postgres via the TRANSACTION pooler (Supavisor, port 6543).

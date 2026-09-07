@@ -74,6 +74,7 @@ export interface Config {
     shows: Show;
     staff: Staff;
     partners: Partner;
+    pages: Page;
     media: Media;
     categories: Category;
     'event-types': EventType;
@@ -94,6 +95,7 @@ export interface Config {
     shows: ShowsSelect<false> | ShowsSelect<true>;
     staff: StaffSelect<false> | StaffSelect<true>;
     partners: PartnersSelect<false> | PartnersSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'event-types': EventTypesSelect<false> | EventTypesSelect<true>;
@@ -110,8 +112,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    site: Site;
+  };
+  globalsSelect: {
+    site: SiteSelect<false> | SiteSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -175,7 +181,12 @@ export interface Post {
   } | null;
   cover?: (number | null) | Media;
   category?: (number | Category)[] | null;
+  author?: (number | null) | User;
   publishedAt?: string | null;
+  /**
+   * Path on the old site, used for 301 redirects.
+   */
+  legacyPath?: string | null;
   /**
    * Optional. Falls back to title and excerpt.
    */
@@ -203,7 +214,6 @@ export interface Media {
    * Filled by the migration.
    */
   legacyUrl?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -259,6 +269,37 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  name: string;
+  role: 'admin' | 'editor';
+  /**
+   * Used by the migration to attribute posts.
+   */
+  legacyLogin?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "events".
  */
 export interface Event {
@@ -288,12 +329,21 @@ export interface Event {
   startDate_tz: SupportedTimezones;
   endDate?: string | null;
   endDate_tz?: SupportedTimezones;
+  /**
+   * E.g. "Luuk van Dijk - Jaden Thompson"
+   */
+  artists?: string | null;
   venueName?: string | null;
+  city?: string | null;
   address?: string | null;
   lat?: number | null;
   lng?: number | null;
   externalUrl?: string | null;
   eventType?: (number | null) | EventType;
+  /**
+   * Path on the old site, used for 301 redirects.
+   */
+  legacyPath?: string | null;
   /**
    * Optional. Falls back to title and excerpt.
    */
@@ -357,6 +407,10 @@ export interface Podcast {
   publishedAt?: string | null;
   filters?: (number | PodcastFilter)[] | null;
   /**
+   * Path on the old site, used for 301 redirects.
+   */
+  legacyPath?: string | null;
+  /**
    * Optional. Falls back to title and excerpt.
    */
   seo?: {
@@ -394,6 +448,7 @@ export interface Show {
    * Leave empty to generate from the title. Lowercase letters, numbers and dashes only.
    */
   slug: string;
+  subtitle?: string | null;
   description?: {
     root: {
       type: string;
@@ -410,7 +465,7 @@ export interface Show {
     [k: string]: unknown;
   } | null;
   cover?: (number | null) | Media;
-  genre?: (number | null) | Genre;
+  genres?: (number | Genre)[] | null;
   hosts?: (number | Staff)[] | null;
   /**
    * Local times (Europe/Rome). Gaps between slots are allowed.
@@ -423,6 +478,10 @@ export interface Show {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Path on the old site, used for 301 redirects.
+   */
+  legacyPath?: string | null;
   /**
    * Optional. Falls back to title and excerpt.
    */
@@ -462,7 +521,7 @@ export interface Staff {
    */
   slug: string;
   /**
-   * TODO: roles missing in the legacy site.
+   * E.g. Founder, Station Manager, Photographer.
    */
   role?: string | null;
   bio?: {
@@ -484,9 +543,14 @@ export interface Staff {
   socials?: {
     instagram?: string | null;
     facebook?: string | null;
+    linkedin?: string | null;
     tiktok?: string | null;
     spotify?: string | null;
   };
+  /**
+   * Path on the old site, used for 301 redirects.
+   */
+  legacyPath?: string | null;
   /**
    * Optional. Falls back to title and excerpt.
    */
@@ -516,34 +580,41 @@ export interface Partner {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "pages".
  */
-export interface User {
+export interface Page {
   id: number;
-  name: string;
-  role: 'admin' | 'editor';
+  title: string;
   /**
-   * Used by the migration to attribute posts.
+   * Leave empty to generate from the title. Lowercase letters, numbers and dashes only.
    */
-  legacyLogin?: string | null;
+  slug: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Optional. Falls back to title and excerpt.
+   */
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    ogImage?: (number | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -686,6 +757,10 @@ export interface PayloadLockedDocument {
         value: number | Partner;
       } | null)
     | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
@@ -762,7 +837,9 @@ export interface PostsSelect<T extends boolean = true> {
   content?: T;
   cover?: T;
   category?: T;
+  author?: T;
   publishedAt?: T;
+  legacyPath?: T;
   seo?:
     | T
     | {
@@ -787,12 +864,15 @@ export interface EventsSelect<T extends boolean = true> {
   startDate_tz?: T;
   endDate?: T;
   endDate_tz?: T;
+  artists?: T;
   venueName?: T;
+  city?: T;
   address?: T;
   lat?: T;
   lng?: T;
   externalUrl?: T;
   eventType?: T;
+  legacyPath?: T;
   seo?:
     | T
     | {
@@ -818,6 +898,7 @@ export interface PodcastsSelect<T extends boolean = true> {
   duration?: T;
   publishedAt?: T;
   filters?: T;
+  legacyPath?: T;
   seo?:
     | T
     | {
@@ -836,9 +917,10 @@ export interface PodcastsSelect<T extends boolean = true> {
 export interface ShowsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  subtitle?: T;
   description?: T;
   cover?: T;
-  genre?: T;
+  genres?: T;
   hosts?: T;
   slots?:
     | T
@@ -848,6 +930,7 @@ export interface ShowsSelect<T extends boolean = true> {
         end?: T;
         id?: T;
       };
+  legacyPath?: T;
   seo?:
     | T
     | {
@@ -874,9 +957,11 @@ export interface StaffSelect<T extends boolean = true> {
     | {
         instagram?: T;
         facebook?: T;
+        linkedin?: T;
         tiktok?: T;
         spotify?: T;
       };
+  legacyPath?: T;
   seo?:
     | T
     | {
@@ -904,13 +989,31 @@ export interface PartnersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  content?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        ogImage?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   legacyUrl?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1099,6 +1202,78 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site".
+ */
+export interface Site {
+  id: number;
+  logo?: (number | null) | Media;
+  heroSlides?:
+    | {
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  claim?: string | null;
+  hashtag?: string | null;
+  licenseText?: string | null;
+  gallery?:
+    | {
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  mbrEventsHero?: (number | null) | Media;
+  mbrEventsPosters?:
+    | {
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  instagram?: string | null;
+  facebook?: string | null;
+  appStoreUrl?: string | null;
+  playStoreUrl?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site_select".
+ */
+export interface SiteSelect<T extends boolean = true> {
+  logo?: T;
+  heroSlides?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  claim?: T;
+  hashtag?: T;
+  licenseText?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  mbrEventsHero?: T;
+  mbrEventsPosters?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  instagram?: T;
+  facebook?: T;
+  appStoreUrl?: T;
+  playStoreUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "collections_widget".
  */
 export interface CollectionsWidget {
@@ -1139,6 +1314,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'partners';
           value: number | Partner;
+        } | null)
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
         } | null);
     global?: string | null;
     user?: (number | null) | User;

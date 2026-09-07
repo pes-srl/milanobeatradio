@@ -14,13 +14,14 @@ export const Shows: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: { it: 'Radio', en: 'Radio' },
-    defaultColumns: ['title', 'genre', 'hosts', '_status'],
+    defaultColumns: ['title', 'genres', 'hosts', '_status'],
   },
   access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
   versions,
   fields: [
     { name: 'title', type: 'text', label: { it: 'Titolo', en: 'Title' }, required: true },
     slugField(),
+    { name: 'subtitle', type: 'text', label: { it: 'Sottotitolo', en: 'Subtitle' } },
     { name: 'description', type: 'richText', label: { it: 'Descrizione', en: 'Description' } },
     {
       name: 'cover',
@@ -30,10 +31,11 @@ export const Shows: CollectionConfig = {
       filterOptions: { mimeType: { contains: 'image' } },
     },
     {
-      name: 'genre',
+      name: 'genres',
       type: 'relationship',
       relationTo: 'genres',
-      label: { it: 'Genere', en: 'Genre' },
+      hasMany: true,
+      label: { it: 'Generi', en: 'Genres' },
       admin: { position: 'sidebar' },
     },
     {
@@ -86,6 +88,13 @@ export const Shows: CollectionConfig = {
           ],
         },
       ],
+    },
+    {
+      name: 'legacyPath',
+      type: 'text',
+      label: { it: 'URL WordPress (legacy)', en: 'Legacy WordPress path' },
+      index: true,
+      admin: { readOnly: true, position: 'sidebar', description: { it: 'Percorso sul vecchio sito, usato per i redirect 301.', en: 'Path on the old site, used for 301 redirects.' } },
     },
     seoField,
   ],

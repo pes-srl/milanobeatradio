@@ -54,7 +54,14 @@ export const Events: CollectionConfig = {
         },
       ],
     },
-    { name: 'venueName', type: 'text', label: { it: 'Luogo', en: 'Venue' } },
+    { name: 'artists', type: 'text', label: { it: 'Artisti / line-up', en: 'Artists / line-up' }, admin: { description: { it: 'Es. "Luuk van Dijk - Jaden Thompson"', en: 'E.g. "Luuk van Dijk - Jaden Thompson"' } } },
+    {
+      type: 'row',
+      fields: [
+        { name: 'venueName', type: 'text', label: { it: 'Luogo', en: 'Venue' }, admin: { width: '60%' } },
+        { name: 'city', type: 'text', label: { it: 'Città', en: 'City' }, defaultValue: 'Milano', admin: { width: '40%' } },
+      ],
+    },
     { name: 'address', type: 'text', label: { it: 'Indirizzo completo', en: 'Full address' } },
     {
       type: 'row',
@@ -70,6 +77,13 @@ export const Events: CollectionConfig = {
       relationTo: 'event-types',
       label: { it: 'Tipo evento', en: 'Event type' },
       admin: { position: 'sidebar' },
+    },
+    {
+      name: 'legacyPath',
+      type: 'text',
+      label: { it: 'URL WordPress (legacy)', en: 'Legacy WordPress path' },
+      index: true,
+      admin: { readOnly: true, position: 'sidebar', description: { it: 'Percorso sul vecchio sito, usato per i redirect 301.', en: 'Path on the old site, used for 301 redirects.' } },
     },
     seoField,
   ],
