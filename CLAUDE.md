@@ -325,6 +325,24 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
 - Formularios: Server Action + Zod + honeypot (`website`) + rate limit en memoria (5/min por IP).
   Sin reCAPTCHA, como pedía el brief. `CONTACT_TO_EMAIL=info@milanobeatradio.it` para ambos.
 
+# ADMIN — tema de marca (decidido 2026-09-08)
+- El panel va SIEMPRE en oscuro (`admin.theme: 'dark'`): el morado de marca está pensado para
+  fondo negro. Logo de Payload sustituido por el de MBR en login y cabecera
+  (`admin.components.graphics.Logo` / `.Icon` → `src/components/admin/`), más favicon propio.
+- El tema NO se hace clase por clase: Payload deriva todos los colores de la rampa
+  `--color-base-0…1000` y la invierte en modo oscuro, así que `app/(payload)/custom.scss`
+  solo reescribe esa rampa (grises con sesgo violeta, hue 280 / sat 9 %), la tipografía
+  (`--font-body` = Poppins) y los radios. Un único punto de verdad.
+- Todo lo que Payload trae vive en `@layer payload-default, payload`, así que basta con
+  escribir reglas sin capa para ganar siempre, sin peleas de especificidad ni `!important`,
+  y sin romperse al actualizar.
+- OJO al escribir selectores propios: en Payload 3.88 NO existe `.nav__link` (comprobado en
+  `styles.css`). Verificar el nombre real de la clase antes de añadir una regla, o queda muerta.
+- `custom.scss` se escribe en CSS plano a propósito: `sass` no es dependencia directa del
+  proyecto, solo transitiva. Si algún día se usa sintaxis SCSS de verdad, hay que añadirla.
+- Poppins se declara con `@font-face` en `custom.scss` porque `app/(payload)/layout.tsx` lo
+  genera Payload y no se debe tocar.
+
 # DESPLIEGUE — estado
 - Supabase: proyecto `MilanoBeatRadio`, ref `kscrbnarievdaaxbbudo`, región eu-west-1 (Irlanda).
   Host del pooler: `aws-1-eu-west-1.pooler.supabase.com`. La app usa SIEMPRE el 6543

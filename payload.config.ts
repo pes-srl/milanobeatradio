@@ -33,12 +33,21 @@ export default buildConfig({
     user: 'users',
     importMap: { baseDir: path.resolve(dirname) },
     dateFormat: 'dd/MM/yyyy HH:mm',
+    // The panel wears the site's own colours (see app/(payload)/custom.scss), so it is
+    // locked to dark: the brand purple is built for a black ground, not a white one.
+    theme: 'dark',
+    components: {
+      graphics: {
+        Logo: '/src/components/admin/Logo#Logo',
+        Icon: '/src/components/admin/Icon#Icon',
+      },
+    },
     timezones: {
       defaultTimezone: 'Europe/Rome',
       // Payload's default list has no Italian timezone: add it in front.
       supportedTimezones: ({ defaultTimezones }) => [{ label: '(GMT+1) Roma / Milano', value: 'Europe/Rome' }, ...defaultTimezones],
     },
-    meta: { titleSuffix: ' · Milano Beat Radio' },
+    meta: { titleSuffix: ' · Milano Beat Radio', icons: [{ rel: 'icon', url: '/mbr-logo.png' }] },
   },
 
   // Admin UI in Italian by default; English available as a fallback.
