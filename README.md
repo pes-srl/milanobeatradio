@@ -25,6 +25,11 @@ brew install postgresql@17
 
 Demo admin user created by the seed: `admin@milanobeatradio.it` (password in `secrets.local.md`, not in git).
 
+To work against the real database instead, point `DATABASE_URI` at the Supabase pooler (port 6543)
+and skip `seed:demo` — the content is already there. Note that this is the **production** database:
+anything edited at `/admin` is live. Forgotten admin password: `pnpm set-password <email> '<new>'`,
+which is the way in until the Resend domain is verified.
+
 ## Scripts
 
 | Script | What it does |
