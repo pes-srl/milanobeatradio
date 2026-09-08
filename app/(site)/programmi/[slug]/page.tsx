@@ -1,3 +1,5 @@
+import { draftMode } from 'next/headers'
+import { DraftBanner } from '@/src/components/site/DraftBanner'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PageHero } from '@/src/components/site/PageHero'
@@ -19,7 +21,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ShowPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const show = await getShow(slug)
+  const isDraft = (await draftMode()).isEnabled
+  const show = await getShow(slug, isDraft)
   if (!show) notFound()
 
   const hosts = (show.hosts ?? []).filter((h): h is Staff => typeof h === 'object')
@@ -27,6 +30,7 @@ export default async function ShowPage({ params }: { params: Promise<{ slug: str
 
   return (
     <>
+      {isDraft && <DraftBanner path={`/programmi/${slug}`} />}
       <PageHero title={show.title} image={show.cover} kicker={genres[0]?.name} kickerColor="white" size="lg">
         {show.subtitle && <p className="mt-4 text-lg italic text-white/90">{show.subtitle}</p>}
       </PageHero>

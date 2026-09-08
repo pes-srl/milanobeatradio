@@ -3,6 +3,7 @@ import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
+import { previewFor } from '@/src/lib/preview'
 import { versions } from './shared'
 
 const rome = { pickerAppearance: 'dayAndTime' as const, displayFormat: 'dd/MM/yyyy HH:mm' }
@@ -15,6 +16,7 @@ export const Events: CollectionConfig = {
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
     defaultColumns: ['title', 'startDate', 'venueName', '_status'],
+    preview: previewFor((slug) => `/eventi/${slug}`),
     description: {
       it: 'Gli eventi in città: lista su /eventi, scheda su /eventi/[slug]. In home compaiono solo quelli non ancora passati.',
       en: 'City events: list at /eventi, detail at /eventi/[slug]. Only upcoming ones appear on the home page.',

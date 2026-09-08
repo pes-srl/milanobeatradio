@@ -3,6 +3,7 @@ import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
+import { previewFor } from '@/src/lib/preview'
 import { dayOfWeekOptions, validateHHMM, versions } from './shared'
 
 /**
@@ -16,6 +17,7 @@ export const Shows: CollectionConfig = {
     useAsTitle: 'title',
     group: { it: 'Radio', en: 'Radio' },
     defaultColumns: ['title', 'genres', 'hosts', '_status'],
+    preview: previewFor((slug) => `/programmi/${slug}`),
     description: {
       it: 'I programmi della radio: palinsesto su /programmi, scheda su /programmi/[slug].',
       en: 'Radio shows: schedule at /programmi, detail at /programmi/[slug].',

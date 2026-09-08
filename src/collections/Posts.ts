@@ -3,6 +3,7 @@ import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
+import { previewFor } from '@/src/lib/preview'
 import { versions } from './shared'
 
 /** FLASH NEWS. Public URL: /flash-news/[slug]. */
@@ -13,6 +14,7 @@ export const Posts: CollectionConfig = {
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
     defaultColumns: ['title', 'category', 'publishedAt', '_status'],
+    preview: previewFor((slug) => `/flash-news/${slug}`),
     description: {
       it: 'Le Flash News. Ogni articolo si pubblica su /flash-news/[slug]; i più recenti appaiono anche in home.',
       en: 'Flash News. Each article is published at /flash-news/[slug]; the latest also appear on the home page.',

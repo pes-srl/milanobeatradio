@@ -1,3 +1,5 @@
+import { draftMode } from 'next/headers'
+import { DraftBanner } from '@/src/components/site/DraftBanner'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PageHero } from '@/src/components/site/PageHero'
@@ -19,7 +21,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function PodcastPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const podcast = await getPodcast(slug)
+  const isDraft = (await draftMode()).isEnabled
+  const podcast = await getPodcast(slug, isDraft)
   if (!podcast) notFound()
 
   const audioFile = typeof podcast.audioFile === 'object' ? podcast.audioFile : null
@@ -28,6 +31,7 @@ export default async function PodcastPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
+      {isDraft && <DraftBanner path={`/podcast/${slug}`} />}
       <PageHero title={podcast.title} image={podcast.cover} kicker={filter?.name} size="lg" uppercase={false} />
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-8">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">

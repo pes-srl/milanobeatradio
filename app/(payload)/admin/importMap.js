@@ -24,6 +24,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { Icon as Icon_b04c0db8d89d68ff5dd20d513b3034b9 } from '../../../src/components/admin/Icon'
 import { Logo as Logo_4522c7900ab0b0df414ce3e1574aaee4 } from '../../../src/components/admin/Logo'
 import { PasswordToggle as PasswordToggle_c8083aa13f30af58068af6c85f7e9b56 } from '../../../src/components/admin/PasswordToggle'
+import { Dashboard as Dashboard_026e3a3f277e8075edcdbe309e80d973 } from '../../../src/components/admin/Dashboard'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -55,6 +56,7 @@ export const importMap = {
   "/src/components/admin/Icon#Icon": Icon_b04c0db8d89d68ff5dd20d513b3034b9,
   "/src/components/admin/Logo#Logo": Logo_4522c7900ab0b0df414ce3e1574aaee4,
   "/src/components/admin/PasswordToggle#PasswordToggle": PasswordToggle_c8083aa13f30af58068af6c85f7e9b56,
+  "/src/components/admin/Dashboard#Dashboard": Dashboard_026e3a3f277e8075edcdbe309e80d973,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

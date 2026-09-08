@@ -1,3 +1,5 @@
+import { draftMode } from 'next/headers'
+import { DraftBanner } from '@/src/components/site/DraftBanner'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PageHero } from '@/src/components/site/PageHero'
@@ -22,13 +24,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const post = await getPost(slug)
+  const isDraft = (await draftMode()).isEnabled
+  const post = await getPost(slug, isDraft)
   if (!post) notFound()
 
   const cat = post.category?.find((c): c is Extract<typeof post.category[number], object> => typeof c === 'object')
 
   return (
     <>
+      {isDraft && <DraftBanner path={`/flash-news/${slug}`} />}
       <PageHero title={post.title} image={post.cover} kicker={cat?.name} size="lg" uppercase={false} />
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-8">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-5">

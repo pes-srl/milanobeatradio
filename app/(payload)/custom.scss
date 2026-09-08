@@ -123,3 +123,87 @@
 .mbr-reveal:hover {
   color: var(--mbr-brand);
 }
+
+// Dashboard panel (src/components/admin/Dashboard.tsx).
+.mbr-dash {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--theme-elevation-100);
+}
+.mbr-dash__label {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--theme-elevation-500);
+}
+.mbr-dash__show {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--theme-text);
+}
+.mbr-dash__show a {
+  color: inherit;
+  text-decoration: none;
+}
+.mbr-dash__show a:hover {
+  color: var(--mbr-brand);
+}
+.mbr-dash__show span {
+  margin-left: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--theme-elevation-600);
+}
+.mbr-dash__show--empty {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--theme-elevation-600);
+}
+.mbr-dash__figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.mbr-dash__figures a {
+  flex: 1 1 180px;
+  padding: 16px 18px;
+  border: 1px solid var(--theme-elevation-100);
+  text-decoration: none;
+  color: inherit;
+}
+.mbr-dash__figures a:hover {
+  border-color: var(--mbr-brand);
+}
+.mbr-dash__figures b {
+  display: block;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--theme-text);
+  font-variant-numeric: tabular-nums;
+}
+.mbr-dash__figures span {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--theme-elevation-600);
+}
+.mbr-dash__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 14px;
+}
+.mbr-dash__links a {
+  color: var(--mbr-brand);
+  text-decoration: none;
+}
+.mbr-dash__links a:hover {
+  text-decoration: underline;
+}

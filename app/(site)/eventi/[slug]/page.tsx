@@ -1,3 +1,5 @@
+import { draftMode } from 'next/headers'
+import { DraftBanner } from '@/src/components/site/DraftBanner'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PageHero } from '@/src/components/site/PageHero'
@@ -19,7 +21,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function EventPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const event = await getEvent(slug)
+  const isDraft = (await draftMode()).isEnabled
+  const event = await getEvent(slug, isDraft)
   if (!event) notFound()
 
   const eventType = typeof event.eventType === 'object' ? event.eventType : null
@@ -27,6 +30,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 
   return (
     <>
+      {isDraft && <DraftBanner path={`/eventi/${slug}`} />}
       <PageHero title={event.title} image={event.cover} kicker={eventType?.name} kickerColor="white" size="lg" uppercase>
         <p className="mt-6 text-lg">{fmtLong(event.startDate)} · {fmtTime(event.startDate)}</p>
         {event.artists && <p className="mt-2 text-brand">{event.artists}</p>}

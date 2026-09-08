@@ -3,6 +3,7 @@ import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
+import { previewFor } from '@/src/lib/preview'
 import { versions } from './shared'
 
 const social = (name: string, label: string) => ({
@@ -20,6 +21,7 @@ export const Staff: CollectionConfig = {
     useAsTitle: 'title',
     group: { it: 'Radio', en: 'Radio' },
     defaultColumns: ['title', 'role', '_status'],
+    preview: previewFor((slug) => `/staff/${slug}`),
     description: {
       it: 'Il team: lista su /staff, scheda su /staff/[slug].',
       en: 'The team: list at /staff, detail at /staff/[slug].',

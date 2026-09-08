@@ -13,11 +13,15 @@ export const Media: CollectionConfig = {
   labels: { singular: { it: 'Media', en: 'Media' }, plural: { it: 'Media', en: 'Media' } },
   admin: {
     group: { it: 'Contenuti', en: 'Content' },
+    listSearchableFields: ['filename', 'alt'],
     description: {
       it: 'Tutte le immagini e gli audio del sito. I file vengono caricati su Cloudflare R2, convertiti in WebP e salvati in tre misure (400, 800 e 1920 px): il sito sceglie da solo quella giusta per ogni schermo.',
       en: 'Every image and audio file on the site. Files are uploaded to Cloudflare R2, converted to WebP and stored in three sizes (400, 800 and 1920 px); the site picks the right one per screen.',
     },
   },
+  // Newest first: an editor almost always wants the file just uploaded, not the oldest
+  // one migrated from WordPress.
+  defaultSort: '-createdAt',
   access: { read: anyone, create: authenticated, update: authenticated, delete: authenticated },
   upload: {
     // Local fallback dir (git-ignored). Ignored when the S3 adapter is enabled.

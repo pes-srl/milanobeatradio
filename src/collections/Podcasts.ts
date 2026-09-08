@@ -3,6 +3,7 @@ import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
+import { previewFor } from '@/src/lib/preview'
 import { versions } from './shared'
 
 /**
@@ -20,6 +21,7 @@ export const Podcasts: CollectionConfig = {
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
     defaultColumns: ['title', 'filters', 'publishedAt', '_status'],
+    preview: previewFor((slug) => `/podcast/${slug}`),
     description: {
       it: 'Le interviste. Scheda su /podcast/[slug]; la pagina /interviste è questa stessa lista filtrata.',
       en: 'Podcasts. Detail at /podcast/[slug]; the /interviste page is this same list, filtered.',

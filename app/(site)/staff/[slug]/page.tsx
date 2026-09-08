@@ -1,3 +1,5 @@
+import { draftMode } from 'next/headers'
+import { DraftBanner } from '@/src/components/site/DraftBanner'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PageHero } from '@/src/components/site/PageHero'
@@ -18,11 +20,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function StaffMemberPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const member = await getStaffMember(slug)
+  const isDraft = (await draftMode()).isEnabled
+  const member = await getStaffMember(slug, isDraft)
   if (!member) notFound()
 
   return (
     <>
+      {isDraft && <DraftBanner path={`/staff/${slug}`} />}
       <PageHero title={member.title} image={member.photo} kicker={member.role ?? undefined} kickerColor="white" size="lg" uppercase>
         <div className="mt-6"><SocialLinks socials={member.socials} /></div>
       </PageHero>

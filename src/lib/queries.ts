@@ -1,7 +1,20 @@
-import type { Where } from 'payload'
+import type { CollectionSlug, Where } from 'payload'
 import { payloadClient } from './payload'
 
 const live = { _status: { equals: 'published' } } as const
+
+/**
+ * One document by slug. With `draft` (the admin "Anteprima" button, via Next draft mode)
+ * the newest version is returned instead of the published one, so an editor can see an
+ * unpublished piece before it goes out. Access is overridden only on that path: the
+ * request comes from the site, which has no Payload session of its own.
+ */
+async function bySlug<T extends CollectionSlug>(collection: T, slug: string, draft: boolean) {
+  const payload = await payloadClient()
+  const where: Where = draft ? { slug: { equals: slug } } : { and: [live, { slug: { equals: slug } }] }
+  const res = await payload.find({ collection, where, limit: 1, depth: 2, draft, overrideAccess: draft })
+  return res.docs[0] ?? null
+}
 
 export async function getSite() {
   const payload = await payloadClient()
@@ -15,10 +28,8 @@ export async function getPosts(opts: { limit?: number; page?: number; category?:
   return payload.find({ collection: 'posts', where, sort: '-publishedAt', limit: opts.limit ?? 12, page: opts.page ?? 1, depth: 1 })
 }
 
-export async function getPost(slug: string) {
-  const payload = await payloadClient()
-  const res = await payload.find({ collection: 'posts', where: { and: [live, { slug: { equals: slug } }] }, limit: 1, depth: 2 })
-  return res.docs[0] ?? null
+export async function getPost(slug: string, draft = false) {
+  return bySlug('posts', slug, draft)
 }
 
 export async function getEvents(opts: { upcoming?: boolean; limit?: number } = {}) {
@@ -28,10 +39,8 @@ export async function getEvents(opts: { upcoming?: boolean; limit?: number } = {
   return payload.find({ collection: 'events', where, sort: opts.upcoming ? 'startDate' : '-startDate', limit: opts.limit ?? 20, depth: 1 })
 }
 
-export async function getEvent(slug: string) {
-  const payload = await payloadClient()
-  const res = await payload.find({ collection: 'events', where: { and: [live, { slug: { equals: slug } }] }, limit: 1, depth: 2 })
-  return res.docs[0] ?? null
+export async function getEvent(slug: string, draft = false) {
+  return bySlug('events', slug, draft)
 }
 
 export async function getPodcasts(opts: { filter?: string; limit?: number; page?: number } = {}) {
@@ -41,10 +50,8 @@ export async function getPodcasts(opts: { filter?: string; limit?: number; page?
   return payload.find({ collection: 'podcasts', where, sort: '-publishedAt', limit: opts.limit ?? 12, page: opts.page ?? 1, depth: 1 })
 }
 
-export async function getPodcast(slug: string) {
-  const payload = await payloadClient()
-  const res = await payload.find({ collection: 'podcasts', where: { and: [live, { slug: { equals: slug } }] }, limit: 1, depth: 2 })
-  return res.docs[0] ?? null
+export async function getPodcast(slug: string, draft = false) {
+  return bySlug('podcasts', slug, draft)
 }
 
 export async function getShows() {
@@ -52,10 +59,8 @@ export async function getShows() {
   return payload.find({ collection: 'shows', where: live, sort: 'title', limit: 50, depth: 1 })
 }
 
-export async function getShow(slug: string) {
-  const payload = await payloadClient()
-  const res = await payload.find({ collection: 'shows', where: { and: [live, { slug: { equals: slug } }] }, limit: 1, depth: 2 })
-  return res.docs[0] ?? null
+export async function getShow(slug: string, draft = false) {
+  return bySlug('shows', slug, draft)
 }
 
 export async function getStaff() {
@@ -63,10 +68,8 @@ export async function getStaff() {
   return payload.find({ collection: 'staff', where: live, sort: 'createdAt', limit: 50, depth: 1 })
 }
 
-export async function getStaffMember(slug: string) {
-  const payload = await payloadClient()
-  const res = await payload.find({ collection: 'staff', where: { and: [live, { slug: { equals: slug } }] }, limit: 1, depth: 2 })
-  return res.docs[0] ?? null
+export async function getStaffMember(slug: string, draft = false) {
+  return bySlug('staff', slug, draft)
 }
 
 export async function getPartners() {
@@ -74,8 +77,6 @@ export async function getPartners() {
   return payload.find({ collection: 'partners', where: { and: [live, { active: { equals: true } }] }, sort: '_order', limit: 50, depth: 1 })
 }
 
-export async function getPage(slug: string) {
-  const payload = await payloadClient()
-  const res = await payload.find({ collection: 'pages', where: { and: [live, { slug: { equals: slug } }] }, limit: 1, depth: 2 })
-  return res.docs[0] ?? null
+export async function getPage(slug: string, draft = false) {
+  return bySlug('pages', slug, draft)
 }

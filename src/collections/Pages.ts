@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { authenticated, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
+import { previewFor } from '@/src/lib/preview'
 import { versions } from './shared'
 
 /**
@@ -16,6 +17,7 @@ export const Pages: CollectionConfig = {
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
     defaultColumns: ['title', 'slug', '_status'],
+    preview: previewFor((slug) => `/${slug}`),
     description: {
       it: 'Pagine di solo testo, come la privacy policy. Si pubblicano su /[slug].',
       en: 'Plain text pages, such as the privacy policy. Published at /[slug].',

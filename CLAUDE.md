@@ -343,6 +343,20 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
 - Poppins se declara con `@font-face` en `custom.scss` porque `app/(payload)/layout.tsx` lo
   genera Payload y no se debe tocar.
 
+# ANTEPRIMA DE BORRADORES (decidido 2026-09-08)
+- Botón "Anteprima" en posts, events, podcasts, shows, staff y pages (`admin.preview` +
+  `previewFor()` en `src/lib/preview.ts`). Apunta a `app/(site)/api/preview`, que enciende el
+  draft mode de Next y redirige a la página real.
+- Las consultas por slug (`bySlug` en `src/lib/queries.ts`) aceptan `draft`: con él se quita el
+  filtro `_status: published`, se pasa `draft: true` y se usa `overrideAccess` (la petición llega
+  desde el sitio, que no tiene sesión de Payload propia). Sin `draft` NO cambia nada.
+- Dos guardas en la ruta, ambas probadas: sin sesión de Payload devuelve 401, y `path` tiene que
+  ser relativo (`https://…` → 400) o el botón sería un redirect abierto.
+- `DraftBanner` + `/api/preview/exit`: sin eso el draft mode se queda encendido en el navegador
+  del editor sin avisar y confundiría un borrador con una página publicada.
+- NO se usó el live preview con iframe de Payload: exige `RefreshRouteOnSave` en cada página del
+  sitio y sin eso el panel muestra un iframe que no se actualiza, que es peor que no tenerlo.
+
 # DESPLIEGUE — estado
 - Supabase: proyecto `MilanoBeatRadio`, ref `kscrbnarievdaaxbbudo`, región eu-west-1 (Irlanda).
   Host del pooler: `aws-1-eu-west-1.pooler.supabase.com`. La app usa SIEMPRE el 6543
