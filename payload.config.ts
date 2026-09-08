@@ -41,6 +41,7 @@ export default buildConfig({
         Logo: '/src/components/admin/Logo#Logo',
         Icon: '/src/components/admin/Icon#Icon',
       },
+      afterLogin: ['/src/components/admin/PasswordToggle#PasswordToggle'],
     },
     timezones: {
       defaultTimezone: 'Europe/Rome',

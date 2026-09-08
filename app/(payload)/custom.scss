@@ -90,22 +90,36 @@
   --hover-color: #ffffff;
 }
 
-// Brand mark, shown by src/components/admin/Logo.tsx and Icon.tsx.
+// Brand mark, shown by src/components/admin/Logo.tsx and Icon.tsx. The logo is the
+// only thing above the login form now, so it carries the screen on its own.
 .mbr-brand {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
+  justify-content: center;
 }
-.mbr-brand span {
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--theme-text);
+.mbr-brand img {
+  width: min(260px, 60vw);
+  height: auto;
 }
-.mbr-brand img,
 .mbr-icon {
   height: auto;
+}
+
+// Reveal button injected into the password field by PasswordToggle.tsx.
+.mbr-reveal {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--theme-elevation-500);
+  cursor: pointer;
+}
+.mbr-reveal:hover {
+  color: var(--mbr-brand);
 }
