@@ -19,7 +19,7 @@ cuando no es secreto, y de dónde sale.
 | `CONTACT_TO_EMAIL` | `info@milanobeatradio.it` | Destino de los formularios contatti y promuoviti. |
 | `NEXT_PUBLIC_AZURACAST_BASE` | `https://canali.pesstream.eu` | |
 | `NEXT_PUBLIC_AZURACAST_STATION` | `mbr` | |
-| `NEXT_PUBLIC_SITE_URL` | `https://milanobeatradio.it` | En Preview puede quedarse igual. |
+| `NEXT_PUBLIC_SITE_URL` | *(dejar SIN definir hasta el cambio de dominio)* | Mientras el sitio viva en la URL de Vercel, **no la pongas**: sin ella el código usa la URL del propio despliegue. Si la fijas a `https://milanobeatradio.it` antes de tiempo, el sitemap, las URLs canónicas y el botón «Anteprima» del panel apuntarán al WordPress viejo. El día del cambio de dominio, ponla. |
 
 Build command en Vercel (cuando Supabase tenga la contraseña): `pnpm migrate && pnpm build`.
 
