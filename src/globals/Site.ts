@@ -13,7 +13,13 @@ const image = (name: string, label: { it: string; en: string }) => ({
 export const Site: GlobalConfig = {
   slug: 'site',
   label: { it: 'Impostazioni sito', en: 'Site settings' },
-  admin: { group: { it: 'Sistema', en: 'System' } },
+  admin: {
+    group: { it: 'Sistema', en: 'System' },
+    description: {
+      it: 'Logo, claim, immagini della home e link social: vale per tutto il sito, non è contenuto editoriale.',
+      en: 'Logo, claim, home page images and social links: site-wide settings, not editorial content.',
+    },
+  },
   access: { read: anyone, update: authenticated },
   fields: [
     {

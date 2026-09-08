@@ -2,9 +2,9 @@ import type { Field } from 'payload'
 
 /**
  * Engagement counters carried over from the Pro.Radio theme (`proradio_reaktions_*`).
- * These are historical totals from the WordPress site: the migration fills them once so
- * the numbers shown on cards match what readers saw before. They are editable but not
- * incremented automatically — live counting is a separate decision (see TASKS-HUMANAS.md).
+ * The migration seeds them with the WordPress totals so the numbers on the cards keep
+ * their history, and app/(site)/api/stats/route.ts increments them live from then on.
+ * Editable here, but rarely worth touching by hand.
  */
 export const statsField: Field = {
   name: 'stats',
@@ -13,8 +13,8 @@ export const statsField: Field = {
   admin: {
     position: 'sidebar',
     description: {
-      it: 'Contatori storici importati da WordPress. Non si aggiornano da soli.',
-      en: 'Historical counters imported from WordPress. Not incremented automatically.',
+      it: 'Partono dai numeri importati da WordPress e da lì crescono da soli con le visite reali. Si possono correggere a mano, ma raramente serve.',
+      en: 'Seeded with the WordPress totals, then incremented live by real visits. Editable by hand, but rarely worth it.',
     },
   },
   fields: [

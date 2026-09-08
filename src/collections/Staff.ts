@@ -20,6 +20,10 @@ export const Staff: CollectionConfig = {
     useAsTitle: 'title',
     group: { it: 'Radio', en: 'Radio' },
     defaultColumns: ['title', 'role', '_status'],
+    description: {
+      it: 'Il team: lista su /staff, scheda su /staff/[slug].',
+      en: 'The team: list at /staff, detail at /staff/[slug].',
+    },
   },
   access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
   versions,

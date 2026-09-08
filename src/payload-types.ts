@@ -153,6 +153,8 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Flash News. Each article is published at /flash-news/[slug]; the latest also appear on the home page.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
@@ -184,7 +186,7 @@ export interface Post {
   author?: (number | null) | User;
   publishedAt?: string | null;
   /**
-   * Historical counters imported from WordPress. Not incremented automatically.
+   * Seeded with the WordPress totals, then incremented live by real visits. Editable by hand, but rarely worth it.
    */
   stats?: {
     views?: number | null;
@@ -208,6 +210,8 @@ export interface Post {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Every image and audio file on the site. Files are uploaded to Cloudflare R2, converted to WebP and stored in three sizes (400, 800 and 1920 px); the site picks the right one per screen.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -262,6 +266,8 @@ export interface Media {
   };
 }
 /**
+ * Flash News categories. Shown as the label on each card, and used to group articles.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
  */
@@ -277,6 +283,8 @@ export interface Category {
   createdAt: string;
 }
 /**
+ * Who can sign in to this panel. Administrator: full access, users included. Editor: content only.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -308,6 +316,8 @@ export interface User {
   collection: 'users';
 }
 /**
+ * City events: list at /eventi, detail at /eventi/[slug]. Only upcoming ones appear on the home page.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "events".
  */
@@ -350,7 +360,7 @@ export interface Event {
   externalUrl?: string | null;
   eventType?: (number | null) | EventType;
   /**
-   * Historical counters imported from WordPress. Not incremented automatically.
+   * Seeded with the WordPress totals, then incremented live by real visits. Editable by hand, but rarely worth it.
    */
   stats?: {
     views?: number | null;
@@ -374,6 +384,8 @@ export interface Event {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Used to tell event types apart on the /eventi page.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "event-types".
  */
@@ -389,6 +401,8 @@ export interface EventType {
   createdAt: string;
 }
 /**
+ * Podcasts. Detail at /podcast/[slug]; the /interviste page is this same list, filtered.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "podcasts".
  */
@@ -424,7 +438,7 @@ export interface Podcast {
   publishedAt?: string | null;
   filters?: (number | PodcastFilter)[] | null;
   /**
-   * Historical counters imported from WordPress. Not incremented automatically.
+   * Seeded with the WordPress totals, then incremented live by real visits. Editable by hand, but rarely worth it.
    */
   stats?: {
     views?: number | null;
@@ -448,6 +462,8 @@ export interface Podcast {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Podcast filters. The one named «intervista» is what feeds the /interviste page: do not delete it.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "podcast-filters".
  */
@@ -463,6 +479,8 @@ export interface PodcastFilter {
   createdAt: string;
 }
 /**
+ * Radio shows: schedule at /programmi, detail at /programmi/[slug].
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "shows".
  */
@@ -504,7 +522,7 @@ export interface Show {
       }[]
     | null;
   /**
-   * Historical counters imported from WordPress. Not incremented automatically.
+   * Seeded with the WordPress totals, then incremented live by real visits. Editable by hand, but rarely worth it.
    */
   stats?: {
     views?: number | null;
@@ -528,6 +546,8 @@ export interface Show {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Musical genres of the shows. Shown as the label on each show card.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "genres".
  */
@@ -543,6 +563,8 @@ export interface Genre {
   createdAt: string;
 }
 /**
+ * The team: list at /staff, detail at /staff/[slug].
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "staff".
  */
@@ -581,7 +603,7 @@ export interface Staff {
     spotify?: string | null;
   };
   /**
-   * Historical counters imported from WordPress. Not incremented automatically.
+   * Seeded with the WordPress totals, then incremented live by real visits. Editable by hand, but rarely worth it.
    */
   stats?: {
     views?: number | null;
@@ -605,6 +627,8 @@ export interface Staff {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Logos shown on the home page and Chi siamo. Drag rows to reorder. Unticking «Active» hides one without deleting it.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "partners".
  */
@@ -620,6 +644,8 @@ export interface Partner {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Plain text pages, such as the privacy policy. Published at /[slug].
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
@@ -1278,6 +1304,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Logo, claim, home page images and social links: site-wide settings, not editorial content.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site".
  */

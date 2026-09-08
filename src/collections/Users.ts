@@ -24,7 +24,15 @@ export const Users: CollectionConfig = {
     maxLoginAttempts: 5,
     lockTime: 15 * 60 * 1000,
   },
-  admin: { useAsTitle: 'email', group: { it: 'Sistema', en: 'System' }, defaultColumns: ['name', 'email', 'role'] },
+  admin: {
+    useAsTitle: 'email',
+    group: { it: 'Sistema', en: 'System' },
+    defaultColumns: ['name', 'email', 'role'],
+    description: {
+      it: 'Chi può entrare in questo pannello. Amministratore: accesso completo, utenti compresi. Editore: solo i contenuti.',
+      en: 'Who can sign in to this panel. Administrator: full access, users included. Editor: content only.',
+    },
+  },
   access: {
     read: selfOrAdmin,
     create: isAdmin,

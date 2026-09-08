@@ -13,6 +13,10 @@ export const Posts: CollectionConfig = {
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
     defaultColumns: ['title', 'category', 'publishedAt', '_status'],
+    description: {
+      it: 'Le Flash News. Ogni articolo si pubblica su /flash-news/[slug]; i più recenti appaiono anche in home.',
+      en: 'Flash News. Each article is published at /flash-news/[slug]; the latest also appear on the home page.',
+    },
   },
   access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
   versions,

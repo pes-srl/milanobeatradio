@@ -16,6 +16,10 @@ export const Shows: CollectionConfig = {
     useAsTitle: 'title',
     group: { it: 'Radio', en: 'Radio' },
     defaultColumns: ['title', 'genres', 'hosts', '_status'],
+    description: {
+      it: 'I programmi della radio: palinsesto su /programmi, scheda su /programmi/[slug].',
+      en: 'Radio shows: schedule at /programmi, detail at /programmi/[slug].',
+    },
   },
   access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
   versions,

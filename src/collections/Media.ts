@@ -11,7 +11,13 @@ const webp = (quality: number) => ({ format: 'webp' as const, options: { quality
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: { singular: { it: 'Media', en: 'Media' }, plural: { it: 'Media', en: 'Media' } },
-  admin: { group: { it: 'Contenuti', en: 'Content' } },
+  admin: {
+    group: { it: 'Contenuti', en: 'Content' },
+    description: {
+      it: 'Tutte le immagini e gli audio del sito. I file vengono caricati su Cloudflare R2, convertiti in WebP e salvati in tre misure (400, 800 e 1920 px): il sito sceglie da solo quella giusta per ogni schermo.',
+      en: 'Every image and audio file on the site. Files are uploaded to Cloudflare R2, converted to WebP and stored in three sizes (400, 800 and 1920 px); the site picks the right one per screen.',
+    },
+  },
   access: { read: anyone, create: authenticated, update: authenticated, delete: authenticated },
   upload: {
     // Local fallback dir (git-ignored). Ignored when the S3 adapter is enabled.

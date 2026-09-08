@@ -11,6 +11,10 @@ export const Partners: CollectionConfig = {
     useAsTitle: 'name',
     group: { it: 'Radio', en: 'Radio' },
     defaultColumns: ['name', 'url', 'active', '_status'],
+    description: {
+      it: 'I loghi mostrati in home e in Chi siamo. Si riordinano trascinando le righe. Togliendo «Attivo» spariscono dal sito senza cancellarli.',
+      en: 'Logos shown on the home page and Chi siamo. Drag rows to reorder. Unticking «Active» hides one without deleting it.',
+    },
   },
   access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
   versions,

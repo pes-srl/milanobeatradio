@@ -15,6 +15,10 @@ export const Events: CollectionConfig = {
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
     defaultColumns: ['title', 'startDate', 'venueName', '_status'],
+    description: {
+      it: 'Gli eventi in città: lista su /eventi, scheda su /eventi/[slug]. In home compaiono solo quelli non ancora passati.',
+      en: 'City events: list at /eventi, detail at /eventi/[slug]. Only upcoming ones appear on the home page.',
+    },
   },
   access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
   versions,

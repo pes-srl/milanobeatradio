@@ -20,6 +20,10 @@ export const Podcasts: CollectionConfig = {
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
     defaultColumns: ['title', 'filters', 'publishedAt', '_status'],
+    description: {
+      it: 'Le interviste. Scheda su /podcast/[slug]; la pagina /interviste è questa stessa lista filtrata.',
+      en: 'Podcasts. Detail at /podcast/[slug]; the /interviste page is this same list, filtered.',
+    },
   },
   access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
   versions,

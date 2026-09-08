@@ -12,7 +12,15 @@ import { versions } from './shared'
 export const Pages: CollectionConfig = {
   slug: 'pages',
   labels: { singular: { it: 'Pagina', en: 'Page' }, plural: { it: 'Pagine', en: 'Pages' } },
-  admin: { useAsTitle: 'title', group: { it: 'Contenuti', en: 'Content' }, defaultColumns: ['title', 'slug', '_status'] },
+  admin: {
+    useAsTitle: 'title',
+    group: { it: 'Contenuti', en: 'Content' },
+    defaultColumns: ['title', 'slug', '_status'],
+    description: {
+      it: 'Pagine di solo testo, come la privacy policy. Si pubblicano su /[slug].',
+      en: 'Plain text pages, such as the privacy policy. Published at /[slug].',
+    },
+  },
   access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
   versions,
   fields: [
