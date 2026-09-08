@@ -30,7 +30,7 @@
   build de producción + lint + typecheck en verde.
 
 ### Qué FALTA (por orden de importancia)
-1. **Desplegar en Vercel.** Repo de trabajo: github.com/pes-srl/mbr (privado, propiedad del cliente).
+1. **Desplegar en Vercel.** Repo de trabajo: github.com/PES-SRL-Organization/milanobeatradio (privado, propiedad del cliente).
    Copia histórica en github.com/mirkodgzconsulting/milanobeatradio.
    Falta importarlo en Vercel (plan Pro: hay sponsors, es uso comercial), pegar las variables de
    VERCEL-ENV.md y poner como build command `pnpm migrate && pnpm build`.
@@ -365,7 +365,7 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
 - Migración de datos: `pg_dump --data-only` + carga en una sola transacción. OJO: `--disable-triggers`
   NO funciona en Supabase (requiere superusuario). Tras cargar hay que reajustar las secuencias de
   id con `setval`, o el primer alta desde el admin falla por clave duplicada.
-- Repo: github.com/pes-srl/mbr (privado, del cliente). Verificado antes de subir que
+- Repo: github.com/PES-SRL-Organization/milanobeatradio (privado, del cliente). Verificado antes de subir que
   ni `.env*` ni `secrets.local.md` ni ningún secreto está en el historial.
 
 # CONTADORES EN VIVO (vistas / like / share) — decisiones
