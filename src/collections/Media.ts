@@ -14,6 +14,14 @@ export const Media: CollectionConfig = {
   admin: {
     group: { it: 'Contenuti', en: 'Content' },
     listSearchableFields: ['filename', 'alt'],
+    components: {
+      // A grid of thumbnails, ADDED next to Payload's table rather than replacing it:
+      // the table keeps filters, column choice and bulk upload. See MediaGrid.tsx.
+      views: {
+        grid: { Component: '/src/components/admin/MediaGrid#MediaGrid', path: '/grid', exact: true },
+        list: { actions: ['/src/components/admin/MediaGridLink#MediaGridLink'] },
+      },
+    },
     description: {
       it: 'Tutte le immagini e gli audio del sito. I file vengono caricati su Cloudflare R2, convertiti in WebP e salvati in tre misure (400, 800 e 1920 px): il sito sceglie da solo quella giusta per ogni schermo.',
       en: 'Every image and audio file on the site. Files are uploaded to Cloudflare R2, converted to WebP and stored in three sizes (400, 800 and 1920 px); the site picks the right one per screen.',

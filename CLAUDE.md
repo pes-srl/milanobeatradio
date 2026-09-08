@@ -408,6 +408,20 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
 - Poppins se declara con `@font-face` en `custom.scss` porque `app/(payload)/layout.tsx` lo
   genera Payload y no se debe tocar.
 
+# MEDIATECA — vista en cuadrícula (decidido 2026-09-08)
+- Payload 3.88 NO trae conmutador lista/cuadrícula: comprobado en el panel real, la cabecera solo
+  tiene "Caricamento in Blocco", "Colonne" y "Filtri". Las clases `grid-view` que hay en su CSS
+  son de otra pantalla.
+- Se AÑADE una vista propia en `/admin/collections/media/grid` (`admin.components.views.grid`),
+  NO se sustituye la tabla. Sustituirla obligaría a reimplementar filtros, selección, columnas y
+  subida en bloque, y a mantenerlo funcionando en cada actualización de Payload.
+  Se salta de una a otra con un enlace en cada cabecera (`views.list.actions`).
+- `object-fit: contain`, no `cover`: recortar cortaba el texto de los logos de los partner, y el
+  sentido de esta vista es reconocer el archivo de un vistazo.
+- Las miniaturas se sirven con `<img>` normal, no `next/image`: ya son WebP de 400 px en R2 y es
+  una herramienta interna; pasarlas por el optimizador costaría dinero sin ganar nada.
+- Padding lateral con `--gutter-h-left/right`: Payload no aplica gutter a las vistas propias.
+
 # ANTEPRIMA DE BORRADORES (decidido 2026-09-08)
 - Botón "Anteprima" en posts, events, podcasts, shows, staff y pages (`admin.preview` +
   `previewFor()` en `src/lib/preview.ts`). Apunta a `app/(site)/api/preview`, que enciende el

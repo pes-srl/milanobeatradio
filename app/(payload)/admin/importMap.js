@@ -21,6 +21,8 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { MediaGridLink as MediaGridLink_90949724db9743d7b2c198f615c9dec0 } from '../../../src/components/admin/MediaGridLink'
+import { MediaGrid as MediaGrid_62e5c8eefe6e5bfcb6cabcb544f307c2 } from '../../../src/components/admin/MediaGrid'
 import { Icon as Icon_b04c0db8d89d68ff5dd20d513b3034b9 } from '../../../src/components/admin/Icon'
 import { Logo as Logo_4522c7900ab0b0df414ce3e1574aaee4 } from '../../../src/components/admin/Logo'
 import { PasswordToggle as PasswordToggle_c8083aa13f30af58068af6c85f7e9b56 } from '../../../src/components/admin/PasswordToggle'
@@ -53,6 +55,8 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#UnderlineFeatureClient": UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
+  "/src/components/admin/MediaGridLink#MediaGridLink": MediaGridLink_90949724db9743d7b2c198f615c9dec0,
+  "/src/components/admin/MediaGrid#MediaGrid": MediaGrid_62e5c8eefe6e5bfcb6cabcb544f307c2,
   "/src/components/admin/Icon#Icon": Icon_b04c0db8d89d68ff5dd20d513b3034b9,
   "/src/components/admin/Logo#Logo": Logo_4522c7900ab0b0df414ce3e1574aaee4,
   "/src/components/admin/PasswordToggle#PasswordToggle": PasswordToggle_c8083aa13f30af58068af6c85f7e9b56,

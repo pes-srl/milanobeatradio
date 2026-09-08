@@ -207,3 +207,153 @@
 .mbr-dash__links a:hover {
   text-decoration: underline;
 }
+
+// Media grid view (src/components/admin/MediaGrid.tsx), at /admin/collections/media/grid.
+.mbr-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  // Payload gutters its own views through these variables; a custom view gets none,
+  // so the first column would sit flush against the window edge.
+  padding: 0 var(--gutter-h-right, 3rem) 60px var(--gutter-h-left, 3rem);
+}
+.mbr-grid__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+.mbr-grid__head h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--theme-text);
+}
+.mbr-grid__head p {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--theme-elevation-500);
+}
+.mbr-grid__alt {
+  padding: 7px 14px;
+  border: 1px solid var(--theme-elevation-150);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--theme-text);
+  white-space: nowrap;
+}
+.mbr-grid__alt:hover {
+  border-color: var(--mbr-brand);
+  color: var(--mbr-brand);
+}
+.mbr-grid__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.mbr-grid__tools input[type='search'] {
+  flex: 1 1 260px;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid var(--theme-elevation-150);
+  background: var(--theme-input-bg);
+  color: var(--theme-text);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+.mbr-grid__tools button {
+  padding: 9px 16px;
+  border: 0;
+  background: var(--mbr-brand);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.mbr-grid__kinds {
+  display: flex;
+  gap: 4px;
+}
+.mbr-grid__kinds a {
+  padding: 8px 14px;
+  border: 1px solid var(--theme-elevation-150);
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--theme-elevation-600);
+}
+.mbr-grid__kinds a.is-on {
+  border-color: var(--mbr-brand);
+  color: var(--mbr-brand);
+}
+.mbr-grid__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mbr-grid__items a {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+.mbr-grid__frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid var(--theme-elevation-100);
+  background: var(--theme-elevation-50);
+}
+.mbr-grid__items a:hover .mbr-grid__frame {
+  border-color: var(--mbr-brand);
+}
+.mbr-grid__frame img {
+  width: 100%;
+  height: 100%;
+  // `contain`, not `cover`: the point of this view is recognising a file at a glance,
+  // and cropping cut the wordmarks off the partner logos.
+  object-fit: contain;
+}
+.mbr-grid__ext {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--theme-elevation-500);
+}
+.mbr-grid__name {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--theme-elevation-600);
+  overflow-wrap: anywhere;
+}
+.mbr-grid__items a:hover .mbr-grid__name {
+  color: var(--theme-text);
+}
+.mbr-grid__empty {
+  color: var(--theme-elevation-500);
+}
+.mbr-grid__pager {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 14px;
+}
+.mbr-grid__pager a {
+  color: var(--mbr-brand);
+  text-decoration: none;
+}
+.mbr-grid__pager span {
+  color: var(--theme-elevation-400);
+}
+.mbr-grid__count {
+  font-variant-numeric: tabular-nums;
+}
