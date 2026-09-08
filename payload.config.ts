@@ -16,6 +16,25 @@ import { Site } from './src/globals/Site'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+/**
+ * Fail with the name of what is missing. Payload's own error for a blank secret is
+ * "missing secret key", which says nothing about WHERE to fix it — on a hosting
+ * dashboard that costs a build and a guess. A variable declared but left empty counts
+ * as missing here, because that is what actually happens when a value is pasted wrong.
+ */
+function requireEnv(names: string[]) {
+  const missing = names.filter((n) => !process.env[n]?.trim())
+  if (missing.length > 0) {
+    throw new Error(
+      `Variabili d'ambiente mancanti o vuote: ${missing.join(', ')}. ` +
+        'Su Vercel: Settings → Environment Variables (Production e Preview), poi Redeploy. ' +
+        'In locale: .env.local. I valori sono elencati in VERCEL-ENV.md.',
+    )
+  }
+}
+
+requireEnv(['DATABASE_URI', 'PAYLOAD_SECRET'])
+
 const databaseUri = process.env.DATABASE_URI ?? ''
 const isLocalDb = /localhost|127\.0\.0\.1/.test(databaseUri)
 const isProduction = process.env.NODE_ENV === 'production'
