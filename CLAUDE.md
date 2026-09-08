@@ -3,7 +3,17 @@
 > Este archivo es la memoria persistente del proyecto entre sesiones.
 > Léelo entero antes de tocar nada. Si una decisión no está aquí, PREGUNTA, no improvises.
 
-## ESTADO ACTUAL — actualizado 2026-09-07
+## ESTADO ACTUAL — actualizado 2026-09-08
+
+### EN LÍNEA, en dominio temporal
+**https://milanobeatradio-lake.vercel.app** — desplegado y verificado el 2026-09-08.
+El sitio viejo de WordPress SIGUE SIENDO el de producción en milanobeatradio.it: todavía no
+se ha tocado nada del dominio real.
+
+**Cómo se trabaja durante estas semanas (acordado con el cliente el 2026-09-08):**
+Cristian (el propietario) prueba el sitio en la URL temporal todo el tiempo que necesite.
+Cuando dé el visto bueno, avisa a Mirko y ENTONCES se conecta el dominio real. Hasta ese
+aviso, NO se toca el DNS de milanobeatradio.it ni se pone `NEXT_PUBLIC_SITE_URL`.
 
 ### Qué está HECHO y verificado
 - **Fase 0** — scaffold Next 16.3.4 + Payload 3.88 + Postgres + R2, 12 colecciones, Site global,
@@ -12,43 +22,96 @@
   real (`migration/reference/`, no versionado). Color de marca morado #C824E3.
 - **Fase 2** — import real del XML: 122 Flash News · 5 eventi · 14 podcast · 6 show con
   palinsesto real · 6 staff · 11 partner · 1 pagina (privacy). Solo `publish`, borradores ignorados.
-- **Fase 3** — mediateca completa en R2: 407 documentos de imagen + los 14 MP3 de los podcast
-  (217 MB) movidos del WordPress viejo. Ya nada del sitio depende del servidor antiguo.
+- **Fase 3** — mediateca completa en R2: 421 archivos (318 MB), incluidos los 14 MP3 de los
+  podcast. Ya nada del sitio depende del servidor antiguo.
 - **Fase 4 (parcial)** — formularios contatti/promuoviti (Server Actions + Zod + honeypot +
   rate limit + Resend), sitemap.xml (164 URLs) y robots.txt.
 - **Fase 5 — redirecciones.** `proxy.ts` sirve 149 redirects 308 y 37 páginas con 410, más el
   borrado del parámetro `?swcfpc=1`. El mapa (`src/redirects.generated.json`) lo genera
   `pnpm generate:redirects` desde `legacyPath` de la base de datos, nunca a mano: hay que
   regenerarlo y commitearlo tras cualquier import o cambio de slug.
-  Verificado una por una: 149/149 redirecciones y 37/37 páginas 410, sin bucles.
+  Verificado una por una: 149/149 redirecciones y 37/37 páginas 410, sin bucles. Recomprobado
+  a muestra sobre el despliegue real de Vercel.
+- **Fase 6 — despliegue.** Repo en GitHub, proyecto en Vercel, sitio en línea. Ver abajo.
+- **Panel de admin con la identidad de MBR**: tema oscuro morado, logo propio, ojo para mostrar
+  la contraseña, panel de inicio con lo que suena ahora, y anteprima de borradores.
 - Usuarios reales del WordPress migrados con roles admin/editor.
 - **Contadores de interacción migrados Y EN VIVO**: vistas, me gusta y compartidos de
   Pro.Radio (`proradio_reaktions_*`) en posts, eventi, podcast, show y staff. Punto de
-  partida real: 32.616 vistas · 1.376 like · 132 share en los 122 posts. Ahora se
-  incrementan de verdad (ver más abajo).
+  partida real: 32.616 vistas · 1.376 like · 132 share en los 122 posts.
 - Verificado con Playwright: audio nunca se corta al navegar, cero errores de hidratación,
   build de producción + lint + typecheck en verde.
 
 ### Qué FALTA (por orden de importancia)
-1. **Desplegar en Vercel.** Repo de trabajo: github.com/pes-srl/milanobeatradio (privado, cuenta personal del cliente).
-   Copia histórica en github.com/mirkodgzconsulting/milanobeatradio.
-   Falta importarlo en Vercel (plan Pro: hay sponsors, es uso comercial), pegar las variables de
-   VERCEL-ENV.md y poner como build command `pnpm migrate && pnpm build`.
+1. **Conectar el dominio real** — SOLO cuando Cristian lo pida. Ver "CAMBIO DE DOMINIO" abajo.
 2. **Dominio propio de R2** (`media.milanobeatradio.it`). Ahora se usa la Public Development URL,
    que Cloudflare no recomienda para producción. Al cambiarlo: una variable de entorno + añadir el
    hostname en `next.config.ts`. No hay que volver a migrar nada.
-3. **Verificar el dominio en Resend** para que los formularios y el "password dimenticata" del
-   admin envíen de verdad.
-4. **Repo remoto + Vercel Pro.** `git init` local hecho, faltan la URL de GitHub y el proyecto en Vercel.
-5. **Datos que solo tiene el cliente**: roles del staff para la página pública, enlaces reales de la
+3. **Verificar el dominio en Resend.** COMPROBADO el 2026-09-08 contra la API: el envío falla con
+   `403 The milanobeatradio.it domain is not verified`. Mientras siga así NO funcionan ni los
+   formularios de contacto ni el "Password dimenticata?" del admin. Mientras tanto, las
+   contraseñas se ponen con `pnpm set-password <email> '<clave>'`.
+4. **Datos que solo tiene el cliente**: roles del staff para la página pública, enlaces reales de la
    app en las stores, y decidir el slug del show `detroit-sessions`.
-6. **Del brief original, nunca priorizado**: contadores de visitas y "Control Room". No están hechos
-   ni planificados; decidir si entran en el alcance.
+5. **Peso de la home**: 753 KB frente al objetivo de 500 KB, por las 13 fotos del hero (las otras
+   páginas van muy sobradas: 239 KB flash-news, 71 KB programmi). Decisión del cliente entre
+   fidelidad al original y velocidad; no es urgente (el sitio viejo pesaba 24,9 MB).
+6. **Del brief original, nunca priorizado**: "Control Room" y las dedicatorias de los oyentes.
+   No están hechos ni planificados; decidir si entran en el alcance y presupuestarlos aparte.
 
 ### Notas de estado que conviene recordar
 - Los eventos importados tienen fechas anteriores a hoy (sept. 2026), por eso la home muestra pocos
   en "City Events": el filtro de próximos funciona bien, faltan eventos futuros reales.
 - `podcasts.audioUrl` conserva la URL vieja como referencia histórica; el sitio reproduce `audioFile`.
+- Hay 20 categorías y TODAS tienen posts (el brief hablaba de 13 usadas + 8 vacías: no cuadra
+  con lo que acabó en la base).
+- El `.env.local` local apunta a la base de PRODUCCIÓN. Lo que se edita en `localhost:3000/admin`
+  sale publicado. No hay base de pruebas separada.
+
+---
+
+# DESPLIEGUE — cómo está montado (2026-09-08)
+
+## Repos
+- **Trabajo: github.com/pes-srl/milanobeatradio** — cuenta PERSONAL del cliente, y **PÚBLICO**.
+  Las dos cosas son a propósito y por el mismo motivo: **Vercel Hobby no despliega repos privados
+  que estén en una organización de GitHub, ni admite colaboradores en repos privados.** Con dos
+  personas trabajando, la única salida sin pagar Pro era cuenta personal + repo público.
+  Si algún día se quiere privado o dentro de una organización, hay que pagar Vercel Pro.
+- Copia histórica: github.com/mirkodgzconsulting/milanobeatradio.
+- Comprobado el 2026-09-08, con el repo ya público: **ningún credencial está en el historial**.
+  Se buscaron los 11 valores de `.env.local` en los 47 commits; solo aparecen los públicos por
+  diseño (emails, URL del stream, URL pública del bucket). Los identificadores de infraestructura
+  (ref de Supabase, host del pooler, account id de R2) se sustituyeron por marcadores, pero
+  SIGUEN en el historial público: si se quiere cerrar del todo, rotar la contraseña de Supabase.
+
+## Vercel
+- Cuenta de Cristian, plan **Hobby**, proyecto `milanobeatradio`.
+- Build command con override: `pnpm migrate && pnpm build`. Un build completo tarda ~2 min 20 s.
+- **`NEXT_PUBLIC_SITE_URL` NO está puesta, y no debe estarlo hasta el cambio de dominio.**
+  Sin ella, `siteUrl()` usa `VERCEL_PROJECT_PRODUCTION_URL`, así que el despliegue se identifica
+  con su propia URL. Si se pone antes de tiempo, el sitemap, las URLs canónicas y el botón
+  "Anteprima" del admin apuntan al WordPress VIEJO. Verificado que el fallback funciona.
+- Las otras 13 variables sí van puestas, en Production y Preview (lista en VERCEL-ENV.md).
+- La URL con `-git-main-` está protegida por la autenticación de Vercel y pide login: la buena
+  para enseñar es la de producción.
+
+## Trampas que costaron builds fallidos (no repetir)
+- **Variables pegadas desde VERCEL-ENV.md**: ese fichero lleva marcadores, no valores. Al pegarlas
+  se crean vacías, Payload arranca sin secret y el build muere. Los valores reales están en
+  `.env.local`. Por eso `payload.config.ts` ahora valida al arrancar y dice QUÉ variable falta.
+- Añadir variables NO relanza el despliegue: hay que pedir Redeploy a mano.
+- Si Vercel dice "already exists" al pegar, las variables están pero pueden tener el valor mal:
+  borrarlas y volver a pegarlas es lo único que deja un estado conocido.
+
+## CAMBIO DE DOMINIO — checklist para cuando Cristian dé el visto bueno
+1. Añadir `milanobeatradio.it` y `www` en Vercel → Project → Domains, y apuntar el DNS en
+   Cloudflare a Vercel.
+2. **Solo entonces** poner `NEXT_PUBLIC_SITE_URL=https://milanobeatradio.it` y hacer Redeploy.
+3. Activar `media.milanobeatradio.it` en R2 y cambiar `R2_PUBLIC_URL` + `next.config.ts`.
+4. Verificar el dominio en Resend (registros DNS) para que salgan formularios y recuperación
+   de contraseña.
+5. Apagar el WordPress viejo y comprobar a muestra las 149 redirecciones sobre el dominio real.
 
 ---
 
@@ -68,7 +131,8 @@ Idioma del sitio: ITALIANO. Código y comentarios: inglés.
   Configura el driver para serverless (sin prepared statements).
   Esta es la trampa clásica del stack: documenta en el README qué flags usaste.
 - Cloudflare R2 vía @payloadcms/storage-s3 (endpoint S3, region "auto")
-- Deploy en Vercel (plan Pro: hay sponsors, es uso comercial)
+- Deploy en Vercel, plan **Hobby** en la cuenta del cliente (2026-09-08). Hobby obliga a que el
+  repo sea público y esté en una cuenta personal, no en una organización: ver DESPLIEGUE arriba.
 - Emails transaccionales con Resend
 
 ## Radio — AzuraCast externo, NO se toca, datos ya verificados
@@ -358,16 +422,15 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
 - NO se usó el live preview con iframe de Payload: exige `RefreshRouteOnSave` en cada página del
   sitio y sin eso el panel muestra un iframe que no se actualiza, que es peor que no tenerlo.
 
-# DESPLIEGUE — estado
-- Supabase: proyecto `MilanoBeatRadio`, ref `<SUPABASE-REF>`, región eu-west-1 (Irlanda).
+# BASE DE DATOS — Supabase
+- Proyecto `MilanoBeatRadio`, ref `<SUPABASE-REF>`, región eu-west-1 (Irlanda).
   Host del pooler: `<POOLER-HOST>`. La app usa SIEMPRE el 6543
   (transaction pooler); el 5432 solo se usó una vez para cargar el volcado inicial.
 - Migración de datos: `pg_dump --data-only` + carga en una sola transacción. OJO: `--disable-triggers`
   NO funciona en Supabase (requiere superusuario). Tras cargar hay que reajustar las secuencias de
   id con `setval`, o el primer alta desde el admin falla por clave duplicada.
-- Repo: github.com/pes-srl/milanobeatradio (privado, del cliente). Cuenta PERSONAL a propósito:
-  Vercel Hobby no despliega repos privados que estén en una organización de GitHub. Verificado antes de subir que
-  ni `.env*` ni `secrets.local.md` ni ningún secreto está en el historial.
+- **No hay base de pruebas.** Local, Vercel y el admin apuntan todos a la misma. Para trastear sin
+  riesgo hay que levantar un Postgres local (línea comentada en `.env.local`).
 
 # CONTADORES EN VIVO (vistas / like / share) — decisiones
 - El endpoint es `app/(site)/api/stats/route.ts` (POST). Convive sin problema con el comodín

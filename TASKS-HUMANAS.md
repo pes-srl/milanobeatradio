@@ -26,12 +26,15 @@ o a `.env.local` (ambos ignorados por git), nunca a este archivo.
       de que tiene límite de peticiones y no la recomienda para producción. Para el dominio propio:
       Cloudflare → R2 → `mbr-media` → Settings → Public access → Custom domain → escribe
       `media.milanobeatradio.it`. Cuando lo actives, solo tengo que cambiar una variable de entorno.
-- [ ] **Repo remoto.** He hecho `git init` local. Dime la URL de GitHub cuando exista y hago el push.
+- [x] **Repo remoto.** github.com/pes-srl/milanobeatradio (público, cuenta personal del cliente).
 
 ## NECESARIO PARA FASES POSTERIORES (puedes ir preparándolo)
 
-- [ ] **Vercel Pro** conectado al repo. Fase 1 en adelante (primer deploy).
-- [ ] **Resend: verificar el dominio.** API key recibida. Falta añadir en Resend el dominio
+- [x] **Vercel** conectado al repo, plan Hobby, en la cuenta de Cristian.
+      EN LÍNEA: https://milanobeatradio-lake.vercel.app (2026-09-08).
+- [ ] **Resend: verificar el dominio.** COMPROBADO 2026-09-08: el envío falla con
+      `403 domain is not verified`. Hoy NO funcionan ni los formularios ni el "Password
+      dimenticata?". Falta añadir en Resend el dominio
       `milanobeatradio.it` (registros DNS en Cloudflare) para poder enviar desde `noreply@`.
       Lo necesita ya el "Password dimenticata?" del admin, no solo los formularios.
 - [x] **Email destino de los formularios**: `info@milanobeatradio.it` (ambos formularios).
