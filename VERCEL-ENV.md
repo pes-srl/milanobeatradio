@@ -1,14 +1,18 @@
 # VERCEL-ENV.md — variables de entorno para Vercel (copiar y pegar)
 
+> El repo es PÚBLICO desde 2026-09-08. Los identificadores de infraestructura
+> (ref de Supabase, host del pooler, account id de R2) están sustituidos por
+> marcadores a propósito: los valores reales viven en `.env.local`, fuera de git.
+
 Vercel → Project → Settings → Environment Variables. Marca **Production** y **Preview**.
 Los valores reales están en `.env.local` (no en git). Aquí solo el nombre, el valor
 cuando no es secreto, y de dónde sale.
 
 | Variable | Valor | Origen / nota |
 |---|---|---|
-| `DATABASE_URI` | `postgres://postgres.kscrbnarievdaaxbbudo:<DB-PASSWORD>@aws-1-eu-west-1.pooler.supabase.com:6543/postgres` | **Falta la contraseña de la base de datos.** Supabase → Project Settings → Database. Puerto 6543 (transaction pooler), NO 5432. |
+| `DATABASE_URI` | `postgres://postgres.<SUPABASE-REF>:<DB-PASSWORD>@<POOLER-HOST>:6543/postgres` | **Falta la contraseña de la base de datos.** Supabase → Project Settings → Database. Puerto 6543 (transaction pooler), NO 5432. |
 | `PAYLOAD_SECRET` | *(el de `.env.local`)* | 64 hex. Si se cambia, todas las sesiones del admin caducan. |
-| `R2_ACCOUNT_ID` | `595c1f7a9800ae3da29771e7c46a2e9a` | Cloudflare account. |
+| `R2_ACCOUNT_ID` | `<R2-ACCOUNT-ID>` | Cloudflare account. |
 | `R2_ENABLED` | `true` | |
 | `R2_ACCESS_KEY_ID` | *(el de `.env.local`)* | Confirmado con permiso de escritura. |
 | `R2_SECRET_ACCESS_KEY` | *(el de `.env.local`)* | |

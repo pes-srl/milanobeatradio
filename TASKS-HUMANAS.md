@@ -15,7 +15,7 @@ o a `.env.local` (ambos ignorados por git), nunca a este archivo.
 
 ## BLOQUEANTE AHORA MISMO (3 cosas pequeñas)
 
-- [ ] **Contraseña de la base de datos de Supabase.** Tengo el proyecto (`kscrbnarievdaaxbbudo`),
+- [ ] **Contraseña de la base de datos de Supabase.** Tengo el proyecto (`<SUPABASE-REF>`),
       la región (eu-west-1) y la cadena del pooler montada en `.env.local`, pero la contraseña de
       Postgres no está entre las claves que me pasaste (anon/service_role son de la API, no de la DB).
       Supabase → Project Settings → Database → "Reset database password" → pégala en `.env.local`

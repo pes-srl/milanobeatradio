@@ -300,9 +300,9 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
   `Igor` (QantumThemes) y `proradio` (pro.radio) son cuentas del proveedor del tema: NO se migran.
   Contraseñas temporales en secrets.local.md; reset por email vía Resend (`@payloadcms/email-resend`).
   `users.legacyLogin` sirve en fase 2 para atribuir cada post a su autor (`<dc:creator>`).
-- **Supabase**: proyecto `kscrbnarievdaaxbbudo`, región eu-west-1 (Irlanda), pooler `aws-1-eu-west-1`.
+- **Supabase**: proyecto `<SUPABASE-REF>`, región eu-west-1 (Irlanda), pooler `aws-1-eu-west-1`.
   Las API keys de Supabase (anon/service_role) NO las usa la app; solo `DATABASE_URI`.
-- **R2**: account `595c1f7a9800ae3da29771e7c46a2e9a`, bucket `mbr-media`, jurisdicción EU.
+- **R2**: account `<R2-ACCOUNT-ID>`, bucket `mbr-media`, jurisdicción EU.
 
 # FASE 1 — decisiones de diseño (no rediscutir salvo que el cliente lo pida)
 - El diseño se hizo a partir de capturas reales de milanobeatradio.it (`migration/reference/`,
@@ -359,8 +359,8 @@ contadores de vistas, Control Room, SEO avanzado, formularios.
   sitio y sin eso el panel muestra un iframe que no se actualiza, que es peor que no tenerlo.
 
 # DESPLIEGUE — estado
-- Supabase: proyecto `MilanoBeatRadio`, ref `kscrbnarievdaaxbbudo`, región eu-west-1 (Irlanda).
-  Host del pooler: `aws-1-eu-west-1.pooler.supabase.com`. La app usa SIEMPRE el 6543
+- Supabase: proyecto `MilanoBeatRadio`, ref `<SUPABASE-REF>`, región eu-west-1 (Irlanda).
+  Host del pooler: `<POOLER-HOST>`. La app usa SIEMPRE el 6543
   (transaction pooler); el 5432 solo se usó una vez para cargar el volcado inicial.
 - Migración de datos: `pg_dump --data-only` + carga en una sola transacción. OJO: `--disable-triggers`
   NO funciona en Supabase (requiere superusuario). Tras cargar hay que reajustar las secuencias de
