@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { HomeHero } from '@/src/components/site/HomeHero'
 import { SectionTitle } from '@/src/components/site/SectionTitle'
 import { PostCard } from '@/src/components/site/PostCard'
+import { InstagramFeed } from '@/src/components/site/InstagramFeed'
 import { EventItem } from '@/src/components/site/EventItem'
 import { Mosaic } from '@/src/components/site/Mosaic'
 import { PartnerLogos } from '@/src/components/site/PartnerLogos'
@@ -11,12 +12,12 @@ import { getEvents, getPartners, getPosts, getSite } from '@/src/lib/queries'
 export const metadata: Metadata = { title: 'Milano Beat Radio — Your Event and Party Station' }
 export const revalidate = 300
 
-/** Home. Section order per the brief: hero → FLASH NEWS → CITY EVENTS → mosaic → PARTNERS. */
+/** Home. Section order: hero → FLASH NEWS → INSTAGRAM FEED → CITY EVENTS → mosaic → PARTNERS. */
 export default async function HomePage() {
   const [site, posts, events, partners] = await Promise.all([
     getSite().catch(() => null),
     getPosts({ limit: 6 }),
-    getEvents({ upcoming: true, limit: 4 }),
+    getEvents({ upcoming: true, limit: 4, minCount: 4 }),
     getPartners(),
   ])
 
@@ -42,11 +43,13 @@ export default async function HomePage() {
         )}
       </section>
 
+      <InstagramFeed site={site} />
+
       <section className="bg-[#050505] px-4 py-20 sm:px-8">
         <SectionTitle>City Events</SectionTitle>
         {events.docs.length > 0 ? (
           <div className="mx-auto mt-10 grid max-w-[1440px] gap-8 sm:grid-cols-2">
-            {events.docs.map((e, i) => (
+            {events.docs.slice(0, 4).map((e, i) => (
               <EventItem key={e.id} event={e} priority={i === 0} />
             ))}
           </div>

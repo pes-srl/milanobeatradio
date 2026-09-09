@@ -81,3 +81,12 @@ export const IconHeart = (p: P) => (
 export const IconPaypal = (p: P) => (
   <svg {...base(p)} viewBox="0 0 24 24"><path d="M7.6 21.5H5.1l.4-2.4h2.3c1.9 0 3.3-.9 3.8-2.7.4-1.5-.1-2.3-1.7-2.3H7.5l1.1-6.8h2.4c3.4 0 5.2 1.7 4.6 4.8-.2.9-.5 1.7-1 2.4 1.3.6 2 1.8 1.6 3.5-.6 3-2.9 3.5-8.6 3.5zm1.3-8.1h2c.9 0 1.3.4 1.1 1.4-.2 1-1 1.4-1.9 1.4H8.2l.7-2.8zm1.3-5.8h1.9c.8 0 1.2.3 1 1.2-.2.8-.8 1.2-1.7 1.2H9.6l.6-2.4z" /></svg>
 )
+export const IconChevronLeft = (p: P) => (
+  <svg {...base(p)} fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+)
+export const IconChevronRight = (p: P) => (
+  <svg {...base(p)} fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
+)
+export const IconExpand = (p: P) => (
+  <svg {...base(p)} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
+)

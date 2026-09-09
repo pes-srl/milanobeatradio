@@ -54,27 +54,51 @@ export function HeaderControls({ instagram, facebook }: Props) {
 
   return (
     <>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 sm:gap-2.5">
         {instagram && (
-          <a href={instagram} target="_blank" rel="noreferrer" className="hdr-btn hidden md:inline-flex" aria-label="Instagram">
-            <IconInstagram size={20} />
+          <a
+            href={instagram}
+            target="_blank"
+            rel="noreferrer"
+            className="hdr-btn group hidden md:inline-flex"
+            aria-label="Instagram"
+          >
+            <IconInstagram size={20} className="transition-transform duration-300 group-hover:scale-110 group-hover:text-pink" />
           </a>
         )}
         {facebook && (
-          <a href={facebook} target="_blank" rel="noreferrer" className="hdr-btn hidden text-white md:inline-flex" aria-label="Facebook">
-            <IconFacebook size={20} />
+          <a
+            href={facebook}
+            target="_blank"
+            rel="noreferrer"
+            className="hdr-btn group hidden md:inline-flex"
+            aria-label="Facebook"
+          >
+            <IconFacebook size={20} className="transition-transform duration-300 group-hover:scale-110 group-hover:text-brand" />
           </a>
         )}
-        <button type="button" onClick={() => setOpen(true)} className="hdr-btn" aria-label="Apri il menu" aria-expanded={open}>
-          <IconMenu size={20} />
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="hdr-btn group"
+          aria-label="Apri il menu"
+          aria-expanded={open}
+        >
+          <IconMenu size={20} className="transition-transform duration-300 group-hover:scale-110 group-hover:text-brand" />
         </button>
-        <button type="button" onClick={toggle} className="hdr-btn gap-2 px-4 text-white" aria-label={isOn ? 'Pausa' : 'Play'} aria-pressed={isOn}>
+        <button
+          type="button"
+          onClick={toggle}
+          className={`hdr-btn-play ${isOn ? 'hdr-btn-play--on' : ''}`}
+          aria-label={isOn ? 'Pausa' : 'Play'}
+          aria-pressed={isOn}
+        >
           {status === 'loading' ? (
-            <span className="size-4 animate-spin rounded-full border-2 border-white/30 border-t-brand" aria-hidden />
+            <span className="size-4 animate-spin rounded-full border-2 border-white/30 border-t-white" aria-hidden />
           ) : isOn ? (
-            <IconPause size={18} className="text-brand" />
+            <IconPause size={18} className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.9)]" />
           ) : (
-            <IconPlayOutline size={18} className="text-brand" />
+            <IconPlayOutline size={18} className="text-pink drop-shadow-[0_0_8px_rgba(224,36,111,0.8)]" />
           )}
           <span className="font-bold">{isOn ? 'Pausa' : 'Play'}</span>
         </button>
@@ -83,7 +107,7 @@ export function HeaderControls({ instagram, facebook }: Props) {
             type="button"
             onClick={() => setVolumeOpen((v) => !v)}
             onDoubleClick={toggleMute}
-            className={`hdr-btn hdr-btn--solid ${volumeOpen ? 'rounded-b-none' : ''}`}
+            className={`hdr-btn hdr-btn--solid ${volumeOpen ? 'ring-2 ring-brand ring-offset-2 ring-offset-black' : ''}`}
             aria-label="Volume"
             aria-expanded={volumeOpen}
           >
@@ -110,38 +134,76 @@ export function HeaderControls({ instagram, facebook }: Props) {
 
       {/* Off-canvas menu */}
       <div className={`fixed inset-0 z-[60] ${open ? '' : 'pointer-events-none'}`} aria-hidden={!open}>
-        <div className={`absolute inset-0 bg-black/70 transition-opacity ${open ? 'opacity-100' : 'opacity-0'}`} onClick={() => setOpen(false)} />
+        <div
+          className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}
+          onClick={() => setOpen(false)}
+        />
         <nav
           aria-label="Menu completo"
-          className={`absolute right-0 top-0 flex h-full w-80 max-w-[85vw] flex-col bg-topbar p-6 shadow-2xl transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`absolute right-0 top-0 flex h-full w-84 max-w-[88vw] flex-col border-l border-white/10 bg-[#0d0718]/95 p-6 backdrop-blur-2xl shadow-[0_0_60px_rgba(0,0,0,0.9)] transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}
         >
-          <button type="button" onClick={() => setOpen(false)} className="self-end text-white/70 hover:text-white" aria-label="Chiudi il menu">
-            <IconClose size={26} />
-          </button>
-          <ul className="mt-6 space-y-4">
+          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <span className="text-xs font-bold uppercase tracking-widest text-white/50">Menu</span>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="hdr-btn !h-9 !min-w-9 text-white/70 hover:text-white"
+              aria-label="Chiudi il menu"
+            >
+              <IconClose size={20} />
+            </button>
+          </div>
+          <ul className="mt-6 space-y-2">
             {MAIN_NAV.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-lg font-semibold uppercase tracking-wider hover:text-brand">
-                  {item.label}
+                <Link
+                  href={item.href}
+                  className="group flex items-center justify-between rounded-xl px-4 py-3 text-base font-bold uppercase tracking-wider text-white/90 transition-all duration-200 hover:bg-white/[0.08] hover:text-brand hover:shadow-[0_0_20px_rgba(200,36,227,0.2)]"
+                >
+                  <span>{item.label}</span>
+                  <span className="text-white/30 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-brand">→</span>
                 </Link>
               </li>
             ))}
           </ul>
-          <ul className="mt-8 space-y-3 border-t border-white/10 pt-6">
-            {MORE_NAV.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className="text-sm uppercase tracking-wider text-white/70 hover:text-white">
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-auto flex gap-3 pt-6">
+          {MORE_NAV.length > 0 && (
+            <ul className="mt-6 space-y-2 border-t border-white/10 pt-4">
+              {MORE_NAV.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="flex items-center rounded-xl px-4 py-2.5 text-sm uppercase tracking-wider text-white/70 transition hover:bg-white/[0.06] hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="mt-auto flex items-center gap-3 border-t border-white/10 pt-6">
             {instagram && (
-              <a href={instagram} target="_blank" rel="noreferrer" className="hdr-btn" aria-label="Instagram"><IconInstagram size={20} /></a>
+              <a
+                href={instagram}
+                target="_blank"
+                rel="noreferrer"
+                className="hdr-btn flex-1 gap-2 text-xs font-semibold"
+                aria-label="Instagram"
+              >
+                <IconInstagram size={18} />
+                <span>Instagram</span>
+              </a>
             )}
             {facebook && (
-              <a href={facebook} target="_blank" rel="noreferrer" className="hdr-btn" aria-label="Facebook"><IconFacebook size={20} /></a>
+              <a
+                href={facebook}
+                target="_blank"
+                rel="noreferrer"
+                className="hdr-btn flex-1 gap-2 text-xs font-semibold"
+                aria-label="Facebook"
+              >
+                <IconFacebook size={18} />
+                <span>Facebook</span>
+              </a>
             )}
           </div>
         </nav>

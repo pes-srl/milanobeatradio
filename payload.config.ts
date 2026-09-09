@@ -68,7 +68,7 @@ export default buildConfig({
       // Payload's default list has no Italian timezone: add it in front.
       supportedTimezones: ({ defaultTimezones }) => [{ label: '(GMT+1) Roma / Milano', value: 'Europe/Rome' }, ...defaultTimezones],
     },
-    meta: { titleSuffix: ' · Milano Beat Radio', icons: [{ rel: 'icon', url: '/mbr-logo.png' }] },
+    meta: { titleSuffix: ' · Milano Beat Radio', icons: [{ rel: 'icon', url: '/mbr-logo-v2.png' }] },
   },
 
   // Admin UI in Italian by default; English available as a fallback.

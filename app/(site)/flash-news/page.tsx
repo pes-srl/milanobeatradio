@@ -13,7 +13,11 @@ export default async function FlashNewsPage({ searchParams }: { searchParams: Pr
 
   return (
     <>
-      <PageHero title="Flash News" />
+      <PageHero
+        overtitle="Ultime Notizie"
+        title="Flash News"
+        subtitle="News, tendenze, nightlife e aggiornamenti in tempo reale da Milano."
+      />
       <section className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8">
         {posts.docs.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -12,9 +12,12 @@ export default async function ChiSiamoPage() {
   const [site, partners] = await Promise.all([getSite().catch(() => null), getPartners()])
   return (
     <>
-      <PageHero title="Milano Beat Radio" size="lg">
-        <p className="mt-6 text-lg text-white/90">{site?.claim ?? 'Your Event and Party Station'}</p>
-      </PageHero>
+      <PageHero
+        overtitle="Milano Beat Radio"
+        title="Chi siamo"
+        subtitle={site?.claim ?? 'Your Event and Party Station'}
+        size="lg"
+      />
 
       <section className="px-4 py-20 sm:px-8">
         <SectionTitle>I nostri partner</SectionTitle>

@@ -9,7 +9,7 @@ export function AppDownload({ site }: { site: Site | null }) {
   ].filter((s) => s.href)
   return (
     <section className="px-4 py-20 text-center">
-      <h2 className="text-3xl font-medium uppercase leading-tight sm:text-5xl lg:text-6xl">
+      <h2 className="text-3xl font-bold uppercase tracking-wide leading-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)] sm:text-5xl lg:text-6xl">
         Ascoltaci dalla nostra app
         <br />
         scaricala

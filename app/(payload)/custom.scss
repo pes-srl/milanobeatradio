@@ -104,6 +104,12 @@
   height: auto;
 }
 
+// Login & auth screens: deep black background
+.template-minimal,
+.template-minimal__wrap {
+  background-color: #000000;
+}
+
 // Reveal button injected into the password field by PasswordToggle.tsx.
 .mbr-reveal {
   position: absolute;

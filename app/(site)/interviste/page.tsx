@@ -15,7 +15,11 @@ export default async function IntervistePage({ searchParams }: { searchParams: P
 
   return (
     <>
-      <PageHero title="Interviste" />
+      <PageHero
+        overtitle="MBR Podcast & Special"
+        title="Interviste"
+        subtitle="Le voci dei protagonisti della musica, della notte e dei grandi eventi."
+      />
       <section className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8">
         {podcasts.docs.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

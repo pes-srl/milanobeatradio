@@ -22,9 +22,10 @@ body {
   @apply bg-ink text-white font-sans font-light antialiased;
 }
 
-/* Section titles: big, uppercase, wide tracking (FLASH NEWS · CITY EVENTS · PARTNERS). */
+/* Section titles: big, uppercase, wide tracking with fashionable glow/shadow. */
 .title-xl {
-  @apply font-medium uppercase tracking-title text-4xl sm:text-5xl lg:text-6xl;
+  @apply font-bold uppercase tracking-wide text-4xl sm:text-5xl lg:text-6xl;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.9), 0 0 35px rgba(200, 36, 227, 0.25);
 }
 
 /* Category label: thin brand-colored border, small bold text. */
@@ -34,26 +35,34 @@ body {
 
 /* In the components layer so per-instance utilities (text-white on Play/Facebook) win. */
 @layer components {
-  /* Outlined square button used in the header (social · menu · play). */
+  /* Fashion glassmorphic button used in header (social · menu) */
   .hdr-btn {
-    @apply inline-flex h-11 min-w-11 items-center justify-center rounded-md border-2 border-white text-brand transition hover:bg-white/10;
+    @apply inline-flex h-11 min-w-11 items-center justify-center rounded-xl border border-white/20 bg-white/[0.06] text-white/90 backdrop-blur-md shadow-md shadow-black/40 transition-all duration-300 hover:scale-105 hover:border-brand/70 hover:bg-white/[0.12] hover:text-white hover:shadow-[0_0_20px_rgba(200,36,227,0.35)] active:scale-95;
   }
 
-  /* Same shape, filled with the brand purple: the volume toggle. */
+  /* Play CTA button styling with fashion neon glow */
+  .hdr-btn-play {
+    @apply inline-flex h-11 items-center justify-center gap-2.5 rounded-xl border border-brand/50 bg-gradient-to-r from-brand/25 via-brand/15 to-transparent px-5 font-bold uppercase tracking-wider text-white backdrop-blur-md shadow-[0_4px_20px_rgba(200,36,227,0.25)] transition-all duration-300 hover:scale-105 hover:border-brand hover:from-brand hover:to-[#e0246f] hover:shadow-[0_0_30px_rgba(200,36,227,0.6)] active:scale-95;
+  }
+  .hdr-btn-play--on {
+    @apply border-brand bg-gradient-to-r from-[#e0246f] to-brand shadow-[0_0_25px_rgba(200,36,227,0.6)] hover:from-[#f02d7d] hover:to-[#d635f0];
+  }
+
+  /* Volume toggle button */
   .hdr-btn--solid {
-    @apply border-brand bg-brand text-white hover:bg-brand-dark;
+    @apply border-brand/40 bg-gradient-to-br from-brand to-brand-dark text-white shadow-[0_4px_16px_rgba(200,36,227,0.35)] hover:border-brand hover:from-brand-dark hover:to-brand hover:shadow-[0_0_22px_rgba(200,36,227,0.55)];
   }
 
-  /* Vertical volume slider hanging under the volume button. */
+  /* Vertical volume slider hanging under the volume button */
   .volume-panel {
-    @apply absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-b-md bg-black px-3 py-4;
+    @apply absolute left-1/2 top-full z-50 mt-2 -translate-x-1/2 rounded-2xl border border-white/15 bg-black/90 p-4 backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_25px_rgba(200,36,227,0.25)];
   }
 }
 .volume-range {
   writing-mode: vertical-lr;
   direction: rtl;
-  width: 1rem;
-  height: 11rem;
+  width: 1.25rem;
+  height: 9rem;
   appearance: none;
   background: transparent;
   cursor: pointer;
@@ -61,51 +70,83 @@ body {
 .volume-range::-webkit-slider-runnable-track {
   width: 0.5rem;
   border-radius: 9999px;
-  background: linear-gradient(to top, var(--color-brand) var(--fill), rgba(255, 255, 255, 0.25) var(--fill));
+  background: linear-gradient(to top, var(--color-brand) var(--fill), rgba(255, 255, 255, 0.15) var(--fill));
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 .volume-range::-moz-range-track {
   width: 0.5rem;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.15);
 }
 .volume-range::-moz-range-progress {
   width: 0.5rem;
   border-radius: 9999px;
   background: var(--color-brand);
+  box-shadow: 0 0 10px var(--color-brand);
 }
 .volume-range::-webkit-slider-thumb {
   appearance: none;
-  width: 1rem;
-  height: 1rem;
-  margin-left: -0.25rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-left: -0.3125rem;
   border-radius: 9999px;
   background: #fff;
+  box-shadow: 0 0 10px rgba(200, 36, 227, 0.8), 0 2px 6px rgba(0, 0, 0, 0.6);
+  border: 2px solid var(--color-brand);
+  transition: transform 0.15s ease;
+}
+.volume-range::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
 }
 .volume-range::-moz-range-thumb {
-  width: 1rem;
-  height: 1rem;
-  border: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 2px solid var(--color-brand);
   border-radius: 9999px;
   background: #fff;
+  box-shadow: 0 0 10px rgba(200, 36, 227, 0.8);
 }
 .volume-range:focus-visible {
   outline: 2px solid var(--color-brand);
   outline-offset: 4px;
 }
 
-/* Pill button: white border, white text (Ascolta · Carica altro). */
+/* Fashion pill button used site-wide (Ascolta · Carica altro · Tutte le news) */
 .btn-pill {
-  @apply inline-flex items-center gap-2 rounded-full border-2 border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-black;
+  @apply inline-flex items-center justify-center gap-2.5 rounded-full border border-white/30 bg-white/[0.08] px-7 py-3 text-sm sm:text-base font-bold uppercase tracking-wider text-white backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)] transition-all duration-300 hover:scale-105 hover:border-brand hover:bg-gradient-to-r hover:from-[#e0246f] hover:to-brand hover:shadow-[0_0_30px_rgba(200,36,227,0.6)] active:scale-95;
 }
 
-/* Bordered "caption" banners in the hero (ASCOLTACI ANCHE SENZA APP…). */
+/* Fashion hero caption banners */
 .caption {
-  @apply inline-block px-3 py-1 font-normal uppercase leading-tight text-white;
-  transform: skewX(-6deg);
+  @apply inline-block rounded-xl sm:rounded-2xl px-5 py-2 sm:px-8 sm:py-3 font-bold uppercase leading-tight text-white backdrop-blur-md transition-all duration-300;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 35px rgba(200, 36, 227, 0.3);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
 }
-.caption > span {
-  display: inline-block;
-  transform: skewX(6deg);
+.caption--violet {
+  @apply border border-white/20 bg-gradient-to-r from-[#501b87]/90 via-[#8b14a3]/90 to-[#501b87]/90 shadow-[0_0_35px_rgba(111,45,189,0.5)];
+}
+.caption--pink {
+  @apply border border-white/25 bg-gradient-to-r from-[#d81b60]/90 via-[#e0246f]/95 to-[#d81b60]/90 shadow-[0_4px_24px_rgba(224,36,111,0.45)];
+}
+.caption--tag {
+  @apply inline-flex items-center gap-2 rounded-full border border-brand/50 bg-white/[0.08] px-5 py-2 text-xs sm:text-sm font-bold tracking-[0.2em] text-brand backdrop-blur-xl shadow-[0_0_25px_rgba(200,36,227,0.35)] transition-all duration-300 hover:scale-105 hover:border-brand hover:bg-brand/20;
+}
+
+/* Soften Instagram embed brightness to blend seamlessly with dark mode */
+.ig-embed-wrapper iframe.instagram-media,
+iframe.instagram-media {
+  border-radius: 20px !important;
+  border: 1px solid rgba(224, 36, 111, 0.3) !important;
+  box-shadow: 0 12px 45px rgba(0, 0, 0, 0.8), 0 0 45px rgba(224, 36, 111, 0.35) !important;
+  filter: brightness(0.86) contrast(1.08) saturate(1.05) !important;
+  transition: filter 0.35s ease, box-shadow 0.35s ease !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+}
+.ig-embed-wrapper iframe.instagram-media:hover,
+iframe.instagram-media:hover {
+  filter: brightness(0.95) contrast(1.03) saturate(1.02) !important;
+  box-shadow: 0 16px 55px rgba(0, 0, 0, 0.85), 0 0 60px rgba(224, 36, 111, 0.55) !important;
 }
 
 /* Card image overlay: bottom gradient so the title always reads. */
@@ -158,7 +199,7 @@ body {
 /* Diagonal purple wedge behind the footer. */
 .footer-wedge {
   background:
-    linear-gradient(160deg, transparent 0 55%, #4a1670 55% 70%, #1c0636 70% 100%);
+    linear-gradient(165deg, transparent 0 15%, #4a1670 15% 35%, #1c0636 35% 100%);
 }
 
 /* Rich text (articles). */

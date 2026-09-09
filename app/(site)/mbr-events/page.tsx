@@ -1,36 +1,45 @@
-import Image from 'next/image'
 import type { Metadata } from 'next'
 import { imageAlt, imageUrl } from '@/src/lib/media'
-import { getSite } from '@/src/lib/queries'
+import { getMediaByFilename, getSite } from '@/src/lib/queries'
+import { PageHero } from '@/src/components/site/PageHero'
+import { MbrEventsDeck } from '@/src/components/site/MbrEventsDeck'
 
 export const metadata: Metadata = { title: 'MBR Events' }
 export const revalidate = 300
 
 /**
  * MBR Events: promotional page for the radio's own event/party services.
- * The hero graphic is a designed asset with its title and tagline already baked in
- * ("MBR EVENTS — Musica, atmosfera, groove… — Molto più di un DJ set"): no text overlay needed.
+ * The presentation slides are displayed via an interactive high-impact lookbook deck + CTA.
  */
 export default async function MbrEventsPage() {
-  const site = await getSite().catch(() => null)
-  const hero = imageUrl(site?.mbrEventsHero, 'hero')
-  const posters = (site?.mbrEventsPosters ?? []).map((p) => p.image).filter((m) => imageUrl(m, 'card'))
+  const [site, heroMedia] = await Promise.all([
+    getSite().catch(() => null),
+    getMediaByFilename('2.webp').catch(() => null),
+  ])
+
+  const heroSrc =
+    heroMedia ??
+    'https://pub-df0e74f6b3f940c5a570551308d6944f.r2.dev/media/2.webp'
+
+  const posterItems = (site?.mbrEventsPosters ?? [])
+    .map((p) => {
+      const url = imageUrl(p.image, 'hero') || imageUrl(p.image, 'card')
+      const alt = imageAlt(p.image, 'MBR Events Slide')
+      return url ? { url, alt } : null
+    })
+    .filter((item): item is { url: string; alt: string } => item !== null)
 
   return (
     <>
-      <section className="relative aspect-[16/9] w-full overflow-hidden bg-black sm:aspect-[21/9]">
-        {hero && <Image src={hero} alt="MBR Events — Molto più di un DJ set" fill priority sizes="100vw" className="object-cover" />}
-      </section>
+      <PageHero
+        overtitle="Musica · Atmosfera · Groove"
+        title="MBR Events"
+        subtitle="Molto più di un DJ set"
+        image={heroSrc}
+        size="lg"
+      />
 
-      {posters.length > 0 && (
-        <section className="mx-auto grid max-w-[1440px] grid-cols-2 gap-1 px-4 py-16 sm:px-8 md:grid-cols-3 lg:grid-cols-6">
-          {posters.map((m, i) => (
-            <div key={i} className="relative aspect-[2/3] overflow-hidden">
-              <Image src={imageUrl(m, 'card')!} alt={imageAlt(m, '')} fill sizes="(max-width: 768px) 50vw, 16vw" className="object-cover transition duration-500 hover:scale-105" />
-            </div>
-          ))}
-        </section>
-      )}
+      {posterItems.length > 0 && <MbrEventsDeck posters={posterItems} />}
     </>
   )
 }

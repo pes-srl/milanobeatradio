@@ -7,10 +7,14 @@ export const metadata: Metadata = { title: 'Eventi' }
 export const revalidate = 300
 
 export default async function EventiPage() {
-  const events = await getEvents({ upcoming: true, limit: 50 })
+  const events = await getEvents({ limit: 50 })
   return (
     <>
-      <PageHero title="Eventi" />
+      <PageHero
+        overtitle="City & Nightlife"
+        title="Eventi"
+        subtitle="I migliori eventi, serate, festival e party a Milano e dintorni."
+      />
       <section className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8">
         {events.docs.length > 0 ? (
           <div className="grid gap-8 sm:grid-cols-2">

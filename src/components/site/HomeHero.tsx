@@ -23,7 +23,7 @@ export function HomeHero({ site }: { site: Site | null }) {
     `@keyframes hero-zoom{0%{transform:scale(1)}${pct(SLIDE_MS + FADE_MS)}%,100%{transform:scale(${ZOOM})}}`
 
   return (
-    <section className="relative flex min-h-[calc(100svh-138px)] items-center justify-center overflow-hidden bg-black text-center">
+    <section className="relative flex min-h-[calc(100svh-126px)] items-center justify-center overflow-hidden bg-black text-center">
       {animated && <style dangerouslySetInnerHTML={{ __html: keyframes }} />}
       <div className="absolute inset-0" style={{ ['--slide-total' as string]: `${total}ms` }}>
         {slides.map((m, i) => (
@@ -47,23 +47,42 @@ export function HomeHero({ site }: { site: Site | null }) {
       </div>
 
       <div className="relative z-10 flex flex-col items-center px-4 py-16">
-        <h3 className="text-2xl font-semibold tracking-[0.12em] drop-shadow sm:text-4xl">Event and Party Radio Station</h3>
-        <h1 className="mt-6 text-5xl font-bold leading-none tracking-[0.06em] drop-shadow-lg sm:text-7xl lg:text-[86px]">
+        {/* Eyebrow badge */}
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-5 py-1.5 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+          <span className="size-2 rounded-full bg-white animate-pulse" />
+          <span className="text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.2em] text-white">
+            Event and Party Radio Station
+          </span>
+        </div>
+
+        {/* Main Title */}
+        <h1 className="mt-6 text-center text-5xl font-black uppercase tracking-tight leading-[0.95] text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)] sm:text-7xl lg:text-[88px]">
           Milano Beat Radio
-          <span className="mt-2 block text-3xl tracking-[0.1em] sm:text-5xl lg:text-6xl">MBR</span>
         </h1>
+
         <AscoltaButton className="mt-8" />
 
-        <div className="mt-14 space-y-4">
-          <p className="caption bg-violet text-2xl sm:text-4xl"><span>Ascoltaci anche senza app - press play</span></p>
-          <div className="space-y-2">
-            <p className="caption bg-pink text-lg sm:text-2xl"><span>Anche in negozio!</span></p>
-            <br />
-            <p className="caption bg-pink text-lg sm:text-2xl"><span>Nella tua attivita&#39; commerciale</span></p>
-            <br />
-            <p className="caption bg-pink text-2xl sm:text-4xl"><span>In citta&#39;</span></p>
+        {/* Fashion Caption Badges */}
+        <div className="mt-14 flex flex-col items-center gap-4">
+          <p className="caption caption--violet text-xl sm:text-3xl lg:text-4xl">
+            <span>Ascoltaci anche senza app – press play</span>
+          </p>
+
+          <div className="flex flex-col items-center gap-2.5">
+            <p className="caption caption--pink text-base sm:text-xl lg:text-2xl">
+              <span>Anche in negozio!</span>
+            </p>
+            <p className="caption caption--pink text-base sm:text-xl lg:text-2xl">
+              <span>Nella tua attività commerciale</span>
+            </p>
+            <p className="caption caption--pink text-xl sm:text-3xl lg:text-4xl font-black">
+              <span>In città</span>
+            </p>
           </div>
-          <p className="caption bg-violet text-sm sm:text-base"><span>{site?.hashtag ?? '#MBRFRIENDS'}</span></p>
+
+          <p className="caption--tag mt-2">
+            <span>{site?.hashtag ?? '#MBRFRIENDS'}</span>
+          </p>
         </div>
       </div>
     </section>

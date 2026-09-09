@@ -32,11 +32,50 @@ export async function getPost(slug: string, draft = false) {
   return bySlug('posts', slug, draft)
 }
 
-export async function getEvents(opts: { upcoming?: boolean; limit?: number } = {}) {
+export async function getEvents(opts: { upcoming?: boolean; limit?: number; minCount?: number } = {}) {
   const payload = await payloadClient()
+
+  if (opts.upcoming) {
+    const upcomingWhere: Where = {
+      and: [
+        live,
+        { startDate: { greater_than_equal: new Date(Date.now() - 12 * 3600_000).toISOString() } },
+      ],
+    }
+    const res = await payload.find({
+      collection: 'events',
+      where: upcomingWhere,
+      sort: 'startDate',
+      limit: opts.limit ?? 20,
+      depth: 1,
+    })
+
+    const min = opts.minCount ?? 0
+    const maxLimit = opts.limit ?? 20
+    if (min > 0 && res.docs.length < min) {
+      const allRecent = await payload.find({
+        collection: 'events',
+        where: { and: [live] },
+        sort: '-startDate',
+        limit: maxLimit,
+        depth: 1,
+      })
+      const seenIds = new Set(res.docs.map((d) => d.id))
+      for (const doc of allRecent.docs) {
+        if (!seenIds.has(doc.id) && res.docs.length < maxLimit) {
+          seenIds.add(doc.id)
+          res.docs.push(doc)
+        }
+      }
+    }
+    if (opts.limit && res.docs.length > opts.limit) {
+      res.docs = res.docs.slice(0, opts.limit)
+    }
+    return res
+  }
+
   const where: Where = { and: [live] }
-  if (opts.upcoming) where.and!.push({ startDate: { greater_than_equal: new Date(Date.now() - 12 * 3600_000).toISOString() } })
-  return payload.find({ collection: 'events', where, sort: opts.upcoming ? 'startDate' : '-startDate', limit: opts.limit ?? 20, depth: 1 })
+  return payload.find({ collection: 'events', where, sort: '-startDate', limit: opts.limit ?? 50, depth: 1 })
 }
 
 export async function getEvent(slug: string, draft = false) {
@@ -79,4 +118,21 @@ export async function getPartners() {
 
 export async function getPage(slug: string, draft = false) {
   return bySlug('pages', slug, draft)
+}
+
+export async function getMediaByFilename(filename: string) {
+  const payload = await payloadClient()
+  const res = await payload.find({
+    collection: 'media',
+    where: {
+      or: [
+        { filename: { equals: filename } },
+        { filename: { like: filename } },
+        { legacyUrl: { contains: filename } },
+      ],
+    },
+    limit: 1,
+    depth: 1,
+  })
+  return res.docs[0] ?? null
 }
