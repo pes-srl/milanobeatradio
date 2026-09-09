@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { IconFacebook, IconInstagram } from '@/src/components/icons'
+import { IconFacebook, IconInstagram, IconPaypal } from '@/src/components/icons'
 import { getSite } from '@/src/lib/queries'
 import { MAIN_NAV, MORE_NAV } from './nav'
 
@@ -22,6 +22,7 @@ export async function Footer() {
             {site?.facebook && (
               <a href={site.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="hover:text-brand"><IconFacebook size={16} /></a>
             )}
+            <a href="https://www.paypal.com" target="_blank" rel="noreferrer" aria-label="PayPal" className="hover:text-brand"><IconPaypal size={16} /></a>
           </span>
         </div>
       </div>
