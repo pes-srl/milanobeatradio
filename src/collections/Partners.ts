@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { authenticated, publishedOrAuthenticated } from '@/src/access'
+import { authenticated, isAdmin, publishedOrAuthenticated } from '@/src/access'
 import { versions } from './shared'
 
 /** Sponsors / partners (legacy CPT `qtsponsor`). Drag-sortable in the admin list (`orderable`). */
@@ -16,7 +16,7 @@ export const Partners: CollectionConfig = {
       en: 'Logos shown on the home page and Chi siamo. Drag rows to reorder. Unticking «Active» hides one without deleting it.',
     },
   },
-  access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
+  access: { read: publishedOrAuthenticated, create: isAdmin, update: isAdmin, delete: isAdmin },
   versions,
   fields: [
     { name: 'name', type: 'text', label: { it: 'Nome', en: 'Name' }, required: true },

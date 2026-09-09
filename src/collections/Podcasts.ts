@@ -1,5 +1,5 @@
 import type { CollectionConfig, TextFieldValidation } from 'payload'
-import { authenticated, publishedOrAuthenticated } from '@/src/access'
+import { authenticated, isAdmin, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
@@ -27,7 +27,7 @@ export const Podcasts: CollectionConfig = {
       en: 'Podcasts. Detail at /podcast/[slug]; the /interviste page is this same list, filtered.',
     },
   },
-  access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
+  access: { read: publishedOrAuthenticated, create: isAdmin, update: isAdmin, delete: isAdmin },
   versions,
   fields: [
     { name: 'title', type: 'text', label: { it: 'Titolo', en: 'Title' }, required: true },

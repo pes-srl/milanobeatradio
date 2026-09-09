@@ -11,3 +11,6 @@ export const publishedOrAuthenticated: Access = ({ req }) => {
 
 /** Public read for collections without drafts (taxonomies, media). */
 export const anyone: Access = () => true
+
+/** Admin-only: create / update / delete restricted to the admin role. */
+export const isAdmin: Access = ({ req }) => req.user?.role === 'admin'

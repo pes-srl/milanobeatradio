@@ -1,12 +1,13 @@
 import type { CollectionConfig } from 'payload'
-import { anyone, authenticated } from '@/src/access'
+import { anyone, authenticated, isAdmin } from '@/src/access'
 import { slugField } from '@/src/fields/slug'
 
 type Labels = { singular: { it: string; en: string }; plural: { it: string; en: string } }
 type Localised = { it: string; en: string }
+type AccessMap = NonNullable<CollectionConfig['access']>
 
 /** Simple taxonomy factory: name, slug, optional description. No drafts (they are lookup tables). */
-const taxonomy = (slug: string, labels: Labels, description: Localised): CollectionConfig => ({
+const taxonomy = (slug: string, labels: Labels, description: Localised, access?: AccessMap): CollectionConfig => ({
   slug,
   labels,
   admin: {
@@ -15,7 +16,7 @@ const taxonomy = (slug: string, labels: Labels, description: Localised): Collect
     defaultColumns: ['name', 'slug'],
     description,
   },
-  access: { read: anyone, create: authenticated, update: authenticated, delete: authenticated },
+  access: access ?? { read: anyone, create: authenticated, update: authenticated, delete: authenticated },
   fields: [
     { name: 'name', type: 'text', label: { it: 'Nome', en: 'Name' }, required: true },
     slugField('name'),
@@ -48,6 +49,9 @@ export const PodcastFilters = taxonomy(
     it: 'I filtri dei podcast. Quello chiamato «intervista» è ciò che alimenta la pagina /interviste: non cancellarlo.',
     en: 'Podcast filters. The one named «intervista» is what feeds the /interviste page: do not delete it.',
   },
+  // Write operations restricted to admin: editors have no reason to change podcast filters,
+  // and accidentally deleting «intervista» would break the /interviste page.
+  { read: anyone, create: isAdmin, update: isAdmin, delete: isAdmin },
 )
 
 export const Genres = taxonomy(

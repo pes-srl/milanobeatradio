@@ -1,5 +1,5 @@
 import type { GlobalConfig } from 'payload'
-import { anyone, authenticated } from '@/src/access'
+import { anyone, isAdmin } from '@/src/access'
 
 const image = (name: string, label: { it: string; en: string }) => ({
   name,
@@ -20,7 +20,7 @@ export const Site: GlobalConfig = {
       en: 'Logo, claim, home page images and social links: site-wide settings, not editorial content.',
     },
   },
-  access: { read: anyone, update: authenticated },
+  access: { read: anyone, update: isAdmin },
   fields: [
     {
       type: 'tabs',

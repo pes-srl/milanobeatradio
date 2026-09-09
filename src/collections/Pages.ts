@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { authenticated, publishedOrAuthenticated } from '@/src/access'
+import { authenticated, isAdmin, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { previewFor } from '@/src/lib/preview'
@@ -23,7 +23,7 @@ export const Pages: CollectionConfig = {
       en: 'Plain text pages, such as the privacy policy. Published at /[slug].',
     },
   },
-  access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
+  access: { read: publishedOrAuthenticated, create: isAdmin, update: isAdmin, delete: isAdmin },
   versions,
   fields: [
     { name: 'title', type: 'text', label: { it: 'Titolo', en: 'Title' }, required: true },
