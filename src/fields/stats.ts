@@ -1,4 +1,5 @@
 import type { Field } from 'payload'
+import { isAdminField } from '@/src/access'
 
 /**
  * Engagement counters carried over from the Pro.Radio theme (`proradio_reaktions_*`).
@@ -10,6 +11,8 @@ export const statsField: Field = {
   name: 'stats',
   type: 'group',
   label: { it: 'Statistiche', en: 'Stats' },
+  // Editors have no use for raw engagement counters: hide the whole group from them.
+  access: { read: isAdminField },
   admin: {
     position: 'sidebar',
     description: {

@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { authenticated, publishedOrAuthenticated } from '@/src/access'
+import { authenticated, isAdminField, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
@@ -73,6 +73,7 @@ export const Posts: CollectionConfig = {
       type: 'text',
       label: { it: 'URL WordPress (legacy)', en: 'Legacy WordPress path' },
       index: true,
+      access: { read: isAdminField },
       admin: { readOnly: true, position: 'sidebar', description: { it: 'Percorso sul vecchio sito, usato per i redirect 301.', en: 'Path on the old site, used for 301 redirects.' } },
     },
     seoField,

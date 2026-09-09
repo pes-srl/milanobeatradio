@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { anyone, authenticated } from '@/src/access'
+import { anyone, authenticated, isAdminField } from '@/src/access'
 
 const webp = (quality: number) => ({ format: 'webp' as const, options: { quality } })
 
@@ -59,6 +59,7 @@ export const Media: CollectionConfig = {
       type: 'text',
       label: { it: 'URL originale (WordPress)', en: 'Legacy URL (WordPress)' },
       index: true,
+      access: { read: isAdminField },
       admin: { readOnly: true, position: 'sidebar', description: { it: 'Compilato dalla migrazione.', en: 'Filled by the migration.' } },
     },
   ],

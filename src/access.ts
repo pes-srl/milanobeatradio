@@ -1,4 +1,4 @@
-import type { Access } from 'payload'
+import type { Access, FieldAccess } from 'payload'
 
 /** Anyone logged into the admin. */
 export const authenticated: Access = ({ req }) => Boolean(req.user)
@@ -12,5 +12,8 @@ export const publishedOrAuthenticated: Access = ({ req }) => {
 /** Public read for collections without drafts (taxonomies, media). */
 export const anyone: Access = () => true
 
-/** Admin-only: create / update / delete restricted to the admin role. */
+/** Admin-only: create / update / delete restricted to the admin role. Collection-level. */
 export const isAdmin: Access = ({ req }) => req.user?.role === 'admin'
+
+/** Admin-only: field-level read/write access (FieldAccess has a wider id type than Access). */
+export const isAdminField: FieldAccess = ({ req }) => req.user?.role === 'admin'
