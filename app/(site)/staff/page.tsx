@@ -6,6 +6,8 @@ import { getMediaByFilename, getStaff } from '@/src/lib/queries'
 export const metadata: Metadata = { title: 'Staff' }
 export const revalidate = 300
 
+const STAFF_ORDER = ['criss', 'luca', 'emilio']
+
 export default async function StaffPage() {
   const [staff, heroMedia] = await Promise.all([
     getStaff(),
@@ -16,19 +18,27 @@ export default async function StaffPage() {
     heroMedia ??
     'https://pub-df0e74f6b3f940c5a570551308d6944f.r2.dev/media/logo%20party%20no%20sfondo%20FB_1080x1080_4.webp'
 
+  const sortedStaff = [...staff.docs].sort((a, b) => {
+    const idxA = STAFF_ORDER.indexOf(a.slug)
+    const idxB = STAFF_ORDER.indexOf(b.slug)
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB
+    if (idxA !== -1) return -1
+    if (idxB !== -1) return 1
+    return 0
+  })
+
   return (
     <>
       <PageHero
         overtitle="Milano Beat Radio Team"
         title="Staff"
-        subtitle="I resident DJ, gli speaker e la squadra ufficiale di Milano Beat Radio."
         image={heroSrc}
         size="lg"
       />
       <section className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8">
-        {staff.docs.length > 0 ? (
+        {sortedStaff.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {staff.docs.map((m, i) => (
+            {sortedStaff.map((m, i) => (
               <StaffCard key={m.id} member={m} priority={i < 3} />
             ))}
           </div>

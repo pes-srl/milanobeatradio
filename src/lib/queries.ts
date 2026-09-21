@@ -21,10 +21,11 @@ export async function getSite() {
   return payload.findGlobal({ slug: 'site', depth: 1 })
 }
 
-export async function getPosts(opts: { limit?: number; page?: number; category?: string } = {}) {
+export async function getPosts(opts: { limit?: number; page?: number; category?: string; tag?: string } = {}) {
   const payload = await payloadClient()
   const where: Where = { and: [live] }
   if (opts.category) where.and!.push({ 'category.slug': { equals: opts.category } })
+  if (opts.tag) where.and!.push({ 'tags.slug': { equals: opts.tag } })
   return payload.find({ collection: 'posts', where, sort: '-publishedAt', limit: opts.limit ?? 12, page: opts.page ?? 1, depth: 1 })
 }
 
@@ -32,7 +33,7 @@ export async function getPost(slug: string, draft = false) {
   return bySlug('posts', slug, draft)
 }
 
-export async function getEvents(opts: { upcoming?: boolean; limit?: number; minCount?: number } = {}) {
+export async function getEvents(opts: { upcoming?: boolean; limit?: number; minCount?: number; page?: number } = {}) {
   const payload = await payloadClient()
 
   if (opts.upcoming) {
@@ -75,7 +76,7 @@ export async function getEvents(opts: { upcoming?: boolean; limit?: number; minC
   }
 
   const where: Where = { and: [live] }
-  return payload.find({ collection: 'events', where, sort: '-startDate', limit: opts.limit ?? 50, depth: 1 })
+  return payload.find({ collection: 'events', where, sort: '-startDate', limit: opts.limit ?? 50, page: opts.page ?? 1, depth: 1 })
 }
 
 export async function getEvent(slug: string, draft = false) {
@@ -127,7 +128,6 @@ export async function getMediaByFilename(filename: string) {
     where: {
       or: [
         { filename: { equals: filename } },
-        { filename: { like: filename } },
         { legacyUrl: { contains: filename } },
       ],
     },

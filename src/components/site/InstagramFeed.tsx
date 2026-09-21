@@ -118,7 +118,7 @@ export function InstagramFeed({ site }: Props) {
               rel="noreferrer"
               className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] px-7 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_4px_20px_rgba(225,48,108,0.4)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(225,48,108,0.7)] active:scale-95 shrink-0"
             >
-              <IconInstagram size={18} />
+              <IconInstagram size={18} variant="glyph" className="text-white" />
               <span>Segui su IG</span>
             </a>
           </div>

@@ -8,10 +8,20 @@ import { SocialLinks } from './SocialLinks'
 export function StaffCard({ member, priority = false }: { member: Staff; priority?: boolean }) {
   const href = `/staff/${member.slug}`
   const img = imageUrl(member.photo, 'card')
+
   return (
     <article className="group relative aspect-[4/5] overflow-hidden bg-[#0f0f0f]">
       <Link href={href} className="absolute inset-0" aria-label={member.title}>
-        {img && <Image src={img} alt={imageAlt(member.photo, member.title)} fill priority={priority} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px" className="object-contain object-top transition duration-500 group-hover:scale-105" />}
+        {img && (
+          <Image
+            src={img}
+            alt={imageAlt(member.photo, member.title)}
+            fill
+            priority={priority}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+            className="object-cover object-top transition duration-500 group-hover:scale-105"
+          />
+        )}
         <div className="overlay absolute inset-0" />
         <span className="absolute right-4 top-4 grid size-11 place-items-center rounded-full border-2 border-white bg-black/40 text-white transition group-hover:bg-brand">
           <IconPerson size={18} />

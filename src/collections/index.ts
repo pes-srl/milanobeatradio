@@ -6,7 +6,7 @@ import { Podcasts } from './Podcasts'
 import { Posts } from './Posts'
 import { Shows } from './Shows'
 import { Staff } from './Staff'
-import { Categories, EventTypes, Genres, PodcastFilters } from './taxonomies'
+import { Categories, EventTypes, Genres, PodcastFilters, Tags } from './taxonomies'
 import { Users } from './Users'
 
 export const collections = [
@@ -24,6 +24,7 @@ export const collections = [
   EventTypes,
   PodcastFilters,
   Genres,
+  Tags,
   // system
   Users,
 ]

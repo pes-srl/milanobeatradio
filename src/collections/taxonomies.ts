@@ -62,3 +62,12 @@ export const Genres = taxonomy(
     en: 'Musical genres of the shows. Shown as the label on each show card.',
   },
 )
+
+export const Tags = taxonomy(
+  'tags',
+  { singular: { it: 'Tag', en: 'Tag' }, plural: { it: 'Tag', en: 'Tags' } },
+  {
+    it: 'I tag delle Flash News. Cliccando su un tag nella pagina articolo si filtrano le news per quell\'argomento.',
+    en: 'Flash News tags. Clicking a tag on the article page filters news by that topic.',
+  },
+)

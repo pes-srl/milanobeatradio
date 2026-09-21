@@ -55,6 +55,20 @@ export const Posts: CollectionConfig = {
       admin: { position: 'sidebar' },
     },
     {
+      name: 'tags',
+      type: 'relationship',
+      relationTo: 'tags',
+      hasMany: true,
+      label: { it: 'Tag', en: 'Tags' },
+      admin: {
+        position: 'sidebar',
+        description: {
+          it: 'Seleziona o crea i tag tematici. Servono come link di filtro sugli articoli.',
+          en: 'Select or create topic tags. They act as filter links on articles.',
+        },
+      },
+    },
+    {
       name: 'publishedAt',
       type: 'date',
       label: { it: 'Data di pubblicazione', en: 'Published at' },

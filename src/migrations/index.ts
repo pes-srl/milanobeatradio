@@ -3,6 +3,7 @@ import * as migration_20260907_094728_users_roles_podcast_audio_file from './202
 import * as migration_20260907_101241_content_model_phase2 from './20260907_101241_content_model_phase2';
 import * as migration_20260907_101243_drop_show_genre from './20260907_101243_drop_show_genre';
 import * as migration_20260907_212321_stats_counters from './20260907_212321_stats_counters';
+import * as migration_20260921_154421 from './20260921_154421';
 
 export const migrations = [
   {
@@ -28,6 +29,11 @@ export const migrations = [
   {
     up: migration_20260907_212321_stats_counters.up,
     down: migration_20260907_212321_stats_counters.down,
-    name: '20260907_212321_stats_counters'
+    name: '20260907_212321_stats_counters',
+  },
+  {
+    up: migration_20260921_154421.up,
+    down: migration_20260921_154421.down,
+    name: '20260921_154421'
   },
 ];

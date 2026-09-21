@@ -80,6 +80,7 @@ export interface Config {
     'event-types': EventType;
     'podcast-filters': PodcastFilter;
     genres: Genre;
+    tags: Tag;
     users: User;
     'payload-kv': PayloadKv;
     'payload-jobs': PayloadJob;
@@ -101,6 +102,7 @@ export interface Config {
     'event-types': EventTypesSelect<false> | EventTypesSelect<true>;
     'podcast-filters': PodcastFiltersSelect<false> | PodcastFiltersSelect<true>;
     genres: GenresSelect<false> | GenresSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
@@ -184,6 +186,10 @@ export interface Post {
   cover?: (number | null) | Media;
   category?: (number | Category)[] | null;
   author?: (number | null) | User;
+  /**
+   * Select or create topic tags. They act as filter links on articles.
+   */
+  tags?: (number | Tag)[] | null;
   publishedAt?: string | null;
   /**
    * Seeded with the WordPress totals, then incremented live by real visits. Editable by hand, but rarely worth it.
@@ -314,6 +320,23 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
+}
+/**
+ * Flash News tags. Clicking a tag on the article page filters news by that topic.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: number;
+  name: string;
+  /**
+   * Leave empty to generate from the title. Lowercase letters, numbers and dashes only.
+   */
+  slug: string;
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * City events: list at /eventi, detail at /eventi/[slug]. Only upcoming ones appear on the home page.
@@ -848,6 +871,10 @@ export interface PayloadLockedDocument {
         value: number | Genre;
       } | null)
     | ({
+        relationTo: 'tags';
+        value: number | Tag;
+      } | null)
+    | ({
         relationTo: 'users';
         value: number | User;
       } | null);
@@ -905,6 +932,7 @@ export interface PostsSelect<T extends boolean = true> {
   cover?: T;
   category?: T;
   author?: T;
+  tags?: T;
   publishedAt?: T;
   stats?:
     | T
@@ -1201,6 +1229,17 @@ export interface PodcastFiltersSelect<T extends boolean = true> {
  * via the `definition` "genres_select".
  */
 export interface GenresSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   description?: T;

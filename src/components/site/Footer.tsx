@@ -15,12 +15,28 @@ export async function Footer() {
               {item.label}
             </Link>
           ))}
-          <span className="ml-2 flex items-center gap-3 text-white/90">
+          <span className="ml-2 flex items-center gap-3">
             {site?.instagram && (
-              <a href={site.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="hover:text-brand"><IconInstagram size={16} /></a>
+              <a
+                href={site.instagram}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="transition-transform duration-200 hover:scale-110 active:scale-95"
+              >
+                <IconInstagram size={20} />
+              </a>
             )}
             {site?.facebook && (
-              <a href={site.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="hover:text-brand"><IconFacebook size={16} /></a>
+              <a
+                href={site.facebook}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                className="transition-transform duration-200 hover:scale-110 active:scale-95"
+              >
+                <IconFacebook size={20} />
+              </a>
             )}
           </span>
         </div>

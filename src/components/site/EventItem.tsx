@@ -1,51 +1,104 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Event } from '@/src/payload-types'
-import { IconCalendarAdd } from '@/src/components/icons'
+import { IconCalendarAdd, IconPin } from '@/src/components/icons'
 import { fmtDay, fmtMonthYear, googleCalendarUrl } from '@/src/lib/format'
 import { imageAlt, imageUrl } from '@/src/lib/media'
 import { StatsRow } from './StatsRow'
 
-/** Event list item as on the original: big day, month, venue — city, title, artists, calendar icon. */
+/** Event list item: clean poster on top, date badge + title + venue/artists in dedicated section below. */
 export function EventItem({ event, priority = false }: { event: Event; priority?: boolean }) {
   const href = `/eventi/${event.slug}`
   const img = imageUrl(event.cover, 'hero')
+
   return (
-    <article className="group relative mx-auto aspect-[16/10] w-full max-w-[610px] overflow-hidden bg-[#0f0f0f] sm:aspect-[16/9]">
-      <Link href={href} className="absolute inset-0" aria-label={event.title}>
-        {img && (
-          <Image src={img} alt={imageAlt(event.cover, event.title)} fill priority={priority} sizes="(max-width: 640px) 100vw, 610px" className="object-cover opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-90" />
-        )}
-        <div className="overlay absolute inset-0" />
-      </Link>
-      <div className="pointer-events-none absolute left-5 top-5">
-        <p className="text-6xl font-light leading-none">{fmtDay(event.startDate)}</p>
-        <p className="mt-1 text-lg">{fmtMonthYear(event.startDate)}</p>
+    <article className="group relative flex flex-col w-full max-w-[610px] mx-auto overflow-hidden rounded-2xl bg-[#0f0f0f] border border-white/10 transition-all duration-300 hover:border-brand/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
+      {/* Poster Image Container */}
+      <div className="relative aspect-video w-full overflow-hidden bg-black/40 sm:aspect-[16/10]">
+        <Link href={href} className="relative block size-full" aria-label={event.title}>
+          {img ? (
+            <Image
+              src={img}
+              alt={imageAlt(event.cover, event.title)}
+              fill
+              priority={priority}
+              sizes="(max-width: 640px) 100vw, 610px"
+              className="object-cover transition duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <div className="size-full bg-gradient-to-br from-brand-dark/40 to-black" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/60 via-transparent to-black/20 opacity-80 transition duration-300 group-hover:opacity-40" />
+        </Link>
+
+        {/* Add to Google Calendar Button */}
+        <a
+          href={googleCalendarUrl({
+            title: event.title,
+            startDate: event.startDate,
+            endDate: event.endDate,
+            address: event.address,
+            venueName: event.venueName,
+          })}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Aggiungi al calendario"
+          className="absolute right-3.5 top-3.5 z-10 grid size-10 place-items-center rounded-full border border-white/20 bg-black/60 text-white shadow-md backdrop-blur-md transition duration-200 hover:scale-110 hover:border-brand hover:bg-brand"
+        >
+          <IconCalendarAdd size={17} />
+        </a>
       </div>
-      <a
-        href={googleCalendarUrl({ title: event.title, startDate: event.startDate, endDate: event.endDate, address: event.address, venueName: event.venueName })}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Aggiungi al calendario"
-        className="absolute right-5 top-5 grid size-11 place-items-center rounded-full border-2 border-white bg-black/40 text-white transition hover:bg-brand"
-      >
-        <IconCalendarAdd size={18} />
-      </a>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 p-6">
-        {(event.venueName || event.city) && (
-          <p className="text-xs font-bold">
-            {event.venueName}
-            {event.venueName && event.city ? ' — ' : ''}
-            {event.city}
-          </p>
-        )}
-        <h3 className="mt-1 text-2xl font-medium leading-tight sm:text-3xl">
-          <Link href={href} className="pointer-events-auto hover:text-brand">
-            {event.title}
+
+      {/* Info Section */}
+      <div className="flex flex-1 flex-col justify-between p-5 sm:p-6">
+        <div className="flex items-start gap-4">
+          {/* Date Badge */}
+          <div className="flex shrink-0 flex-col items-center justify-center rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-center min-w-[58px] transition-colors group-hover:border-brand/30 group-hover:bg-brand/10">
+            <span className="text-2xl font-bold leading-none text-white tracking-tight">
+              {fmtDay(event.startDate)}
+            </span>
+            <span className="mt-1 text-[11px] font-bold uppercase tracking-wider text-brand">
+              {fmtMonthYear(event.startDate)}
+            </span>
+          </div>
+
+          {/* Event Details */}
+          <div className="min-w-0 flex-1">
+            {(event.venueName || event.city) && (
+              <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-white/60">
+                <IconPin size={13} className="shrink-0 text-brand" />
+                <span className="truncate">
+                  {event.venueName}
+                  {event.venueName && event.city ? ' — ' : ''}
+                  {event.city}
+                </span>
+              </div>
+            )}
+
+            <h3 className="mt-1 text-lg font-bold leading-snug text-white transition-colors group-hover:text-brand sm:text-xl">
+              <Link href={href} className="hover:underline">
+                {event.title}
+              </Link>
+            </h3>
+
+            {event.artists && (
+              <p className="mt-1.5 text-sm font-medium text-brand/90 line-clamp-1">
+                {event.artists}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Footer info: Stats & Link */}
+        <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3.5">
+          <StatsRow stats={event.stats} />
+          <Link
+            href={href}
+            className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-white/70 transition hover:text-brand"
+          >
+            Dettagli →
           </Link>
-        </h3>
-        {event.artists && <p className="mt-2 text-brand">{event.artists}</p>}
-        <StatsRow stats={event.stats} className="mt-2" />
+        </div>
       </div>
     </article>
   )

@@ -57,7 +57,9 @@ export function HomeHero({ site }: { site: Site | null }) {
 
         {/* Main Title */}
         <h1 className="mt-6 text-center text-5xl font-black uppercase tracking-tight leading-[0.95] text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)] sm:text-7xl lg:text-[88px]">
-          Milano Beat Radio
+          <span className="block sm:inline">Milano</span>
+          <span className="hidden sm:inline"> </span>
+          <span className="block sm:inline">Beat Radio</span>
         </h1>
 
         <AscoltaButton className="mt-8" />

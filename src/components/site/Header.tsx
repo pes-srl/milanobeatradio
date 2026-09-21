@@ -19,12 +19,28 @@ export async function Header() {
             <IconBell size={14} className="text-white/80" />
             {site?.claim ?? 'Your Event and Party Station'}
           </p>
-          <div className="flex items-center gap-4 text-white/90">
+          <div className="flex items-center gap-3">
             {site?.instagram && (
-              <a href={site.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="hover:text-brand"><IconInstagram size={16} /></a>
+              <a
+                href={site.instagram}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="transition-transform duration-200 hover:scale-110 active:scale-95"
+              >
+                <IconInstagram size={20} />
+              </a>
             )}
             {site?.facebook && (
-              <a href={site.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="hover:text-brand"><IconFacebook size={16} /></a>
+              <a
+                href={site.facebook}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                className="transition-transform duration-200 hover:scale-110 active:scale-95"
+              >
+                <IconFacebook size={20} />
+              </a>
             )}
           </div>
         </div>

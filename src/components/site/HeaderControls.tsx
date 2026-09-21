@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { usePlayer } from '@/src/player/PlayerProvider'
@@ -13,11 +14,16 @@ type Props = { instagram?: string | null; facebook?: string | null }
 export function HeaderControls({ instagram, facebook }: Props) {
   const { status, toggle, muted, toggleMute, volume, setVolume } = usePlayer()
   const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const [volumeOpen, setVolumeOpen] = useState(false)
   const volumeRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const isOn = status === 'playing' || status === 'loading'
   const level = muted ? 0 : volume
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Close the menu on navigation. Adjusting state during render (not an effect) per
   // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
@@ -60,10 +66,10 @@ export function HeaderControls({ instagram, facebook }: Props) {
             href={instagram}
             target="_blank"
             rel="noreferrer"
-            className="hdr-btn group hidden md:inline-flex"
+            className="hdr-btn group hidden md:inline-flex hover:border-[#E1306C]/60 hover:shadow-[0_0_15px_rgba(225,48,108,0.3)]"
             aria-label="Instagram"
           >
-            <IconInstagram size={20} className="transition-transform duration-300 group-hover:scale-110 group-hover:text-pink" />
+            <IconInstagram size={22} className="transition-transform duration-300 group-hover:scale-110" />
           </a>
         )}
         {facebook && (
@@ -71,10 +77,10 @@ export function HeaderControls({ instagram, facebook }: Props) {
             href={facebook}
             target="_blank"
             rel="noreferrer"
-            className="hdr-btn group hidden md:inline-flex"
+            className="hdr-btn group hidden md:inline-flex hover:border-[#1877F2]/60 hover:shadow-[0_0_15px_rgba(24,119,242,0.3)]"
             aria-label="Facebook"
           >
-            <IconFacebook size={20} className="transition-transform duration-300 group-hover:scale-110 group-hover:text-brand" />
+            <IconFacebook size={22} className="transition-transform duration-300 group-hover:scale-110" />
           </a>
         )}
         <button
@@ -132,82 +138,87 @@ export function HeaderControls({ instagram, facebook }: Props) {
         </div>
       </div>
 
-      {/* Off-canvas menu */}
-      <div className={`fixed inset-0 z-[60] ${open ? '' : 'pointer-events-none'}`} aria-hidden={!open}>
-        <div
-          className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}
-          onClick={() => setOpen(false)}
-        />
-        <nav
-          aria-label="Menu completo"
-          className={`absolute right-0 top-0 flex h-full w-84 max-w-[88vw] flex-col border-l border-white/10 bg-[#0d0718]/95 p-6 backdrop-blur-2xl shadow-[0_0_60px_rgba(0,0,0,0.9)] transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}
-        >
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
-            <span className="text-xs font-bold uppercase tracking-widest text-white/50">Menu</span>
-            <button
-              type="button"
+      {/* Off-canvas menu via portal to body to avoid sticky/backdrop-filter containment */}
+      {mounted &&
+        createPortal(
+          <div className={`fixed inset-0 z-[100] ${open ? '' : 'pointer-events-none'}`} aria-hidden={!open}>
+            <div
+              className={`fixed inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}
               onClick={() => setOpen(false)}
-              className="hdr-btn !h-9 !min-w-9 text-white/70 hover:text-white"
-              aria-label="Chiudi il menu"
+            />
+            <nav
+              aria-label="Menu completo"
+              style={{ backgroundColor: 'rgba(28, 6, 54, 0.65)' }}
+              className={`fixed right-0 top-0 flex h-full h-dvh w-84 max-w-[88vw] flex-col overflow-y-auto border-l border-white/15 p-6 backdrop-blur-2xl shadow-[0_0_60px_rgba(0,0,0,0.9),-10px_0_40px_rgba(28,6,54,0.4)] transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}
             >
-              <IconClose size={20} />
-            </button>
-          </div>
-          <ul className="mt-6 space-y-2">
-            {MAIN_NAV.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="group flex items-center justify-between rounded-xl px-4 py-3 text-base font-bold uppercase tracking-wider text-white/90 transition-all duration-200 hover:bg-white/[0.08] hover:text-brand hover:shadow-[0_0_20px_rgba(200,36,227,0.2)]"
+              <div className="flex shrink-0 items-center justify-between border-b border-white/10 pb-4">
+                <span className="text-xs font-bold uppercase tracking-widest text-white/50">Menu</span>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="hdr-btn !h-9 !min-w-9 text-white/70 hover:text-white"
+                  aria-label="Chiudi il menu"
                 >
-                  <span>{item.label}</span>
-                  <span className="text-white/30 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-brand">→</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          {MORE_NAV.length > 0 && (
-            <ul className="mt-6 space-y-2 border-t border-white/10 pt-4">
-              {MORE_NAV.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="flex items-center rounded-xl px-4 py-2.5 text-sm uppercase tracking-wider text-white/70 transition hover:bg-white/[0.06] hover:text-white"
+                  <IconClose size={20} />
+                </button>
+              </div>
+              <ul className="mt-6 space-y-2">
+                {MAIN_NAV.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="group flex items-center justify-between rounded-xl px-4 py-3 text-base font-bold uppercase tracking-wider text-white/90 transition-all duration-200 hover:bg-white/[0.08] hover:text-brand hover:shadow-[0_0_20px_rgba(200,36,227,0.2)]"
+                    >
+                      <span>{item.label}</span>
+                      <span className="text-white/30 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-brand">→</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              {MORE_NAV.length > 0 && (
+                <ul className="mt-6 space-y-2 border-t border-white/10 pt-4">
+                  {MORE_NAV.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="flex items-center rounded-xl px-4 py-2.5 text-sm uppercase tracking-wider text-white/70 transition hover:bg-white/[0.06] hover:text-white"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div className="mt-auto shrink-0 flex items-center gap-3 border-t border-white/10 pt-6">
+                {instagram && (
+                  <a
+                    href={instagram}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hdr-btn flex-1 gap-2.5 text-xs font-semibold hover:border-[#E1306C]/60 hover:shadow-[0_0_15px_rgba(225,48,108,0.3)]"
+                    aria-label="Instagram"
                   >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-          <div className="mt-auto flex items-center gap-3 border-t border-white/10 pt-6">
-            {instagram && (
-              <a
-                href={instagram}
-                target="_blank"
-                rel="noreferrer"
-                className="hdr-btn flex-1 gap-2 text-xs font-semibold"
-                aria-label="Instagram"
-              >
-                <IconInstagram size={18} />
-                <span>Instagram</span>
-              </a>
-            )}
-            {facebook && (
-              <a
-                href={facebook}
-                target="_blank"
-                rel="noreferrer"
-                className="hdr-btn flex-1 gap-2 text-xs font-semibold"
-                aria-label="Facebook"
-              >
-                <IconFacebook size={18} />
-                <span>Facebook</span>
-              </a>
-            )}
-          </div>
-        </nav>
-      </div>
+                    <IconInstagram size={20} />
+                    <span>Instagram</span>
+                  </a>
+                )}
+                {facebook && (
+                  <a
+                    href={facebook}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hdr-btn flex-1 gap-2.5 text-xs font-semibold hover:border-[#1877F2]/60 hover:shadow-[0_0_15px_rgba(24,119,242,0.3)]"
+                    aria-label="Facebook"
+                  >
+                    <IconFacebook size={20} />
+                    <span>Facebook</span>
+                  </a>
+                )}
+              </div>
+            </nav>
+          </div>,
+          document.body
+        )}
     </>
   )
 }

@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react'
 
-type P = SVGProps<SVGSVGElement> & { size?: number }
+type P = SVGProps<SVGSVGElement> & { size?: number; variant?: 'badge' | 'glyph' }
 const base = ({ size = 18, ...rest }: P) => ({ width: size, height: size, viewBox: '0 0 24 24', fill: 'currentColor', 'aria-hidden': true, ...rest })
 
 export const IconPlay = (p: P) => (
@@ -24,21 +24,194 @@ export const IconVolume = (p: P) => (
 export const IconMute = (p: P) => (
   <svg {...base(p)} fill="none" stroke="currentColor" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" /><path d="M17 9l4 6M21 9l-4 6" /></svg>
 )
-export const IconInstagram = (p: P) => (
-  <svg {...base(p)} fill="none" stroke="currentColor" strokeWidth={2}><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
-)
-export const IconFacebook = (p: P) => (
-  <svg {...base(p)}><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.3c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.4H7.4V14h2.8v8z" /></svg>
-)
-export const IconLinkedin = (p: P) => (
-  <svg {...base(p)}><path d="M6.9 8.5H3.6V21h3.3zM5.2 3a1.9 1.9 0 100 3.8 1.9 1.9 0 000-3.8zM21 13.3c0-3.6-1.9-5.2-4.5-5.2-2 0-2.9 1.1-3.4 1.9V8.5H9.8V21h3.3v-6.9c0-1.8.3-3.6 2.6-3.6 2.2 0 2.2 2.1 2.2 3.7V21H21z" /></svg>
-)
-export const IconTiktok = (p: P) => (
-  <svg {...base(p)}><path d="M16 3c.3 2.3 1.6 3.7 3.9 3.9v3.2c-1.5 0-2.8-.4-3.9-1.2v6.3A5.6 5.6 0 1110.4 9.6v3.3a2.4 2.4 0 102.4 2.4V3z" /></svg>
-)
-export const IconSpotify = (p: P) => (
-  <svg {...base(p)}><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm4.3 14.5a.7.7 0 01-1 .2c-2.6-1.6-5.9-2-9.8-1.1a.7.7 0 11-.3-1.4c4.3-1 8-.5 10.9 1.3.3.2.4.7.2 1zm1.2-2.7a.9.9 0 01-1.2.3c-3-1.8-7.5-2.4-11-1.3a.9.9 0 11-.5-1.7c4-1.2 9-.6 12.4 1.5.4.3.5.8.3 1.2zm.1-2.9C14 8.8 8.3 8.6 4.9 9.6a1 1 0 11-.6-2c3.9-1.2 10.3-1 14.4 1.5a1 1 0 01-1.1 1.8z" /></svg>
-)
+export const IconInstagram = ({ size = 18, className, variant = 'badge', ...rest }: P) => {
+  const isWhite = className?.includes('text-white')
+  if (isWhite || variant === 'glyph') {
+    const strokeVal = isWhite ? 'currentColor' : 'url(#mbr-ig-grad)'
+    const fillVal = isWhite ? 'currentColor' : 'url(#mbr-ig-grad)'
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className} {...rest}>
+        <defs>
+          <linearGradient id="mbr-ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop stopColor="#f09433" offset="0%" />
+            <stop stopColor="#e6683c" offset="25%" />
+            <stop stopColor="#dc2743" offset="50%" />
+            <stop stopColor="#cc2366" offset="75%" />
+            <stop stopColor="#bc1888" offset="100%" />
+          </linearGradient>
+        </defs>
+        <rect x="3" y="3" width="18" height="18" rx="5" stroke={strokeVal} strokeWidth={2} />
+        <circle cx="12" cy="12" r="4" stroke={strokeVal} strokeWidth={2} />
+        <circle cx="17.5" cy="6.5" r="1" fill={fillVal} />
+      </svg>
+    )
+  }
+
+  // Official Instagram Badge (multi-stop gradient rounded rectangle with white camera)
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className} {...rest}>
+      <defs>
+        <linearGradient id="mbr-ig-badge-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop stopColor="#f09433" offset="0%" />
+          <stop stopColor="#e6683c" offset="25%" />
+          <stop stopColor="#dc2743" offset="50%" />
+          <stop stopColor="#cc2366" offset="75%" />
+          <stop stopColor="#bc1888" offset="100%" />
+        </linearGradient>
+      </defs>
+      <rect width="24" height="24" rx="6.5" fill="url(#mbr-ig-badge-grad)" />
+      <rect x="5.5" y="5.5" width="13" height="13" rx="3.6" stroke="#ffffff" strokeWidth="1.6" fill="none" />
+      <circle cx="12" cy="12" r="3.2" stroke="#ffffff" strokeWidth="1.6" fill="none" />
+      <circle cx="15.8" cy="8.2" r="0.9" fill="#ffffff" />
+    </svg>
+  )
+}
+export const IconFacebook = ({ size = 18, className, variant = 'badge', fill, ...rest }: P) => {
+  const isWhite = className?.includes('text-white')
+  if (isWhite || variant === 'glyph') {
+    const fillVal = fill || (isWhite ? 'currentColor' : '#1877F2')
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill={fillVal} aria-hidden="true" className={className} {...rest}>
+        <path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.3c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.4H7.4V14h2.8v8z" />
+      </svg>
+    )
+  }
+
+  // Official Facebook Logo (Meta Blue #1877F2 circle with white 'f')
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className} {...rest}>
+      <circle cx="12" cy="12" r="12" fill={fill || '#1877F2'} />
+      <path
+        fill="#ffffff"
+        d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.3c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.4H7.4V14h2.8v8z"
+      />
+    </svg>
+  )
+}
+export const IconLinkedin = ({ size = 18, className, variant = 'badge', fill, ...rest }: P) => {
+  const isWhite = className?.includes('text-white')
+  if (isWhite || variant === 'glyph') {
+    const fillVal = fill || (isWhite ? 'currentColor' : '#0A66C2')
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill={fillVal} aria-hidden="true" className={className} {...rest}>
+        <path d="M6.9 8.5H3.6V21h3.3zM5.2 3a1.9 1.9 0 100 3.8 1.9 1.9 0 000-3.8zM21 13.3c0-3.6-1.9-5.2-4.5-5.2-2 0-2.9 1.1-3.4 1.9V8.5H9.8V21h3.3v-6.9c0-1.8.3-3.6 2.6-3.6 2.2 0 2.2 2.1 2.2 3.7V21H21z" />
+      </svg>
+    )
+  }
+
+  // Official LinkedIn Logo (LinkedIn Blue #0A66C2 rounded square with white "in")
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className} {...rest}>
+      <rect width="24" height="24" rx="5" fill={fill || '#0A66C2'} />
+      <path
+        fill="#ffffff"
+        d="M6.9 8.5H3.6V21h3.3zM5.2 3a1.9 1.9 0 100 3.8 1.9 1.9 0 000-3.8zM21 13.3c0-3.6-1.9-5.2-4.5-5.2-2 0-2.9 1.1-3.4 1.9V8.5H9.8V21h3.3v-6.9c0-1.8.3-3.6 2.6-3.6 2.2 0 2.2 2.1 2.2 3.7V21H21z"
+      />
+    </svg>
+  )
+}
+export const IconTiktok = ({ size = 18, className, variant = 'badge', ...rest }: P) => {
+  const isWhite = className?.includes('text-white')
+  if (isWhite) {
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className} {...rest}>
+        <path d="M16 3c.3 2.3 1.6 3.7 3.9 3.9v3.2c-1.5 0-2.8-.4-3.9-1.2v6.3A5.6 5.6 0 1110.4 9.6v3.3a2.4 2.4 0 102.4 2.4V3z" />
+      </svg>
+    )
+  }
+  if (variant === 'glyph') {
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className} {...rest}>
+        <path
+          d="M16 3c.3 2.3 1.6 3.7 3.9 3.9v3.2c-1.5 0-2.8-.4-3.9-1.2v6.3A5.6 5.6 0 1110.4 9.6v3.3a2.4 2.4 0 102.4 2.4V3z"
+          fill="#00F2FE"
+          transform="translate(-0.8, -0.6)"
+          opacity="0.9"
+        />
+        <path
+          d="M16 3c.3 2.3 1.6 3.7 3.9 3.9v3.2c-1.5 0-2.8-.4-3.9-1.2v6.3A5.6 5.6 0 1110.4 9.6v3.3a2.4 2.4 0 102.4 2.4V3z"
+          fill="#FE2C55"
+          transform="translate(0.8, 0.6)"
+          opacity="0.9"
+        />
+        <path
+          d="M16 3c.3 2.3 1.6 3.7 3.9 3.9v3.2c-1.5 0-2.8-.4-3.9-1.2v6.3A5.6 5.6 0 1110.4 9.6v3.3a2.4 2.4 0 102.4 2.4V3z"
+          fill="#ffffff"
+        />
+      </svg>
+    )
+  }
+
+  // Official TikTok Logo (black squircle background with iconic cyan #00F2FE & red #FE2C55 chromatic 3D note)
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className} {...rest}>
+      <rect width="24" height="24" rx="6" fill="#000000" />
+      <path
+        d="M16 3c.3 2.3 1.6 3.7 3.9 3.9v3.2c-1.5 0-2.8-.4-3.9-1.2v6.3A5.6 5.6 0 1110.4 9.6v3.3a2.4 2.4 0 102.4 2.4V3z"
+        fill="#00F2FE"
+        transform="translate(-0.8, -0.6)"
+        opacity="0.9"
+      />
+      <path
+        d="M16 3c.3 2.3 1.6 3.7 3.9 3.9v3.2c-1.5 0-2.8-.4-3.9-1.2v6.3A5.6 5.6 0 1110.4 9.6v3.3a2.4 2.4 0 102.4 2.4V3z"
+        fill="#FE2C55"
+        transform="translate(0.8, 0.6)"
+        opacity="0.9"
+      />
+      <path
+        d="M16 3c.3 2.3 1.6 3.7 3.9 3.9v3.2c-1.5 0-2.8-.4-3.9-1.2v6.3A5.6 5.6 0 1110.4 9.6v3.3a2.4 2.4 0 102.4 2.4V3z"
+        fill="#ffffff"
+      />
+    </svg>
+  )
+}
+export const IconSpotify = ({ size = 18, className, variant = 'badge', fill, ...rest }: P) => {
+  const isWhite = className?.includes('text-white')
+  if (isWhite) {
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className} {...rest}>
+        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm4.3 14.5a.7.7 0 01-1 .2c-2.6-1.6-5.9-2-9.8-1.1a.7.7 0 11-.3-1.4c4.3-1 8-.5 10.9 1.3.3.2.4.7.2 1zm1.2-2.7a.9.9 0 01-1.2.3c-3-1.8-7.5-2.4-11-1.3a.9.9 0 11-.5-1.7c4-1.2 9-.6 12.4 1.5.4.3.5.8.3 1.2zm.1-2.9C14 8.8 8.3 8.6 4.9 9.6a1 1 0 11-.6-2c3.9-1.2 10.3-1 14.4 1.5a1 1 0 01-1.1 1.8z" />
+      </svg>
+    )
+  }
+  if (variant === 'glyph') {
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill={fill || '#1DB954'} aria-hidden="true" className={className} {...rest}>
+        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm4.3 14.5a.7.7 0 01-1 .2c-2.6-1.6-5.9-2-9.8-1.1a.7.7 0 11-.3-1.4c4.3-1 8-.5 10.9 1.3.3.2.4.7.2 1zm1.2-2.7a.9.9 0 01-1.2.3c-3-1.8-7.5-2.4-11-1.3a.9.9 0 11-.5-1.7c4-1.2 9-.6 12.4 1.5.4.3.5.8.3 1.2zm.1-2.9C14 8.8 8.3 8.6 4.9 9.6a1 1 0 11-.6-2c3.9-1.2 10.3-1 14.4 1.5a1 1 0 01-1.1 1.8z" />
+      </svg>
+    )
+  }
+
+  // Official Spotify Logo (#1DB954 green circle with black sound waves)
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className} {...rest}>
+      <circle cx="12" cy="12" r="12" fill={fill || '#1DB954'} />
+      <path
+        fill="#000000"
+        d="M16.3 16.5a.7.7 0 01-1 .2c-2.6-1.6-5.9-2-9.8-1.1a.7.7 0 11-.3-1.4c4.3-1 8-.5 10.9 1.3.3.2.4.7.2 1zm1.2-2.7a.9.9 0 01-1.2.3c-3-1.8-7.5-2.4-11-1.3a.9.9 0 11-.5-1.7c4-1.2 9-.6 12.4 1.5.4.3.5.8.3 1.2zm.1-2.9C14 8.8 8.3 8.6 4.9 9.6a1 1 0 11-.6-2c3.9-1.2 10.3-1 14.4 1.5a1 1 0 01-1.1 1.8z"
+      />
+    </svg>
+  )
+}
+export const IconYoutube = ({ size = 18, className, variant = 'badge', fill, ...rest }: P) => {
+  const isWhite = className?.includes('text-white')
+  if (isWhite || variant === 'glyph') {
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className} {...rest}>
+        <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+      </svg>
+    )
+  }
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className} {...rest}>
+      <path
+        fill={fill || '#FF0000'}
+        d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"
+      />
+      <path fill="#ffffff" d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+    </svg>
+  )
+}
 export const IconCalendar = (p: P) => (
   <svg {...base(p)} fill="none" stroke="currentColor" strokeWidth={2}><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" /></svg>
 )
