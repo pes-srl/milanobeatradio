@@ -232,9 +232,12 @@ iframe.instagram-media:hover {
 /* Partner logos strip. */
 .logos__track {
   display: flex;
-  gap: 4rem;
+  gap: 2.5rem;
   width: max-content;
-  animation: marquee 40s linear infinite;
+  animation: marquee 35s linear infinite;
+}
+.logos__track:hover {
+  animation-play-state: paused;
 }
 
 /* Diagonal purple wedge behind the footer. */

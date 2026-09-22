@@ -17,11 +17,19 @@ export async function submitContact(_prev: FormState, formData: FormData): Promi
   if (!to) return { status: 'error', message: 'Modulo non configurato. Riprova più tardi.' }
 
   const { nome, email, oggetto, messaggio } = parsed.data
-  await sendEmail({
-    to,
-    replyTo: email,
-    subject: `[Contatti] ${oggetto || 'Nuovo messaggio'} — ${nome}`,
-    text: `Nome: ${nome}\nEmail: ${email}\nOggetto: ${oggetto}\n\n${messaggio}`,
-  })
-  return { status: 'success' }
+  try {
+    await sendEmail({
+      to,
+      replyTo: email,
+      subject: `[Contatti] ${oggetto || 'Nuovo messaggio'} — ${nome}`,
+      text: `Nome: ${nome}\nEmail: ${email}\nOggetto: ${oggetto}\n\n${messaggio}`,
+    })
+    return { status: 'success' }
+  } catch (err) {
+    console.error('[contatti] Errore invio email:', err)
+    return {
+      status: 'error',
+      message: 'Servizio email temporaneamente non disponibile. Riprova più tardi o contattaci direttamente sui social.',
+    }
+  }
 }

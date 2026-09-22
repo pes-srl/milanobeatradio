@@ -25,7 +25,7 @@ export function PartnerLogos({ partners, variant = 'marquee' }: Props) {
         width={200}
         height={115}
         sizes="200px"
-        className="h-14 w-auto max-w-[160px] object-contain brightness-0 invert opacity-80 transition duration-300 hover:opacity-100 sm:h-18"
+        className="max-h-12 sm:max-h-14 w-auto max-w-[125px] sm:max-w-[140px] object-contain brightness-0 invert opacity-75 transition duration-300 hover:opacity-100"
       />
     )
     return p.url ? (
@@ -34,28 +34,52 @@ export function PartnerLogos({ partners, variant = 'marquee' }: Props) {
         target="_blank"
         rel="noreferrer"
         aria-label={p.name}
-        className="shrink-0 transition-transform duration-300 hover:scale-105"
+        className="flex h-16 sm:h-20 w-[120px] sm:w-[145px] shrink-0 items-center justify-center transition-transform duration-300 hover:scale-105"
       >
         {img}
       </a>
     ) : (
-      <span className="shrink-0">{img}</span>
+      <div className="flex h-16 sm:h-20 w-[120px] sm:w-[145px] shrink-0 items-center justify-center">
+        {img}
+      </div>
     )
   }
 
   if (variant === 'grid') {
     return (
-      <ul className="flex flex-wrap items-center justify-center gap-10 sm:gap-16">
+      <ul className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
         {items.map((p) => (
           <li key={p.id}><Logo p={p} /></li>
         ))}
       </ul>
     )
   }
+
+  // Ensure enough items so each half has at least 8 items for a seamless marquee loop
+  let baseItems = [...items]
+  while (baseItems.length < 8) {
+    baseItems = [...baseItems, ...items]
+  }
+  const trackItems = [...baseItems, ...baseItems]
+  const duration = Math.max(25, baseItems.length * 4)
+
   return (
-    <div className="overflow-hidden" aria-label="Partner">
-      <div className="logos__track items-center transform-gpu">
-        {[...items, ...items].map((p, i) => (
+    <div className="relative mx-auto max-w-[1070px] overflow-hidden px-4" aria-label="Partner">
+      {/* Side gradient fade masks */}
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 sm:w-20 bg-gradient-to-r from-black via-black/80 to-transparent"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 sm:w-20 bg-gradient-to-l from-black via-black/80 to-transparent"
+        aria-hidden="true"
+      />
+
+      <div
+        className="logos__track items-center transform-gpu py-2"
+        style={{ animationDuration: `${duration}s` }}
+      >
+        {trackItems.map((p, i) => (
           <Logo key={`${p.id}-${i}`} p={p} />
         ))}
       </div>

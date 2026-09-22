@@ -63,9 +63,9 @@ export default async function HomePage() {
 
       <Mosaic site={site} />
 
-      <section className="px-4 py-20 sm:px-8">
+      <section className="px-4 py-20 sm:px-8 sm:py-28">
         <SectionTitle>Partners</SectionTitle>
-        <div className="mt-10">
+        <div className="mt-16 sm:mt-24">
           <PartnerLogos partners={partners.docs} />
         </div>
       </section>

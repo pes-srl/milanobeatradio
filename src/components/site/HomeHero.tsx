@@ -65,25 +65,12 @@ export function HomeHero({ site }: { site: Site | null }) {
         <AscoltaButton className="mt-8" />
 
         {/* Fashion Caption Badges */}
-        <div className="mt-14 flex flex-col items-center gap-4">
+        <div className="mt-14 flex flex-col items-center gap-3">
           <p className="caption caption--violet text-xl sm:text-3xl lg:text-4xl">
-            <span>Ascoltaci anche senza app – press play</span>
+            <span>Ascoltaci anche senza app</span>
           </p>
-
-          <div className="flex flex-col items-center gap-2.5">
-            <p className="caption caption--pink text-base sm:text-xl lg:text-2xl">
-              <span>Anche in negozio!</span>
-            </p>
-            <p className="caption caption--pink text-base sm:text-xl lg:text-2xl">
-              <span>Nella tua attività commerciale</span>
-            </p>
-            <p className="caption caption--pink text-xl sm:text-3xl lg:text-4xl font-black">
-              <span>In città</span>
-            </p>
-          </div>
-
-          <p className="caption--tag mt-2">
-            <span>{site?.hashtag ?? '#MBRFRIENDS'}</span>
+          <p className="caption caption--violet text-xl sm:text-3xl lg:text-4xl">
+            <span>Press Play</span>
           </p>
         </div>
       </div>

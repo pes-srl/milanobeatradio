@@ -4,7 +4,7 @@ import { IconBell, IconFacebook, IconInstagram } from '@/src/components/icons'
 import { imageUrl } from '@/src/lib/media'
 import { getSite } from '@/src/lib/queries'
 import { HeaderControls } from './HeaderControls'
-import { MAIN_NAV } from './nav'
+import { SIDE_NAV } from './nav'
 
 /** Top bar (claim + socials) and sticky main header (logo · controls · menu). */
 export async function Header() {
@@ -66,12 +66,12 @@ export async function Header() {
 
           <HeaderControls instagram={site?.instagram} facebook={site?.facebook} />
 
-          <nav aria-label="Principale" className="hidden items-center gap-5 lg:flex xl:gap-8">
-            {MAIN_NAV.map((item) => (
+          <nav aria-label="Principale" className="hidden items-center gap-3.5 lg:flex xl:gap-6 2xl:gap-8">
+            {SIDE_NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="group relative whitespace-nowrap py-2 text-[15px] font-bold uppercase tracking-wider text-white/90 transition-colors duration-300 hover:text-white xl:text-base 2xl:text-lg"
+                className="group relative whitespace-nowrap py-2 text-[14px] font-bold uppercase tracking-wider text-white/90 transition-colors duration-300 hover:text-white xl:text-[15px] 2xl:text-base"
               >
                 <span className="relative z-10 transition-transform duration-200 group-hover:drop-shadow-[0_0_12px_rgba(200,36,227,0.75)]">
                   {item.label}

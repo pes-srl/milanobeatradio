@@ -11,13 +11,13 @@ export function AscoltaButton({ className = '' }: { className?: string }) {
     <button
       type="button"
       onClick={toggle}
-      className={`btn-pill text-base sm:text-lg ${isOn ? '!border-brand !bg-gradient-to-r !from-[#e0246f] !to-brand !shadow-[0_0_35px_rgba(200,36,227,0.6)]' : ''} ${className}`}
+      className={`btn-pill !px-9 !py-3.5 sm:!px-11 sm:!py-4 !text-lg sm:!text-xl gap-3 sm:gap-3.5 ${isOn ? '!border-brand !bg-gradient-to-r !from-[#e0246f] !to-brand !shadow-[0_0_35px_rgba(200,36,227,0.6)]' : ''} ${className}`}
       aria-pressed={isOn}
     >
       {isOn ? (
-        <IconPause size={20} className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+        <IconPause size={24} className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
       ) : (
-        <IconPlayOutline size={20} className="text-pink drop-shadow-[0_0_8px_rgba(224,36,111,0.8)]" />
+        <IconPlayOutline size={24} className="text-pink drop-shadow-[0_0_8px_rgba(224,36,111,0.8)]" />
       )}
       <span className="font-bold tracking-wider">{isOn ? 'Pausa' : 'Play'}</span>
     </button>

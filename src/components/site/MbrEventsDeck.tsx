@@ -205,7 +205,7 @@ export function MbrEventsDeck({ posters }: Props) {
             MBR Events nella tua location
           </h3>
           <p className="mx-auto mt-4 max-w-2xl text-base text-white/80 sm:text-lg">
-            DJ Set elegante, regolarizzazione licenze SIAE, service audio e luci, interviste in onda e promozione sul territorio.
+            DJ Set, regolarizzazione licenze SIAE, service audio e luci, interviste in onda e promozione sul territorio.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-6">
