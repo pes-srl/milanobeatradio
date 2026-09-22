@@ -78,10 +78,34 @@ export async function Dashboard(props?: Partial<ServerProps>) {
       </div>
 
       <div className="mbr-dash__links">
-        <Link href="/admin/collections/posts/create">SCRIVI UNA CITY NEWS</Link>
-        <Link href="/admin/collections/events/create">AGGIUNGI UN EVENTO</Link>
-        <Link href="/admin/collections/media">CARICA CONTENUTO</Link>
-        <a href={siteUrl()} target="_blank" rel="noreferrer">APRI IL SITO ↗</a>
+        <Link href="/admin/collections/posts/create" className="mbr-dash__btn mbr-dash__btn--news">
+          <span className="mbr-dash__btn-icon">✍️</span>
+          <span className="mbr-dash__btn-text">
+            <span className="mbr-dash__btn-title">Scrivi una City News</span>
+            <span className="mbr-dash__btn-desc">Crea nuovo articolo</span>
+          </span>
+        </Link>
+        <Link href="/admin/collections/events/create" className="mbr-dash__btn mbr-dash__btn--event">
+          <span className="mbr-dash__btn-icon">🎟️</span>
+          <span className="mbr-dash__btn-text">
+            <span className="mbr-dash__btn-title">Aggiungi un Evento</span>
+            <span className="mbr-dash__btn-desc">Crea serata o party</span>
+          </span>
+        </Link>
+        <Link href="/admin/collections/media" className="mbr-dash__btn mbr-dash__btn--media">
+          <span className="mbr-dash__btn-icon">📤</span>
+          <span className="mbr-dash__btn-text">
+            <span className="mbr-dash__btn-title">Carica Contenuto</span>
+            <span className="mbr-dash__btn-desc">Foto, flyer e immagini</span>
+          </span>
+        </Link>
+        <a href={siteUrl()} target="_blank" rel="noreferrer" className="mbr-dash__btn mbr-dash__btn--site">
+          <span className="mbr-dash__btn-icon">🌐</span>
+          <span className="mbr-dash__btn-text">
+            <span className="mbr-dash__btn-title">Apri il Sito ↗</span>
+            <span className="mbr-dash__btn-desc">Live su milanobeatradio</span>
+          </span>
+        </a>
       </div>
     </section>
   )
