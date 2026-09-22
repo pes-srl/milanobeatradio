@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import type { Site } from '@/src/payload-types'
 import type { InstagramFeedData, InstagramMediaItem } from '@/src/lib/instagram'
-import { IconExternal, IconInstagram } from '@/src/components/icons'
+import { IconInstagram } from '@/src/components/icons'
 import { SectionTitle } from './SectionTitle'
 
 type Props = {
@@ -168,31 +168,6 @@ export function InstagramFeed({ site, feed }: Props) {
               <IconInstagram size={18} variant="glyph" className="text-white" />
               <span>Segui su IG</span>
             </a>
-          </div>
-
-          {/* Quick Actions Bar */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 border-t border-white/10 pt-5 sm:justify-start">
-            <a
-              href="https://www.instagram.com/milanobeatradio_mbr/reels/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/[0.06] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:border-brand hover:bg-brand/20 hover:text-white"
-            >
-              <span>⚡ Guarda i Reel</span>
-              <IconExternal size={14} />
-            </a>
-            <a
-              href="https://www.instagram.com/milanobeatradio_mbr/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/[0.06] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:border-pink hover:bg-pink/20 hover:text-white"
-            >
-              <span>📸 Post & Foto</span>
-              <IconExternal size={14} />
-            </a>
-            <span className="hidden sm:inline-block text-xs font-medium text-white/50">
-              #MBRFRIENDS · Taggaci nei tuoi post e reel per essere ripubblicato
-            </span>
           </div>
         </div>
 
