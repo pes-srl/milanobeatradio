@@ -63,9 +63,9 @@ export default async function HomePage() {
         )}
       </section>
 
-      <section className="px-4 py-20 sm:px-8 sm:py-28">
+      <section className="px-4 pt-16 pb-6 sm:px-8 sm:pt-20 sm:pb-6">
         <SectionTitle>Partners</SectionTitle>
-        <div className="mt-16 sm:mt-24">
+        <div className="mt-10 sm:mt-12">
           <PartnerLogos partners={partners.docs} />
         </div>
       </section>

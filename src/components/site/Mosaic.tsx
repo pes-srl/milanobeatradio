@@ -5,6 +5,7 @@ import Image from 'next/image'
 import type { Site } from '@/src/payload-types'
 import { imageAlt, imageUrl } from '@/src/lib/media'
 import { IconChevronLeft, IconChevronRight, IconClose, IconExpand } from '@/src/components/icons'
+import { SectionTitle } from './SectionTitle'
 
 /** Fashion Image Mosaic on the home with fullscreen lightbox */
 export function Mosaic({ site }: { site: Site | null }) {
@@ -81,11 +82,13 @@ export function Mosaic({ site }: { site: Site | null }) {
   const activeFullUrl = activeImage ? imageUrl(activeImage, 'hero') || imageUrl(activeImage, 'card') : null
 
   return (
-    <section aria-label="Galleria foto" className="relative px-4 py-8 sm:px-8 sm:py-14">
+    <section aria-label="Location" className="relative px-4 pt-6 pb-20 sm:px-8 sm:pt-6 sm:pb-24">
       {/* Background ambient lighting aura */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_50%,rgba(200,36,227,0.12),transparent_70%)]" />
 
       <div className="mx-auto max-w-[1440px]">
+        <SectionTitle className="mb-10 sm:mb-12">LOCATION</SectionTitle>
+
         {/* Fashion balanced 4-column grid (2 rows of 4 for 8 photos) */}
         <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
           {images.map((m, i) => {
