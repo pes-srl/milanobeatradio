@@ -77,9 +77,36 @@ export async function MediaGrid({ payload, searchParams }: Props) {
           <h1>Mediateca</h1>
           <p>{res.totalDocs} file · pagina {res.page} di {res.totalPages}</p>
         </div>
-        <Link href={listHref} className="mbr-grid__alt">
-          Vista a elenco
-        </Link>
+        <div className="mbr-media-toolbar__views">
+          <span className="mbr-media-toolbar__view-label">Vista:</span>
+          <div className="mbr-media-toolbar__view-switch">
+            <Link
+              href={listHref}
+              className="mbr-media-toolbar__view-btn mbr-media-toolbar__view-btn--cta"
+              title="Passa alla vista a elenco dettagliata"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="8" y1="6" x2="21" y2="6" />
+                <line x1="8" y1="12" x2="21" y2="12" />
+                <line x1="8" y1="18" x2="21" y2="18" />
+                <line x1="3" y1="6" x2="3.01" y2="6" />
+                <line x1="3" y1="12" x2="3.01" y2="12" />
+                <line x1="3" y1="18" x2="3.01" y2="18" />
+              </svg>
+              <span>Vista a elenco</span>
+            </Link>
+
+            <span className="mbr-media-toolbar__view-btn is-active" title="Vista a griglia (attiva)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="14" width="7" height="7" rx="1" />
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+              </svg>
+              <span>Griglia</span>
+            </span>
+          </div>
+        </div>
       </header>
 
       <form className="mbr-grid__tools" action="/admin/collections/media/grid" method="get">

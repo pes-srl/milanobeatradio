@@ -20,7 +20,6 @@ export const Media: CollectionConfig = {
       // the table keeps filters, column choice and bulk upload. See MediaGrid.tsx.
       views: {
         grid: { Component: '/src/components/admin/MediaGrid#MediaGrid', path: '/grid', exact: true },
-        list: { actions: ['/src/components/admin/MediaGridLink#MediaGridLink'] },
       },
     },
     description: {
