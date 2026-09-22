@@ -61,28 +61,6 @@ export function HeaderControls({ instagram, facebook }: Props) {
   return (
     <>
       <div className="flex items-center gap-2 sm:gap-2.5">
-        {instagram && (
-          <a
-            href={instagram}
-            target="_blank"
-            rel="noreferrer"
-            className="hdr-btn group hidden md:inline-flex hover:border-[#E1306C]/60 hover:shadow-[0_0_15px_rgba(225,48,108,0.3)]"
-            aria-label="Instagram"
-          >
-            <IconInstagram size={22} className="transition-transform duration-300 group-hover:scale-110" />
-          </a>
-        )}
-        {facebook && (
-          <a
-            href={facebook}
-            target="_blank"
-            rel="noreferrer"
-            className="hdr-btn group hidden md:inline-flex hover:border-[#1877F2]/60 hover:shadow-[0_0_15px_rgba(24,119,242,0.3)]"
-            aria-label="Facebook"
-          >
-            <IconFacebook size={22} className="transition-transform duration-300 group-hover:scale-110" />
-          </a>
-        )}
         <button
           type="button"
           onClick={() => setOpen(true)}

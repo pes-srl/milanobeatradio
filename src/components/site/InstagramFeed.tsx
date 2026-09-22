@@ -251,7 +251,7 @@ export function InstagramFeed({ site, feed }: Props) {
               href={displayPostUrl}
               target="_blank"
               rel="noreferrer"
-              className="group relative block aspect-square w-full overflow-hidden bg-black"
+              className="group relative block aspect-[4/5] w-full overflow-hidden bg-black"
             >
               {displayImageUrl ? (
                 <Image

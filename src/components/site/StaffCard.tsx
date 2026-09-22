@@ -10,7 +10,7 @@ export function StaffCard({ member, priority = false }: { member: Staff; priorit
   const img = imageUrl(member.photo, 'card')
 
   return (
-    <article className="group relative aspect-[4/5] overflow-hidden bg-[#0f0f0f]">
+    <article className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-[#0f0f0f] transition-all duration-300 hover:border-brand/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)] transform-gpu">
       <Link href={href} className="absolute inset-0" aria-label={member.title}>
         {img && (
           <Image

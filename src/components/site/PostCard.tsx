@@ -20,7 +20,7 @@ export function PostCard({ post, priority = false, variant = 'grid' }: Props) {
   const overlay = variant !== 'grid'
 
   return (
-    <article className={`group relative overflow-hidden bg-[#0f0f0f] ${overlay ? 'h-full' : ''}`}>
+    <article className={`group relative overflow-hidden rounded-2xl bg-[#0f0f0f] border border-white/10 transition-all duration-300 hover:border-brand/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)] transform-gpu ${overlay ? 'h-full' : ''}`}>
       <Link href={href} className={`block ${overlay ? 'absolute inset-0' : 'relative aspect-video'}`} aria-label={post.title}>
         {img ? (
           <Image
