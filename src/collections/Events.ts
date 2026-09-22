@@ -11,7 +11,7 @@ const rome = { pickerAppearance: 'dayAndTime' as const, displayFormat: 'dd/MM/yy
 /** City events agenda. Public URL: /eventi/[slug]. Dates stored in UTC, edited in Europe/Rome. */
 export const Events: CollectionConfig = {
   slug: 'events',
-  labels: { singular: { it: 'Evento', en: 'Event' }, plural: { it: 'Eventi', en: 'Events' } },
+  labels: { singular: { it: 'City Event', en: 'City Event' }, plural: { it: 'City Events', en: 'City Events' } },
   admin: {
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },

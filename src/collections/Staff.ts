@@ -16,7 +16,7 @@ const social = (name: string, label: string) => ({
 /** Team members. Public URL: /staff/[slug]. `role` is intentionally optional: unknown in the source site. */
 export const Staff: CollectionConfig = {
   slug: 'staff',
-  labels: { singular: { it: 'Membro dello staff', en: 'Staff member' }, plural: { it: 'Staff', en: 'Staff' } },
+  labels: { singular: { it: 'Membro del team', en: 'Team member' }, plural: { it: 'Team', en: 'Team' } },
   admin: {
     useAsTitle: 'title',
     group: { it: 'Radio', en: 'Radio' },

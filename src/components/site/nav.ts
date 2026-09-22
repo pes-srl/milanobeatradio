@@ -1,10 +1,10 @@
 /** Main menu (top bar and main off-canvas list). */
 export const MAIN_NAV = [
   { href: '/mbr-events', label: 'MBR Events' },
-  { href: '/eventi', label: 'Eventi' },
-  { href: '/flash-news', label: 'Flash News' },
+  { href: '/eventi', label: 'City Events' },
+  { href: '/flash-news', label: 'City News' },
   { href: '/interviste', label: 'Interviste' },
-  { href: '/staff', label: 'Staff' },
+  { href: '/staff', label: 'Team' },
   { href: '/promuoviti', label: 'Promuoviti' },
 ] as const
 

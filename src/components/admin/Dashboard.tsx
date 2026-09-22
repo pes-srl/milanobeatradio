@@ -43,7 +43,7 @@ export async function Dashboard() {
       <div className="mbr-dash__figures">
         <Link href="/admin/collections/posts?where[_status][equals]=published">
           <b>{published.totalDocs}</b>
-          <span>Flash News pubblicate</span>
+          <span>City News pubblicate</span>
         </Link>
         <Link href="/admin/collections/posts?where[_status][equals]=draft">
           <b>{drafts.totalDocs}</b>
@@ -56,7 +56,7 @@ export async function Dashboard() {
       </div>
 
       <div className="mbr-dash__links">
-        <Link href="/admin/collections/posts/create">Scrivi una Flash News</Link>
+        <Link href="/admin/collections/posts/create">Scrivi una City News</Link>
         <Link href="/admin/collections/events/create">Aggiungi un evento</Link>
         <Link href="/admin/collections/media">Carica un’immagine</Link>
         <a href={siteUrl()} target="_blank" rel="noreferrer">Apri il sito ↗</a>

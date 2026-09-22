@@ -28,8 +28,8 @@ export const Categories = taxonomy(
   'categories',
   { singular: { it: 'Categoria', en: 'Category' }, plural: { it: 'Categorie', en: 'Categories' } },
   {
-    it: 'Le categorie delle Flash News. Compaiono come etichetta sulle card e raggruppano gli articoli.',
-    en: 'Flash News categories. Shown as the label on each card, and used to group articles.',
+    it: 'Le categorie delle City News. Compaiono come etichetta sulle card e raggruppano gli articoli.',
+    en: 'City News categories. Shown as the label on each card, and used to group articles.',
   },
 )
 
@@ -67,7 +67,7 @@ export const Tags = taxonomy(
   'tags',
   { singular: { it: 'Tag', en: 'Tag' }, plural: { it: 'Tag', en: 'Tags' } },
   {
-    it: 'I tag delle Flash News. Cliccando su un tag nella pagina articolo si filtrano le news per quell\'argomento.',
-    en: 'Flash News tags. Clicking a tag on the article page filters news by that topic.',
+    it: 'I tag delle City News. Cliccando su un tag nella pagina articolo si filtrano le news per quell\'argomento.',
+    en: 'City News tags. Clicking a tag on the article page filters news by that topic.',
   },
 )

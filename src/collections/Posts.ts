@@ -6,18 +6,18 @@ import { statsField } from '@/src/fields/stats'
 import { previewFor } from '@/src/lib/preview'
 import { versions } from './shared'
 
-/** FLASH NEWS. Public URL: /flash-news/[slug]. */
+/** CITY NEWS. Public URL: /flash-news/[slug]. */
 export const Posts: CollectionConfig = {
   slug: 'posts',
-  labels: { singular: { it: 'Flash News', en: 'Post' }, plural: { it: 'Flash News', en: 'Posts' } },
+  labels: { singular: { it: 'City News', en: 'City News' }, plural: { it: 'City News', en: 'City News' } },
   admin: {
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
     defaultColumns: ['title', 'category', 'publishedAt', '_status'],
     preview: previewFor((slug) => `/flash-news/${slug}`),
     description: {
-      it: 'Le Flash News. Ogni articolo si pubblica su /flash-news/[slug]; i più recenti appaiono anche in home.',
-      en: 'Flash News. Each article is published at /flash-news/[slug]; the latest also appear on the home page.',
+      it: 'Le City News. Ogni articolo si pubblica su /flash-news/[slug]; i più recenti appaiono anche in home.',
+      en: 'City News. Each article is published at /flash-news/[slug]; the latest also appear on the home page.',
     },
   },
   access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },

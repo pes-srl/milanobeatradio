@@ -55,7 +55,7 @@ export default async function StaffMemberPage({ params }: { params: Promise<{ sl
             href="/staff"
             className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-white/60 transition hover:text-brand"
           >
-            ← Tutto lo staff
+            ← Tutto il team
           </Link>
         </div>
 

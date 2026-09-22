@@ -3,7 +3,7 @@ import { PageHero } from '@/src/components/site/PageHero'
 import { EventsGrid } from '@/src/components/site/EventsGrid'
 import { getEvents } from '@/src/lib/queries'
 
-export const metadata: Metadata = { title: 'Eventi' }
+export const metadata: Metadata = { title: 'City Events' }
 export const revalidate = 300
 
 export default async function EventiPage() {
@@ -12,7 +12,7 @@ export default async function EventiPage() {
     <>
       <PageHero
         overtitle="City & Nightlife"
-        title="Eventi"
+        title="City Events"
         subtitle="I migliori eventi, serate, festival e party a Milano e dintorni."
       />
       <section className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8">

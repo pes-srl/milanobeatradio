@@ -42,7 +42,7 @@ export async function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10 px-4 py-3 text-center text-[11px] text-white/50">
-        © {new Date().getFullYear()} Milano Beat Radio
+        © {new Date().getFullYear()} Milano Beat Radio - Agency Radio
       </div>
     </footer>
   )

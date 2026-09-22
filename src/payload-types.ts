@@ -155,7 +155,7 @@ export interface UserAuthOperations {
   };
 }
 /**
- * Flash News. Each article is published at /flash-news/[slug]; the latest also appear on the home page.
+ * City News. Each article is published at /flash-news/[slug]; the latest also appear on the home page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
@@ -272,7 +272,7 @@ export interface Media {
   };
 }
 /**
- * Flash News categories. Shown as the label on each card, and used to group articles.
+ * City News categories. Shown as the label on each card, and used to group articles.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
@@ -322,7 +322,7 @@ export interface User {
   collection: 'users';
 }
 /**
- * Flash News tags. Clicking a tag on the article page filters news by that topic.
+ * City News tags. Clicking a tag on the article page filters news by that topic.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tags".

@@ -13,7 +13,28 @@ export const metadata: Metadata = {
   title: { default: 'Milano Beat Radio', template: '%s · Milano Beat Radio' },
   description: 'Your Event and Party Station — la radio di eventi, vita notturna e cultura di Milano.',
   metadataBase: new URL(siteUrl()),
-  openGraph: { type: 'website', locale: 'it_IT', siteName: 'Milano Beat Radio' },
+  openGraph: {
+    type: 'website',
+    locale: 'it_IT',
+    siteName: 'Milano Beat Radio',
+    title: 'Milano Beat Radio — Your Event and Party Station',
+    description: 'Your Event and Party Station — la radio di eventi, vita notturna e cultura di Milano.',
+    url: siteUrl(),
+    images: [
+      {
+        url: '/mbr-logo-v2.png',
+        width: 1200,
+        height: 630,
+        alt: 'Milano Beat Radio',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Milano Beat Radio — Your Event and Party Station',
+    description: 'Your Event and Party Station — la radio di eventi, vita notturna e cultura di Milano.',
+    images: ['/mbr-logo-v2.png'],
+  },
 }
 
 /**

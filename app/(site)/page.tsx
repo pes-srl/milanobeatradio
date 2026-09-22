@@ -26,7 +26,7 @@ export default async function HomePage() {
       <HomeHero site={site} />
 
       <section className="px-4 py-20 sm:px-8">
-        <SectionTitle>Flash News</SectionTitle>
+        <SectionTitle>City News</SectionTitle>
         {posts.docs.length > 0 ? (
           <>
             <div className="mx-auto mt-10 grid max-w-[1440px] gap-4 sm:grid-cols-2 lg:grid-cols-3">

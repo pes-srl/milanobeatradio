@@ -4,7 +4,7 @@ import { PageHero } from '@/src/components/site/PageHero'
 import { FlashNewsGrid } from '@/src/components/site/FlashNewsGrid'
 import { getPosts } from '@/src/lib/queries'
 
-export const metadata: Metadata = { title: 'Flash News' }
+export const metadata: Metadata = { title: 'City News' }
 export const revalidate = 60
 
 export default async function FlashNewsPage({
@@ -19,7 +19,7 @@ export default async function FlashNewsPage({
     <>
       <PageHero
         overtitle="Ultime Notizie"
-        title="Flash News"
+        title="City News"
         subtitle="News, tendenze, nightlife e aggiornamenti in tempo reale da Milano."
       />
 
