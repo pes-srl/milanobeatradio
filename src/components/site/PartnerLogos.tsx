@@ -53,7 +53,7 @@ export function PartnerLogos({ partners, variant = 'marquee' }: Props) {
     )
   }
   return (
-    <div className="overflow-hidden content-auto" aria-label="Partner">
+    <div className="overflow-hidden" aria-label="Partner">
       <div className="logos__track items-center transform-gpu">
         {[...items, ...items].map((p, i) => (
           <Logo key={`${p.id}-${i}`} p={p} />

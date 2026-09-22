@@ -26,8 +26,6 @@ html {
 
 body {
   @apply bg-ink text-white font-sans font-light antialiased;
-  overflow-x: clip;
-  -webkit-overflow-scrolling: touch;
 }
 
 /* Section titles: big, uppercase, wide tracking with fashionable glow/shadow. */
@@ -45,13 +43,13 @@ body {
 @layer components {
   /* Fashion glassmorphic button used in header (social · menu) */
   .hdr-btn {
-    @apply inline-flex h-11 min-w-11 items-center justify-center rounded-xl border border-white/20 bg-white/[0.08] sm:bg-white/[0.06] text-white/90 backdrop-blur-sm sm:backdrop-blur-md shadow-sm sm:shadow-md shadow-black/40 transition-all duration-300 hover:scale-105 hover:border-brand/70 hover:bg-white/[0.12] hover:text-white hover:shadow-[0_0_20px_rgba(200,36,227,0.35)] active:scale-95;
+    @apply inline-flex h-11 min-w-11 items-center justify-center rounded-xl border border-white/20 bg-white/[0.08] sm:bg-white/[0.06] text-white/90 sm:backdrop-blur-md shadow-sm sm:shadow-md shadow-black/40 transition-all duration-300 hover:scale-105 hover:border-brand/70 hover:bg-white/[0.12] hover:text-white hover:shadow-[0_0_20px_rgba(200,36,227,0.35)] active:scale-95;
     transform: translateZ(0);
   }
 
   /* Play CTA button styling with fashion neon glow */
   .hdr-btn-play {
-    @apply inline-flex h-11 items-center justify-center gap-2.5 rounded-xl border border-brand/50 bg-gradient-to-r from-brand/25 via-brand/15 to-transparent px-5 font-bold uppercase tracking-wider text-white backdrop-blur-sm sm:backdrop-blur-md shadow-[0_2px_12px_rgba(200,36,227,0.25)] sm:shadow-[0_4px_20px_rgba(200,36,227,0.25)] transition-all duration-300 hover:scale-105 hover:border-brand hover:from-brand hover:to-[#e0246f] hover:shadow-[0_0_30px_rgba(200,36,227,0.6)] active:scale-95;
+    @apply inline-flex h-11 items-center justify-center gap-2.5 rounded-xl border border-brand/50 bg-gradient-to-r from-brand/25 via-brand/15 to-transparent px-5 font-bold uppercase tracking-wider text-white sm:backdrop-blur-md shadow-[0_2px_12px_rgba(200,36,227,0.25)] sm:shadow-[0_4px_20px_rgba(200,36,227,0.25)] transition-all duration-300 hover:scale-105 hover:border-brand hover:from-brand hover:to-[#e0246f] hover:shadow-[0_0_30px_rgba(200,36,227,0.6)] active:scale-95;
     transform: translateZ(0);
   }
   .hdr-btn-play--on {
@@ -66,7 +64,7 @@ body {
 
   /* Vertical volume slider hanging under the volume button */
   .volume-panel {
-    @apply absolute left-1/2 top-full z-50 mt-2 -translate-x-1/2 rounded-2xl border border-white/15 bg-black/90 p-4 backdrop-blur-md sm:backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_25px_rgba(200,36,227,0.25)];
+    @apply absolute left-1/2 top-full z-50 mt-2 -translate-x-1/2 rounded-2xl border border-white/15 bg-black/95 p-4 sm:backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_25px_rgba(200,36,227,0.25)];
     transform: translateZ(0);
   }
 }
@@ -125,13 +123,13 @@ body {
 
 /* Fashion pill button used site-wide (Ascolta · Carica altro · Tutte le news) */
 .btn-pill {
-  @apply inline-flex items-center justify-center gap-2.5 rounded-full border border-white/30 bg-white/[0.08] px-7 py-3 text-sm sm:text-base font-bold uppercase tracking-wider text-white backdrop-blur-sm sm:backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.4)] sm:shadow-[0_4px_20px_rgba(0,0,0,0.4)] transition-all duration-300 hover:scale-105 hover:border-brand hover:bg-gradient-to-r hover:from-[#e0246f] hover:to-brand hover:shadow-[0_0_30px_rgba(200,36,227,0.6)] active:scale-95;
+  @apply inline-flex items-center justify-center gap-2.5 rounded-full border border-white/30 bg-white/[0.1] sm:bg-white/[0.08] px-7 py-3 text-sm sm:text-base font-bold uppercase tracking-wider text-white sm:backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.4)] sm:shadow-[0_4px_20px_rgba(0,0,0,0.4)] transition-all duration-300 hover:scale-105 hover:border-brand hover:bg-gradient-to-r hover:from-[#e0246f] hover:to-brand hover:shadow-[0_0_30px_rgba(200,36,227,0.6)] active:scale-95;
   transform: translateZ(0);
 }
 
 /* Fashion hero caption banners */
 .caption {
-  @apply inline-block rounded-xl sm:rounded-2xl px-5 py-2 sm:px-8 sm:py-3 font-bold uppercase leading-tight text-white backdrop-blur-sm sm:backdrop-blur-xl transition-all duration-300;
+  @apply inline-block rounded-xl sm:rounded-2xl px-5 py-2 sm:px-8 sm:py-3 font-bold uppercase leading-tight text-white sm:backdrop-blur-xl transition-all duration-300;
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.5), 0 0 16px rgba(200, 36, 227, 0.18);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
   transform: translateZ(0);
@@ -143,13 +141,13 @@ body {
   }
 }
 .caption--violet {
-  @apply border border-white/25 bg-gradient-to-r from-[#501b87]/75 via-[#8b14a3]/75 to-[#501b87]/75 sm:from-[#501b87]/65 sm:via-[#8b14a3]/65 sm:to-[#501b87]/65 shadow-[0_0_16px_rgba(111,45,189,0.35)] sm:shadow-[0_0_30px_rgba(111,45,189,0.35)];
+  @apply border border-white/25 bg-gradient-to-r from-[#501b87]/85 via-[#8b14a3]/85 to-[#501b87]/85 sm:from-[#501b87]/65 sm:via-[#8b14a3]/65 sm:to-[#501b87]/65 shadow-[0_0_16px_rgba(111,45,189,0.35)] sm:shadow-[0_0_30px_rgba(111,45,189,0.35)];
 }
 .caption--pink {
-  @apply border border-white/25 bg-gradient-to-r from-[#d81b60]/75 via-[#e0246f]/75 to-[#d81b60]/75 sm:from-[#d81b60]/60 sm:via-[#e0246f]/65 sm:to-[#d81b60]/60 shadow-[0_2px_12px_rgba(224,36,111,0.35)] sm:shadow-[0_4px_20px_rgba(224,36,111,0.35)];
+  @apply border border-white/25 bg-gradient-to-r from-[#d81b60]/85 via-[#e0246f]/85 to-[#d81b60]/85 sm:from-[#d81b60]/60 sm:via-[#e0246f]/65 sm:to-[#d81b60]/60 shadow-[0_2px_12px_rgba(224,36,111,0.35)] sm:shadow-[0_4px_20px_rgba(224,36,111,0.35)];
 }
 .caption--tag {
-  @apply inline-flex items-center gap-2 rounded-full border border-brand/50 bg-black/60 sm:bg-black/40 px-5 py-2 text-xs sm:text-sm font-bold tracking-[0.2em] text-brand backdrop-blur-sm sm:backdrop-blur-xl shadow-[0_0_14px_rgba(200,36,227,0.35)] sm:shadow-[0_0_25px_rgba(200,36,227,0.35)] transition-all duration-300 hover:scale-105 hover:border-brand hover:bg-brand/20;
+  @apply inline-flex items-center gap-2 rounded-full border border-brand/50 bg-black/80 sm:bg-black/40 px-5 py-2 text-xs sm:text-sm font-bold tracking-[0.2em] text-brand sm:backdrop-blur-xl shadow-[0_0_14px_rgba(200,36,227,0.35)] sm:shadow-[0_0_25px_rgba(200,36,227,0.35)] transition-all duration-300 hover:scale-105 hover:border-brand hover:bg-brand/20;
   transform: translateZ(0);
 }
 
@@ -204,6 +202,7 @@ iframe.instagram-media:hover {
 
 /* Hero slideshow: pure-CSS crossfade plus a very slow zoom. Keyframes live in
    HomeHero.tsx because both windows depend on the number of slides. */
+/* Hero slideshow: pure-CSS crossfade plus a very slow zoom on desktop. */
 .slide {
   position: absolute;
   inset: 0;
@@ -214,20 +213,20 @@ iframe.instagram-media:hover {
   transform: translateZ(0);
 }
 .slide > img {
-  animation: hero-zoom var(--slide-total) linear infinite;
-  animation-delay: var(--slide-delay);
   will-change: transform;
   transform: translateZ(0);
 }
+@media (min-width: 640px) {
+  .slide > img {
+    animation: hero-zoom var(--slide-total) linear infinite;
+    animation-delay: var(--slide-delay);
+  }
+}
 
-/* GPU hardware layer and off-screen rendering optimization */
+/* GPU hardware layer */
 .gpu-layer {
   transform: translateZ(0);
   will-change: transform;
-}
-.content-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: 600px;
 }
 
 /* Partner logos strip. */

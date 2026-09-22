@@ -46,7 +46,7 @@ export function InstagramFeed({ site }: Props) {
   }, [])
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-black via-[#0b0517] to-black px-4 py-24 sm:px-8 content-auto">
+    <section className="relative overflow-hidden bg-gradient-to-b from-black via-[#0b0517] to-black px-4 py-24 sm:px-8">
       {/* Background ambient glowing spheres */}
       <div className="pointer-events-none absolute -left-40 top-1/4 size-96 rounded-full bg-brand/15 blur-[60px] sm:blur-[140px] transform-gpu" />
       <div className="pointer-events-none absolute -right-40 bottom-1/4 size-96 rounded-full bg-pink/15 blur-[60px] sm:blur-[140px] transform-gpu" />
@@ -54,7 +54,7 @@ export function InstagramFeed({ site }: Props) {
       <div className="relative mx-auto max-w-[1440px]">
         {/* Eyebrow badge */}
         <div className="mb-4 flex justify-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-pink/40 bg-pink/10 px-5 py-1.5 backdrop-blur-sm sm:backdrop-blur-md shadow-[0_0_12px_rgba(224,36,111,0.25)] sm:shadow-[0_0_20px_rgba(224,36,111,0.25)] transform-gpu">
+          <div className="inline-flex items-center gap-2 rounded-full border border-pink/40 bg-pink/10 px-5 py-1.5 sm:backdrop-blur-md shadow-[0_0_12px_rgba(224,36,111,0.25)] sm:shadow-[0_0_20px_rgba(224,36,111,0.25)] transform-gpu">
             <span className="size-2 rounded-full bg-pink animate-pulse" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-pink sm:text-sm">
               Live Instagram Feed & Social Hub
@@ -65,7 +65,7 @@ export function InstagramFeed({ site }: Props) {
         <SectionTitle>MBR on Instagram</SectionTitle>
 
         {/* Top Profile Summary Card */}
-        <div className="mx-auto mt-10 max-w-4xl rounded-2xl border border-white/15 bg-white/[0.04] p-6 backdrop-blur-md sm:backdrop-blur-xl shadow-[0_8px_24px_rgba(0,0,0,0.8)] sm:shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_25px_rgba(200,36,227,0.15)] sm:p-8 transform-gpu">
+        <div className="mx-auto mt-10 max-w-4xl rounded-2xl border border-white/15 bg-[#0e071a] sm:bg-white/[0.04] p-6 sm:backdrop-blur-xl shadow-[0_8px_24px_rgba(0,0,0,0.8)] sm:shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_25px_rgba(200,36,227,0.15)] sm:p-8 transform-gpu">
           <div className="flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left">
             <div className="flex flex-col items-center gap-5 sm:flex-row">
               {/* Instagram Stories Gradient Ring Avatar */}

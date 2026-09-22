@@ -43,7 +43,7 @@ export function EventItem({ event, priority = false }: { event: Event; priority?
           target="_blank"
           rel="noreferrer"
           aria-label="Aggiungi al calendario"
-          className="absolute right-3.5 top-3.5 z-10 grid size-10 place-items-center rounded-full border border-white/20 bg-black/75 sm:bg-black/60 text-white shadow-sm sm:shadow-md backdrop-blur-sm sm:backdrop-blur-md transition duration-200 hover:scale-110 hover:border-brand hover:bg-brand transform-gpu"
+          className="absolute right-3.5 top-3.5 z-10 grid size-10 place-items-center rounded-full border border-white/20 bg-black/80 sm:bg-black/60 text-white shadow-sm sm:shadow-md sm:backdrop-blur-md transition duration-200 hover:scale-110 hover:border-brand hover:bg-brand transform-gpu"
         >
           <IconCalendarAdd size={17} />
         </a>

@@ -48,7 +48,7 @@ export function HomeHero({ site }: { site: Site | null }) {
 
       <div className="relative z-10 flex flex-col items-center px-4 py-16">
         {/* Eyebrow badge */}
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.1] sm:bg-white/[0.08] px-5 py-1.5 backdrop-blur-sm sm:backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.4)] sm:shadow-[0_4px_20px_rgba(0,0,0,0.4)] transform-gpu">
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/60 sm:bg-white/[0.08] px-5 py-1.5 sm:backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.4)] sm:shadow-[0_4px_20px_rgba(0,0,0,0.4)] transform-gpu">
           <span className="size-2 rounded-full bg-white animate-pulse" />
           <span className="text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.2em] text-white">
             Event and Party Radio Station

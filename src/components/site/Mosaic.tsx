@@ -81,7 +81,7 @@ export function Mosaic({ site }: { site: Site | null }) {
   const activeFullUrl = activeImage ? imageUrl(activeImage, 'hero') || imageUrl(activeImage, 'card') : null
 
   return (
-    <section aria-label="Galleria foto" className="relative px-4 py-8 sm:px-8 sm:py-14 content-auto">
+    <section aria-label="Galleria foto" className="relative px-4 py-8 sm:px-8 sm:py-14">
       {/* Background ambient lighting aura */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_50%,rgba(200,36,227,0.12),transparent_70%)]" />
 
@@ -111,7 +111,7 @@ export function Mosaic({ site }: { site: Site | null }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-40 transition-opacity duration-300 group-hover:opacity-15" />
 
                 {/* Expand icon pill appearing on hover */}
-                <div className="absolute right-3.5 top-3.5 flex size-9 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white/90 opacity-0 shadow-lg backdrop-blur-sm sm:backdrop-blur-md transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 scale-90 sm:size-10 transform-gpu">
+                <div className="absolute right-3.5 top-3.5 flex size-9 items-center justify-center rounded-full border border-white/20 bg-black/75 sm:bg-black/60 text-white/90 opacity-0 shadow-lg sm:backdrop-blur-md transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 scale-90 sm:size-10 transform-gpu">
                   <IconExpand size={18} />
                 </div>
 

@@ -31,7 +31,7 @@ export function PodcastCard({ podcast, priority = false }: { podcast: Podcast; p
           <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/60 via-transparent to-black/20 opacity-80 transition duration-300 group-hover:opacity-40" />
 
           {/* Floating Play Button */}
-          <span className="absolute right-3.5 top-3.5 z-10 grid size-10 place-items-center rounded-full border border-white/20 bg-black/75 sm:bg-black/60 text-white shadow-sm sm:shadow-md backdrop-blur-sm sm:backdrop-blur-md transition duration-200 group-hover:scale-110 group-hover:border-brand group-hover:bg-brand transform-gpu">
+          <span className="absolute right-3.5 top-3.5 z-10 grid size-10 place-items-center rounded-full border border-white/20 bg-black/80 sm:bg-black/60 text-white shadow-sm sm:shadow-md sm:backdrop-blur-md transition duration-200 group-hover:scale-110 group-hover:border-brand group-hover:bg-brand transform-gpu">
             <IconPlayOutline size={18} />
           </span>
         </Link>
