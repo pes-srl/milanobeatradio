@@ -1164,6 +1164,164 @@
 .card-genres .card__title::before { content: '🎵'; }
 .card-tags .card__title::before { content: '🏷️'; }
 
+// Responsive & Centering for Smartphone / Mobile
+@media (max-width: 640px) {
+  .mbr-dash {
+    align-items: center !important;
+    text-align: center !important;
+
+    &__air-row {
+      justify-content: center !important;
+      text-align: center !important;
+      width: 100% !important;
+    }
+
+    &__air {
+      align-self: center !important;
+      text-align: center !important;
+      align-items: center !important;
+    }
+
+    &__redazione {
+      text-align: center !important;
+      width: 100% !important;
+
+      &-title {
+        text-align: center !important;
+        margin: 0 auto !important;
+      }
+    }
+
+    &__figures {
+      justify-content: center !important;
+      width: 100% !important;
+
+      a {
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        max-width: 340px !important;
+      }
+    }
+
+    &__links {
+      grid-template-columns: 1fr !important;
+      justify-items: center !important;
+      width: 100% !important;
+      max-width: 380px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    &__btn {
+      width: 100% !important;
+      align-items: center !important;
+      text-align: center !important;
+      padding: 22px 18px !important;
+      min-height: 125px !important;
+
+      &-text {
+        align-items: center !important;
+        text-align: center !important;
+        margin-top: 10px !important;
+      }
+
+      &-title {
+        text-align: center !important;
+      }
+
+      &-desc {
+        text-align: center !important;
+      }
+    }
+  }
+
+  .collections {
+    &__wrap {
+      width: 100% !important;
+      max-width: 480px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      gap: 28px !important;
+    }
+
+    &__group {
+      padding: 18px 14px 20px 14px !important;
+      border-radius: 16px !important;
+      width: 100% !important;
+    }
+
+    &__label {
+      display: flex !important;
+      width: 100% !important;
+      justify-content: center !important;
+      align-items: center !important;
+      text-align: center !important;
+      flex-wrap: wrap !important;
+      gap: 6px 8px !important;
+      border-left: none !important;
+      border-top: 3px solid #e0246f !important;
+      padding: 10px 14px !important;
+      margin-bottom: 16px !important;
+    }
+
+    &__card-list {
+      grid-template-columns: 1fr !important;
+      width: 100% !important;
+      gap: 12px !important;
+    }
+  }
+
+  // Centered group banners on mobile
+  .collections__group:has(.card-posts) .collections__label {
+    border-left: none !important;
+    border-top: 3px solid #38bdf8 !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .collections__group:has(.card-shows) .collections__label {
+    border-left: none !important;
+    border-top: 3px solid #c824e3 !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .collections__group:has(.card-categories) .collections__label {
+    border-left: none !important;
+    border-top: 3px solid #a855f7 !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .collections__group:has(.card-users) .collections__label {
+    border-left: none !important;
+    border-top: 3px solid #ec4899 !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .card {
+    width: 100% !important;
+    padding: 12px 14px !important;
+    min-height: 74px !important;
+
+    &__title {
+      padding-left: 46px !important;
+      font-size: 0.98rem !important;
+
+      &::before {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 1.15rem !important;
+      }
+    }
+  }
+}
+
 // Admin sidebar navigation styling
 .nav {
   background: linear-gradient(180deg, #0e0317 0%, #06010a 100%) !important;
