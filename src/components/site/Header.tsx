@@ -12,8 +12,8 @@ export async function Header() {
   const logo = imageUrl(site?.logo, 'thumb')
 
   return (
-    <header className="relative z-40">
-      <div className="bg-topbar">
+    <>
+      <div className="relative z-40 bg-topbar">
         <div className="flex h-12 w-full items-center justify-between px-4 sm:px-6 lg:px-8">
           <p className="flex items-center gap-2 text-sm font-semibold sm:text-base">
             <IconBell size={14} className="text-white/80" />
@@ -46,7 +46,7 @@ export async function Header() {
         </div>
       </div>
 
-      <div className="sticky top-0 z-40 bg-black sm:bg-black/60 sm:backdrop-blur-xl border-b border-white/[0.08] shadow-sm sm:shadow-[0_4px_30px_rgba(0,0,0,0.5)] transform-gpu will-change-transform">
+      <header className="sticky top-0 z-40 bg-black sm:bg-black/60 sm:backdrop-blur-xl border-b border-white/[0.08] shadow-sm sm:shadow-[0_4px_30px_rgba(0,0,0,0.5)] transform-gpu will-change-transform">
         <div className="mx-auto flex h-[64px] max-w-[1440px] items-center justify-between gap-3 px-4 sm:h-[70px] sm:gap-4 sm:px-8 lg:h-[78px]">
           <Link href="/" className="shrink-0 flex items-center" aria-label="Milano Beat Radio — Home">
             {logo ? (
@@ -81,7 +81,7 @@ export async function Header() {
             ))}
           </nav>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   )
 }

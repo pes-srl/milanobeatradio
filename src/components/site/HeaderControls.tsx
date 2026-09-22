@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { usePlayer } from '@/src/player/PlayerProvider'
 import { IconClose, IconFacebook, IconInstagram, IconMenu, IconMute, IconPause, IconPlayOutline, IconVolume } from '@/src/components/icons'
-import { MAIN_NAV, MORE_NAV } from './nav'
+import { MORE_NAV, SIDE_NAV } from './nav'
 
 type Props = { instagram?: string | null; facebook?: string | null }
 
@@ -163,7 +163,7 @@ export function HeaderControls({ instagram, facebook }: Props) {
                 </button>
               </div>
               <ul className="mt-6 space-y-2">
-                {MAIN_NAV.map((item) => (
+                {SIDE_NAV.map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
