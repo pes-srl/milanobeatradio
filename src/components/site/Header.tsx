@@ -47,9 +47,12 @@ export async function Header() {
       </div>
 
       <header className="sticky top-0 z-40 bg-black sm:bg-black/60 sm:backdrop-blur-xl border-b border-white/[0.08] shadow-sm sm:shadow-[0_4px_30px_rgba(0,0,0,0.5)] transform-gpu will-change-transform">
-        <div className="mx-auto flex h-[64px] max-w-[1440px] items-center justify-between gap-3 px-4 sm:h-[70px] sm:gap-4 sm:px-8 lg:h-[78px]">
-          <Link href="/" className="shrink-0 flex items-center" aria-label="Milano Beat Radio — Home">
-            {logo ? (
+        <div className="flex h-[64px] w-full items-center justify-between gap-3 px-4 sm:h-[70px] sm:gap-4 sm:px-6 lg:h-[78px] lg:px-8">
+          <Link href="/" className="group shrink-0 flex items-center gap-2 sm:gap-2.5" aria-label="Milano Beat Radio — Home">
+            <span className="text-xl font-black tracking-tight uppercase bg-gradient-to-r from-[#e0246f] via-[#c824e3] to-[#a855f7] bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(200,36,227,0.45)] transition-transform duration-300 group-hover:scale-105 sm:text-2xl lg:text-[28px]">
+              MBR
+            </span>
+            {logo && (
               <Image
                 src={logo}
                 alt="Milano Beat Radio"
@@ -57,10 +60,8 @@ export async function Header() {
                 height={128}
                 sizes="(max-width: 1024px) 64px, 72px"
                 priority
-                className="size-[56px] sm:size-[62px] lg:size-[70px] object-contain"
+                className="size-[48px] sm:size-[56px] lg:size-[64px] object-contain transition-transform duration-300 group-hover:scale-105"
               />
-            ) : (
-              <span className="text-sm font-bold uppercase tracking-[0.2em]">MBR</span>
             )}
           </Link>
 
