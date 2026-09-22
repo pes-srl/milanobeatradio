@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { authenticated, isAdmin, isAdminField, publishedOrAuthenticated } from '@/src/access'
+import { authenticated, hideForNonAdmin, isAdmin, isAdminField, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
@@ -14,6 +14,7 @@ export const Shows: CollectionConfig = {
   slug: 'shows',
   labels: { singular: { it: 'Programma', en: 'Show' }, plural: { it: 'Programmi', en: 'Shows' } },
   admin: {
+    hidden: hideForNonAdmin,
     useAsTitle: 'title',
     group: { it: 'Radio', en: 'Radio' },
     defaultColumns: ['title', 'genres', 'hosts', '_status'],

@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { authenticated, isAdmin, publishedOrAuthenticated } from '@/src/access'
+import { authenticated, hideForNonAdmin, isAdmin, publishedOrAuthenticated } from '@/src/access'
 import { versions } from './shared'
 
 /** Sponsors / partners (legacy CPT `qtsponsor`). Drag-sortable in the admin list (`orderable`). */
@@ -8,6 +8,7 @@ export const Partners: CollectionConfig = {
   labels: { singular: { it: 'Partner', en: 'Partner' }, plural: { it: 'Partner', en: 'Partners' } },
   orderable: true,
   admin: {
+    hidden: hideForNonAdmin,
     useAsTitle: 'name',
     group: { it: 'Radio', en: 'Radio' },
     defaultColumns: ['name', 'url', 'active', '_status'],

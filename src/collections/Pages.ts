@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { authenticated, isAdmin, publishedOrAuthenticated } from '@/src/access'
+import { authenticated, hideForNonAdmin, isAdmin, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { previewFor } from '@/src/lib/preview'
@@ -14,6 +14,7 @@ export const Pages: CollectionConfig = {
   slug: 'pages',
   labels: { singular: { it: 'Pagina', en: 'Page' }, plural: { it: 'Pagine', en: 'Pages' } },
   admin: {
+    hidden: hideForNonAdmin,
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
     defaultColumns: ['title', 'slug', '_status'],

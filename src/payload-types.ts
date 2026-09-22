@@ -216,7 +216,7 @@ export interface Post {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Every image and audio file on the site. Files are uploaded to Cloudflare R2, converted to WebP and stored in three sizes (400, 800 and 1920 px); the site picks the right one per screen.
+ * All media on the site: photos, audio and video. Files are stored on Cloudflare R2 with automatic optimizations.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
@@ -1377,6 +1377,16 @@ export interface Site {
   facebook?: string | null;
   appStoreUrl?: string | null;
   playStoreUrl?: string | null;
+  /**
+   * Configure the image and text of the post displayed in the native Instagram card on the home page.
+   */
+  instagramFeatured?: {
+    image?: (number | null) | Media;
+    postUrl?: string | null;
+    caption?: string | null;
+    likes?: string | null;
+    dateLabel?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1412,6 +1422,15 @@ export interface SiteSelect<T extends boolean = true> {
   facebook?: T;
   appStoreUrl?: T;
   playStoreUrl?: T;
+  instagramFeatured?:
+    | T
+    | {
+        image?: T;
+        postUrl?: T;
+        caption?: T;
+        likes?: T;
+        dateLabel?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

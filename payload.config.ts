@@ -50,6 +50,9 @@ export default buildConfig({
 
   admin: {
     user: 'users',
+    avatar: {
+      Component: '/src/components/admin/Avatar#Avatar',
+    },
     importMap: { baseDir: path.resolve(dirname) },
     dateFormat: 'dd/MM/yyyy HH:mm',
     // The panel wears the site's own colours (see app/(payload)/custom.scss), so it is
@@ -62,6 +65,7 @@ export default buildConfig({
       },
       afterLogin: ['/src/components/admin/PasswordToggle#PasswordToggle'],
       beforeDashboard: ['/src/components/admin/Dashboard#Dashboard'],
+      beforeNavLinks: ['/src/components/admin/NavDashboardLink#NavDashboardLink'],
     },
     timezones: {
       defaultTimezone: 'Europe/Rome',

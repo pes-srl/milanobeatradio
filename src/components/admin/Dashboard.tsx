@@ -1,16 +1,31 @@
 import Link from 'next/link'
+import { headers as getHeaders } from 'next/headers'
+import type { ServerProps } from 'payload'
 import { siteUrl } from '@/src/lib/env'
 import { DAY_NAMES_IT, nowInRome, slotIsOn } from '@/src/lib/format'
 import { payloadClient } from '@/src/lib/payload'
+import { AdminPlayButton } from './AdminPlayButton'
 
 /**
  * Panel above the collection cards on /admin. Answers the three things an editor
  * opens the panel to find out: what is on air, what is waiting to be published,
  * and where to start writing.
  */
-export async function Dashboard() {
+export async function Dashboard(props?: Partial<ServerProps>) {
   const payload = await payloadClient()
   const now = nowInRome()
+
+  let user = props?.user
+  if (!user) {
+    try {
+      const headers = await getHeaders()
+      const authResult = await payload.auth({ headers })
+      user = (authResult.user ?? undefined) as typeof user
+    } catch {}
+  }
+
+  const isAdmin = user?.role === 'admin'
+  const title = isAdmin ? 'BEAT DASHBOARD' : 'REDAZIONE'
 
   const [shows, published, drafts, upcoming] = await Promise.all([
     payload.find({ collection: 'shows', where: { _status: { equals: 'published' } }, limit: 50, depth: 0 }),
@@ -28,16 +43,23 @@ export async function Dashboard() {
 
   return (
     <section className="mbr-dash">
-      <div className="mbr-dash__air">
-        <p className="mbr-dash__label">Ora in onda · {DAY_NAMES_IT[Number(now.dayOfWeek)]} {now.time}</p>
-        {onAir ? (
-          <p className="mbr-dash__show">
-            <Link href={`/admin/collections/shows/${onAir.show.id}`}>{onAir.show.title}</Link>
-            <span> {onAir.slot.start} – {onAir.slot.end}</span>
-          </p>
-        ) : (
-          <p className="mbr-dash__show mbr-dash__show--empty">Nessun programma in palinsesto a quest’ora.</p>
-        )}
+      <div className="mbr-dash__air-row">
+        <div className="mbr-dash__air">
+          <p className="mbr-dash__label">Ora in onda · {DAY_NAMES_IT[Number(now.dayOfWeek)]} {now.time}</p>
+          {onAir ? (
+            <p className="mbr-dash__show">
+              <Link href={`/admin/collections/shows/${onAir.show.id}`}>{onAir.show.title}</Link>
+              <span> {onAir.slot.start} – {onAir.slot.end}</span>
+            </p>
+          ) : (
+            <p className="mbr-dash__show mbr-dash__show--empty">Nessun programma in palinsesto a quest’ora.</p>
+          )}
+        </div>
+        <AdminPlayButton />
+      </div>
+
+      <div className="mbr-dash__redazione">
+        <h1 className="mbr-dash__redazione-title">{title}</h1>
       </div>
 
       <div className="mbr-dash__figures">
@@ -56,10 +78,10 @@ export async function Dashboard() {
       </div>
 
       <div className="mbr-dash__links">
-        <Link href="/admin/collections/posts/create">Scrivi una City News</Link>
-        <Link href="/admin/collections/events/create">Aggiungi un evento</Link>
-        <Link href="/admin/collections/media">Carica un’immagine</Link>
-        <a href={siteUrl()} target="_blank" rel="noreferrer">Apri il sito ↗</a>
+        <Link href="/admin/collections/posts/create">SCRIVI UNA CITY NEWS</Link>
+        <Link href="/admin/collections/events/create">AGGIUNGI UN EVENTO</Link>
+        <Link href="/admin/collections/media">CARICA CONTENUTO</Link>
+        <a href={siteUrl()} target="_blank" rel="noreferrer">APRI IL SITO ↗</a>
       </div>
     </section>
   )

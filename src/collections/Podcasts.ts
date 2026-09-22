@@ -1,5 +1,5 @@
 import type { CollectionConfig, TextFieldValidation } from 'payload'
-import { authenticated, isAdmin, isAdminField, publishedOrAuthenticated } from '@/src/access'
+import { authenticated, hideForNonAdmin, isAdmin, isAdminField, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
@@ -18,6 +18,7 @@ export const Podcasts: CollectionConfig = {
   slug: 'podcasts',
   labels: { singular: { it: 'Podcast', en: 'Podcast' }, plural: { it: 'Podcast', en: 'Podcasts' } },
   admin: {
+    hidden: hideForNonAdmin,
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
     defaultColumns: ['title', 'filters', 'publishedAt', '_status'],

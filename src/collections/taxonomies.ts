@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { anyone, authenticated, isAdmin } from '@/src/access'
+import { anyone, authenticated, hideForNonAdmin, isAdmin } from '@/src/access'
 import { slugField } from '@/src/fields/slug'
 
 type Labels = { singular: { it: string; en: string }; plural: { it: string; en: string } }
@@ -7,7 +7,13 @@ type Localised = { it: string; en: string }
 type AccessMap = NonNullable<CollectionConfig['access']>
 
 /** Simple taxonomy factory: name, slug, optional description. No drafts (they are lookup tables). */
-const taxonomy = (slug: string, labels: Labels, description: Localised, access?: AccessMap): CollectionConfig => ({
+const taxonomy = (
+  slug: string,
+  labels: Labels,
+  description: Localised,
+  access?: AccessMap,
+  admin?: Partial<CollectionConfig['admin']>,
+): CollectionConfig => ({
   slug,
   labels,
   admin: {
@@ -15,6 +21,7 @@ const taxonomy = (slug: string, labels: Labels, description: Localised, access?:
     group: { it: 'Tassonomie', en: 'Taxonomies' },
     defaultColumns: ['name', 'slug'],
     description,
+    ...admin,
   },
   access: access ?? { read: anyone, create: authenticated, update: authenticated, delete: authenticated },
   fields: [
@@ -52,6 +59,7 @@ export const PodcastFilters = taxonomy(
   // Write operations restricted to admin: editors have no reason to change podcast filters,
   // and accidentally deleting «intervista» would break the /interviste page.
   { read: anyone, create: isAdmin, update: isAdmin, delete: isAdmin },
+  { hidden: hideForNonAdmin },
 )
 
 export const Genres = taxonomy(

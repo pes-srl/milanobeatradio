@@ -15,6 +15,7 @@ export const Media: CollectionConfig = {
     group: { it: 'Contenuti', en: 'Content' },
     listSearchableFields: ['filename', 'alt'],
     components: {
+      beforeListTable: ['/src/components/admin/MediaFilters#MediaFilters'],
       // A grid of thumbnails, ADDED next to Payload's table rather than replacing it:
       // the table keeps filters, column choice and bulk upload. See MediaGrid.tsx.
       views: {
@@ -23,8 +24,8 @@ export const Media: CollectionConfig = {
       },
     },
     description: {
-      it: 'Tutte le immagini e gli audio del sito. I file vengono caricati su Cloudflare R2, convertiti in WebP e salvati in tre misure (400, 800 e 1920 px): il sito sceglie da solo quella giusta per ogni schermo.',
-      en: 'Every image and audio file on the site. Files are uploaded to Cloudflare R2, converted to WebP and stored in three sizes (400, 800 and 1920 px); the site picks the right one per screen.',
+      it: 'Tutti i media del sito: foto, audio e video. I file vengono archiviati su Cloudflare R2 con ottimizzazioni automatiche.',
+      en: 'All media on the site: photos, audio and video. Files are stored on Cloudflare R2 with automatic optimizations.',
     },
   },
   // Newest first: an editor almost always wants the file just uploaded, not the oldest
@@ -34,7 +35,7 @@ export const Media: CollectionConfig = {
   upload: {
     // Local fallback dir (git-ignored). Ignored when the S3 adapter is enabled.
     staticDir: 'media',
-    mimeTypes: ['image/*', 'audio/mpeg', 'audio/mp4', 'audio/aac', 'application/pdf'],
+    mimeTypes: ['image/*', 'audio/*', 'video/*', 'application/pdf'],
     focalPoint: true,
     adminThumbnail: 'thumb',
     // Original image is re-encoded to WebP too (audio/PDF are left untouched by sharp).

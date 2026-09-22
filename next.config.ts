@@ -22,6 +22,9 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'pub-df0e74f6b3f940c5a570551308d6944f.r2.dev' },
       // AzuraCast album art for the "now playing" widget
       { protocol: 'https', hostname: 'canali.pesstream.eu' },
+      // Instagram & Facebook CDN for official Instagram Graph API feed
+      { protocol: 'https', hostname: '**.cdninstagram.com' },
+      { protocol: 'https', hostname: '**.fbcdn.net' },
       // Local dev only: media served from Payload's own API when R2 is disabled.
       ...(process.env.NODE_ENV !== 'production' ? [{ protocol: 'http' as const, hostname: 'localhost' }] : []),
     ],

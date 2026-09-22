@@ -1,4 +1,5 @@
 import type { Access, CollectionConfig } from 'payload'
+import { hideForNonAdmin } from '@/src/access'
 
 /**
  * Admin panel users. Two roles, mirroring the WordPress site:
@@ -25,6 +26,7 @@ export const Users: CollectionConfig = {
     lockTime: 15 * 60 * 1000,
   },
   admin: {
+    hidden: hideForNonAdmin,
     useAsTitle: 'email',
     group: { it: 'Sistema', en: 'System' },
     defaultColumns: ['name', 'email', 'role'],

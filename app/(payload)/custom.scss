@@ -44,54 +44,66 @@
 
 :root {
   // Payload derives every surface, border and text colour from this one ramp, and
-  // flips it for dark mode. Re-tinting it violet themes the whole panel at the source
-  // instead of overriding components one by one.
+  // flips it for dark mode. Tuned to deep nighttime violet/black of Milano Beat Radio.
   --color-base-0: #ffffff;
-  --color-base-50: #f5f4f6;
-  --color-base-100: #ece9ed;
-  --color-base-150: #dedae0;
-  --color-base-200: #d1ccd4;
-  --color-base-250: #c5bec8;
-  --color-base-300: #b7aebc;
-  --color-base-350: #aba0b0;
-  --color-base-400: #9d91a3;
-  --color-base-450: #908397;
-  --color-base-500: #84758b;
-  --color-base-550: #75687c;
-  --color-base-600: #685c6e;
-  --color-base-650: #5a4f5f;
-  --color-base-700: #4c4351;
-  --color-base-750: #3e3741;
-  --color-base-800: #302b33;
-  --color-base-850: #231f25;
-  --color-base-900: #151216;
-  --color-base-950: #070608;
+  --color-base-50: #fbf9fc;
+  --color-base-100: #f4f0f6;
+  --color-base-150: #e9e2ed;
+  --color-base-200: #ded3e3;
+  --color-base-250: #d0c2d7;
+  --color-base-300: #c1b0ca;
+  --color-base-350: #b19ebd;
+  --color-base-400: #9e89ab;
+  --color-base-450: #8c7599;
+  --color-base-500: #7b6288;
+  --color-base-550: #6a5177;
+  --color-base-600: #5a4166;
+  --color-base-650: #4a3255;
+  --color-base-700: #3b2446;
+  --color-base-750: #2d1836;
+  --color-base-800: #220f2b;
+  --color-base-850: #180920;
+  --color-base-900: #100516;
+  --color-base-950: #08020c;
   --color-base-1000: #000000;
 
   --mbr-brand: #c824e3;
   --mbr-brand-hover: #d959ec;
+  --mbr-pink: #e0246f;
+  --mbr-pink-hover: #f02d7d;
+  --mbr-violet: #6f2dbd;
 
   --font-body: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  // The site has no rounded corners; the panel follows.
-  --style-radius-s: 2px;
-  --style-radius-m: 3px;
-  --style-radius-l: 4px;
+  --style-radius-s: 4px;
+  --style-radius-m: 8px;
+  --style-radius-l: 12px;
 
-  --accessibility-outline: 2px solid var(--mbr-brand);
+  --accessibility-outline: 2px solid var(--mbr-pink);
 }
 
-// Primary actions (Salva, Pubblica) in brand purple instead of the default near-black,
-// which on a dark panel would read as a light grey slab.
+// Primary actions (Salva, Pubblica) with website signature pink-to-purple gradient.
 .btn--style-primary {
-  --bg-color: var(--mbr-brand);
+  --bg-color: var(--mbr-pink);
   --color: #ffffff;
-  --hover-bg: var(--mbr-brand-hover);
+  --hover-bg: var(--mbr-brand);
   --hover-color: #ffffff;
+  background: linear-gradient(135deg, var(--mbr-pink) 0%, var(--mbr-brand) 100%) !important;
+  border: none !important;
+  border-radius: var(--style-radius-m) !important;
+  box-shadow: 0 4px 16px rgba(200, 36, 227, 0.35);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, var(--mbr-pink-hover) 0%, var(--mbr-brand-hover) 100%) !important;
+    box-shadow: 0 0 25px rgba(224, 36, 111, 0.6) !important;
+    transform: translateY(-1px);
+  }
 }
 
-// Brand mark, shown by src/components/admin/Logo.tsx and Icon.tsx. The logo is the
-// only thing above the login form now, so it carries the screen on its own.
+// Brand mark, shown by src/components/admin/Logo.tsx and Icon.tsx.
 .mbr-brand {
   display: flex;
   justify-content: center;
@@ -99,9 +111,61 @@
 .mbr-brand img {
   width: min(260px, 60vw);
   height: auto;
+  filter: drop-shadow(0 0 20px rgba(200, 36, 227, 0.35));
 }
 .mbr-icon {
   height: auto;
+}
+
+// Top-right header account badge with pink MBR logo
+.app-header__account {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+}
+
+.mbr-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(38, 12, 58, 0.95) 0%, rgba(14, 4, 24, 0.98) 100%);
+  border: 1.5px solid var(--mbr-pink);
+  box-shadow: 0 0 14px rgba(224, 36, 111, 0.4), 0 2px 8px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    border-color: #ff3b86;
+    box-shadow: 0 0 22px rgba(224, 36, 111, 0.75), 0 0 32px rgba(200, 36, 227, 0.4);
+  }
+
+  &__img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 4px rgba(224, 36, 111, 0.5));
+  }
+}
+
+// Fallback styling for default account graphic if ever displayed
+.graphic-account {
+  &__bg {
+    fill: rgba(35, 10, 52, 0.9) !important;
+    stroke: var(--mbr-pink) !important;
+  }
+  &__head,
+  &__body {
+    fill: var(--mbr-pink) !important;
+  }
 }
 
 // Login & auth screens: deep black background
@@ -127,91 +191,491 @@
   cursor: pointer;
 }
 .mbr-reveal:hover {
-  color: var(--mbr-brand);
+  color: var(--mbr-pink);
 }
 
 // Dashboard panel (src/components/admin/Dashboard.tsx).
 .mbr-dash {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 20px;
   margin-bottom: 40px;
-  padding-bottom: 32px;
-  border-bottom: 1px solid var(--theme-elevation-100);
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(200, 36, 227, 0.22);
 }
-.mbr-dash__label {
-  margin: 0 0 6px;
+
+.mbr-dash__air-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.mbr-dash__air {
+  display: inline-flex;
+  flex-direction: column;
+  align-self: flex-start;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(200, 36, 227, 0.1) 0%, rgba(111, 45, 189, 0.06) 100%);
+  border: 1px solid rgba(200, 36, 227, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+.mbr-dash__player-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mbr-dash__play-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid var(--mbr-pink);
+  background: linear-gradient(135deg, rgba(35, 10, 56, 0.95) 0%, rgba(18, 4, 30, 0.98) 100%);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(224, 36, 111, 0.35), 0 4px 16px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  flex-shrink: 0;
+
+  &:hover {
+    transform: scale(1.08);
+    border-color: #ff3b86;
+    background: linear-gradient(135deg, rgba(224, 36, 111, 0.3) 0%, rgba(200, 36, 227, 0.4) 100%);
+    box-shadow: 0 0 28px rgba(224, 36, 111, 0.7), 0 0 42px rgba(200, 36, 227, 0.4);
+    color: #ffffff;
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &--playing {
+    background: linear-gradient(135deg, var(--mbr-pink) 0%, var(--mbr-brand) 100%) !important;
+    border-color: #ffffff !important;
+    box-shadow: 0 0 30px rgba(224, 36, 111, 0.85), 0 0 50px rgba(200, 36, 227, 0.5) !important;
+    animation: mbr-pulse-ring 2s infinite ease-in-out;
+  }
+
+  &--loading {
+    border-color: var(--mbr-brand);
+  }
+}
+
+.mbr-dash__play-icon {
+  display: block;
+  color: #ffffff;
+  transition: transform 0.2s ease;
+
+  &--spin {
+    animation: mbr-spin 1s linear infinite;
+  }
+}
+
+@keyframes mbr-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mbr-pulse-ring {
+  0%, 100% {
+    box-shadow: 0 0 22px rgba(224, 36, 111, 0.8), 0 0 40px rgba(200, 36, 227, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 36px rgba(224, 36, 111, 1), 0 0 65px rgba(200, 36, 227, 0.7);
+  }
+}
+
+.mbr-dash__player-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: rgba(224, 36, 111, 0.2);
+  border: 1px solid rgba(224, 36, 111, 0.6);
+  color: #ffffff;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  box-shadow: 0 0 14px rgba(224, 36, 111, 0.4);
+  animation: mbr-dash-pulse 1.8s infinite ease-in-out;
+}
+
+.mbr-dash__player-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--mbr-pink);
+  box-shadow: 0 0 8px var(--mbr-pink);
+}
+
+.mbr-dash__label {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--theme-elevation-500);
+  color: var(--mbr-pink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--mbr-pink);
+    box-shadow: 0 0 8px var(--mbr-pink);
+    animation: mbr-dash-pulse 2s infinite ease-in-out;
+  }
 }
+
+@keyframes mbr-dash-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
 .mbr-dash__show {
   margin: 0;
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 19px;
+  font-weight: 700;
   color: var(--theme-text);
 }
 .mbr-dash__show a {
   color: inherit;
   text-decoration: none;
+  transition: color 0.2s;
 }
 .mbr-dash__show a:hover {
-  color: var(--mbr-brand);
+  color: var(--mbr-pink);
 }
 .mbr-dash__show span {
   margin-left: 10px;
-  font-size: 15px;
-  font-weight: 400;
-  color: var(--theme-elevation-600);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
 }
 .mbr-dash__show--empty {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
   color: var(--theme-elevation-600);
 }
+
+// REDAZIONE title under the on-air playlist
+.mbr-dash__redazione {
+  margin: 4px 0 10px;
+}
+.mbr-dash__redazione-title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(3rem, 7.5vw, 5.8rem);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #ff2a85 0%, #e0246f 25%, #c824e3 65%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 25px rgba(224, 36, 111, 0.45)) drop-shadow(0 0 50px rgba(200, 36, 227, 0.35));
+}
+
 .mbr-dash__figures {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 16px;
 }
 .mbr-dash__figures a {
   flex: 1 1 180px;
-  padding: 16px 18px;
-  border: 1px solid var(--theme-elevation-100);
+  padding: 18px 22px;
+  border: 1px solid rgba(200, 36, 227, 0.22);
+  border-radius: var(--style-radius-m);
+  background: linear-gradient(145deg, rgba(30, 8, 48, 0.55) 0%, rgba(14, 4, 24, 0.75) 100%);
   text-decoration: none;
   color: inherit;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 .mbr-dash__figures a:hover {
-  border-color: var(--mbr-brand);
+  border-color: rgba(224, 36, 111, 0.7);
+  box-shadow: 0 0 25px rgba(224, 36, 111, 0.35), 0 0 45px rgba(200, 36, 227, 0.25);
+  transform: translateY(-2px);
 }
 .mbr-dash__figures b {
   display: block;
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 800;
   line-height: 1;
-  color: var(--theme-text);
+  background: linear-gradient(135deg, #ffffff 40%, #f0abfc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-variant-numeric: tabular-nums;
 }
 .mbr-dash__figures span {
   display: block;
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 13px;
-  color: var(--theme-elevation-600);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
 }
+
 .mbr-dash__links {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
-  font-size: 14px;
+  gap: 12px;
+  margin-top: 4px;
 }
 .mbr-dash__links a {
-  color: var(--mbr-brand);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  background: rgba(200, 36, 227, 0.1);
+  border: 1px solid rgba(200, 36, 227, 0.3);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .mbr-dash__links a:hover {
-  text-decoration: underline;
+  background: linear-gradient(135deg, #e0246f 0%, #c824e3 100%);
+  border-color: #ff3b94;
+  box-shadow: 0 0 20px rgba(224, 36, 111, 0.5);
+  transform: translateY(-1px);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+// Collections groups & Cards in dashboard
+.collections {
+  &__group {
+    margin-bottom: 28px;
+  }
+
+  &__label {
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #ffffff !important;
+    margin-bottom: 14px !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1em;
+      background: linear-gradient(to bottom, #e0246f, #c824e3);
+      border-radius: 2px;
+      box-shadow: 0 0 10px rgba(200, 36, 227, 0.6);
+    }
+  }
+
+  &__card-list {
+    gap: 14px !important;
+  }
+}
+
+.card {
+  background: linear-gradient(145deg, rgba(28, 8, 44, 0.6) 0%, rgba(14, 4, 23, 0.8) 100%) !important;
+  border: 1px solid rgba(200, 36, 227, 0.22) !important;
+  border-radius: var(--style-radius-m) !important;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+
+  &:hover {
+    border-color: rgba(224, 36, 111, 0.65) !important;
+    box-shadow: 0 0 25px rgba(200, 36, 227, 0.3), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+    transform: translateY(-2px);
+  }
+
+  &__title {
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  &:hover &__title {
+    color: #fce7f3 !important;
+  }
+
+  &__actions .btn__icon {
+    border: 1.5px solid rgba(200, 36, 227, 0.6) !important;
+    background: linear-gradient(135deg, rgba(224, 36, 111, 0.16) 0%, rgba(200, 36, 227, 0.24) 100%) !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 10px rgba(200, 36, 227, 0.25), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+    svg,
+    .icon--plus .stroke,
+    path.stroke {
+      stroke: #ffffff !important;
+      stroke-width: 2px !important;
+      filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+    }
+
+    &:hover {
+      background: linear-gradient(135deg, #e0246f 0%, #c824e3 100%) !important;
+      border-color: #ff3b94 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 18px rgba(224, 36, 111, 0.65), 0 0 26px rgba(200, 36, 227, 0.35) !important;
+      transform: scale(1.08);
+
+      svg,
+      .icon--plus .stroke,
+      path.stroke {
+        stroke: #ffffff !important;
+      }
+    }
+  }
+
+  &:hover &__actions .btn__icon {
+    border-color: rgba(224, 36, 111, 0.8) !important;
+    background: linear-gradient(135deg, rgba(224, 36, 111, 0.28) 0%, rgba(200, 36, 227, 0.34) 100%) !important;
+    box-shadow: 0 0 14px rgba(224, 36, 111, 0.4) !important;
+  }
+}
+
+// Admin sidebar navigation styling
+.nav {
+  background: linear-gradient(180deg, #0e0317 0%, #06010a 100%) !important;
+  border-right: 1px solid rgba(200, 36, 227, 0.18) !important;
+
+  // Top Dashboard button in navigation
+  .mbr-nav-dashboard-wrap {
+    margin: 8px 0 14px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(200, 36, 227, 0.22);
+
+    @media (min-width: 1024px) {
+      margin: 10px 0 18px 0;
+      padding-bottom: 16px;
+    }
+  }
+
+  .mbr-nav-dashboard-icon {
+    margin-right: 12px;
+    flex-shrink: 0;
+    color: var(--mbr-pink);
+    transition: all 0.25s ease;
+  }
+
+  .nav__link:hover .mbr-nav-dashboard-icon,
+  .nav__link.active .mbr-nav-dashboard-icon {
+    color: #ffffff;
+    filter: drop-shadow(0 0 8px var(--mbr-pink));
+  }
+
+  // Group headers (Contenuti, Tassonomie, Radio, Sistema)
+  .nav-group {
+    margin-bottom: 12px;
+
+    &__toggle {
+      color: rgba(255, 255, 255, 0.65) !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 12px !important;
+      padding: 6px 12px !important;
+      margin-top: 14px;
+      margin-bottom: 4px;
+      transition: color 0.2s ease;
+
+      @media (min-width: 1024px) {
+        font-size: 14px !important; // Larger on PC
+        margin-top: 18px;
+        margin-bottom: 6px;
+      }
+
+      &:hover {
+        color: var(--mbr-pink) !important;
+      }
+    }
+
+    &__label {
+      font-weight: 700 !important;
+      letter-spacing: 0.06em;
+    }
+  }
+
+  // Collection & Global links in left sidebar
+  .nav__link,
+  a.nav__link,
+  div.nav__link,
+  a.nav__link:visited {
+    display: flex;
+    align-items: center;
+    padding: 8px 14px !important;
+    margin: 3px 0 !important;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+    @media (min-width: 1024px) {
+      padding: 10px 18px !important; // More comfortable on PC
+      margin: 4px 0 !important;
+    }
+
+    .nav__link-label {
+      font-size: 15px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.01em;
+      color: rgba(255, 255, 255, 0.85) !important;
+      transition: all 0.2s ease;
+
+      @media (min-width: 1024px) {
+        font-size: 17px !important; // Significantly larger on PC!
+        line-height: 1.4 !important;
+        font-weight: 600 !important;
+      }
+    }
+
+    &:hover {
+      background: rgba(200, 36, 227, 0.15) !important;
+      transform: translateX(3px);
+
+      .nav__link-label {
+        color: #ffffff !important;
+      }
+    }
+
+    &.active,
+    &[aria-current='page'],
+    &:has(.nav__link-indicator) {
+      background: linear-gradient(90deg, rgba(224, 36, 111, 0.28) 0%, rgba(200, 36, 227, 0.16) 100%) !important;
+      border-left: 3px solid var(--mbr-pink) !important;
+
+      .nav__link-label {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        text-shadow: 0 0 12px rgba(224, 36, 111, 0.5);
+      }
+    }
+  }
 }
 
 // Media grid view (src/components/admin/MediaGrid.tsx), at /admin/collections/media/grid.
@@ -282,18 +746,91 @@
 }
 .mbr-grid__kinds {
   display: flex;
-  gap: 4px;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+
+  .mbr-grid__kind-btn,
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 15px;
+    border-radius: 9999px;
+    background: rgba(30, 8, 46, 0.7);
+    border: 1px solid rgba(200, 36, 227, 0.3);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    svg {
+      flex-shrink: 0;
+      color: rgba(255, 255, 255, 0.75);
+      transition: color 0.2s ease;
+    }
+
+    &:hover {
+      background: rgba(200, 36, 227, 0.22);
+      border-color: var(--mbr-pink);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 0 14px rgba(224, 36, 111, 0.4);
+
+      svg {
+        color: var(--mbr-pink);
+      }
+    }
+
+    &.is-on,
+    &.is-active {
+      background: linear-gradient(135deg, #e0246f 0%, #c824e3 100%) !important;
+      border-color: #ff3b94 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 18px rgba(224, 36, 111, 0.6), 0 2px 10px rgba(0, 0, 0, 0.4) !important;
+      font-weight: 700;
+
+      svg {
+        color: #ffffff !important;
+      }
+    }
+  }
 }
-.mbr-grid__kinds a {
-  padding: 8px 14px;
-  border: 1px solid var(--theme-elevation-150);
-  font-size: 13px;
-  text-decoration: none;
-  color: var(--theme-elevation-600);
-}
-.mbr-grid__kinds a.is-on {
-  border-color: var(--mbr-brand);
-  color: var(--mbr-brand);
+
+.mbr-grid__badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+
+  span {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  &--video {
+    background: radial-gradient(circle, rgba(48, 10, 42, 0.9) 0%, rgba(18, 4, 25, 0.95) 100%);
+    color: var(--mbr-pink);
+
+    svg {
+      filter: drop-shadow(0 0 8px rgba(224, 36, 111, 0.7));
+    }
+  }
+
+  &--audio {
+    background: radial-gradient(circle, rgba(35, 12, 55, 0.9) 0%, rgba(14, 4, 26, 0.95) 100%);
+    color: #c084fc;
+
+    svg {
+      filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.7));
+    }
+  }
 }
 .mbr-grid__items {
   display: grid;
@@ -363,3 +900,338 @@
 .mbr-grid__count {
   font-variant-numeric: tabular-nums;
 }
+
+// =============================================================================
+// Table bulk action toolbar (.list-selection)
+// When one or more rows are checked in the list view, this bar appears in the
+// top right of the header. Styled with high contrast, tactile buttons and MBR glow.
+// =============================================================================
+
+.list-selection {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 8px 18px !important;
+  background: linear-gradient(135deg, rgba(32, 10, 52, 0.96) 0%, rgba(18, 5, 30, 0.98) 100%) !important;
+  border: 1px solid rgba(200, 36, 227, 0.45) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 20px rgba(200, 36, 227, 0.25) !important;
+  backdrop-filter: blur(12px) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #ffffff !important;
+  animation: mbrToolbarPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+
+  @media (max-width: 768px) {
+    border-radius: var(--style-radius-m) !important;
+    flex-wrap: wrap;
+    padding: 10px 14px !important;
+    gap: 8px !important;
+  }
+
+  // Selected count badge: e.g. "1 selezionato"
+  > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: #ffffff !important;
+    white-space: nowrap;
+
+    // Glowing pink pulsating dot
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--mbr-pink);
+      box-shadow: 0 0 10px var(--mbr-pink), 0 0 16px var(--mbr-pink);
+    }
+  }
+
+  // Divider dash "—"
+  > span:not(:first-child) {
+    color: rgba(200, 36, 227, 0.4) !important;
+    font-weight: 300;
+    user-select: none;
+  }
+
+  &__actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  // Base style for all bulk action buttons
+  .list-selection__button,
+  button.list-selection__button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 6px 14px !important;
+    border-radius: 6px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    white-space: nowrap !important;
+    line-height: 1.3 !important;
+
+    &:hover {
+      background: rgba(200, 36, 227, 0.25) !important;
+      border-color: var(--mbr-brand) !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 14px rgba(200, 36, 227, 0.4) !important;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  // Select all across pages button (#select-all-across-pages)
+  #select-all-across-pages.list-selection__button {
+    background: rgba(111, 45, 189, 0.25) !important;
+    border: 1px solid rgba(111, 45, 189, 0.5) !important;
+    color: #e9d5ff !important;
+
+    &:hover {
+      background: rgba(111, 45, 189, 0.5) !important;
+      border-color: #a855f7 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 14px rgba(168, 85, 247, 0.4) !important;
+    }
+  }
+
+  // Edit / Modifica button (.edit-many__toggle)
+  .edit-many__toggle .list-selection__button,
+  button[aria-label*='edit' i],
+  button[aria-label*='modific' i] {
+    background: rgba(200, 36, 227, 0.18) !important;
+    border: 1px solid rgba(200, 36, 227, 0.4) !important;
+    color: #f5d0fe !important;
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(224, 36, 111, 0.4) 0%, rgba(200, 36, 227, 0.5) 100%) !important;
+      border-color: var(--mbr-brand) !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 16px rgba(200, 36, 227, 0.45) !important;
+    }
+  }
+
+  // Delete / Elimina button (.delete-documents__toggle) - HIGH VISIBILITY DANGER
+  .delete-documents__toggle,
+  button.delete-documents__toggle,
+  button[aria-label*='Elimina' i],
+  button[aria-label*='delete' i],
+  button[aria-label*='cancella' i] {
+    background: rgba(224, 36, 111, 0.22) !important;
+    border: 1px solid rgba(224, 36, 111, 0.7) !important;
+    color: #ff6e9c !important;
+    font-weight: 700 !important;
+
+    &:hover {
+      background: var(--mbr-pink) !important;
+      border-color: #ff3b86 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 18px rgba(224, 36, 111, 0.7) !important;
+    }
+  }
+
+  // Publish / Pubblica button
+  button[aria-label*='Pubblica' i],
+  button[aria-label*='publish' i] {
+    background: rgba(34, 197, 94, 0.18) !important;
+    border: 1px solid rgba(34, 197, 94, 0.5) !important;
+    color: #86efac !important;
+
+    &:hover {
+      background: rgba(34, 197, 94, 0.35) !important;
+      border-color: #22c55e !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 16px rgba(34, 197, 94, 0.4) !important;
+    }
+  }
+
+  // Unpublish / Annulla pubblicazione
+  button[aria-label*='Annulla pubblicazione' i],
+  button[aria-label*='unpublish' i] {
+    background: rgba(234, 179, 8, 0.18) !important;
+    border: 1px solid rgba(234, 179, 8, 0.5) !important;
+    color: #fde047 !important;
+
+    &:hover {
+      background: rgba(234, 179, 8, 0.35) !important;
+      border-color: #eab308 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 16px rgba(234, 179, 8, 0.4) !important;
+    }
+  }
+}
+
+@keyframes mbrToolbarPop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Checkboxes in admin tables and lists
+.checkbox-input {
+  &__input {
+    border: 1px solid rgba(200, 36, 227, 0.4) !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+  }
+
+  &:hover &__input {
+    border-color: var(--mbr-pink) !important;
+    box-shadow: 0 0 8px rgba(224, 36, 111, 0.4) !important;
+  }
+
+  &--checked {
+    .checkbox-input__input {
+      background: var(--mbr-pink) !important;
+      border-color: var(--mbr-pink) !important;
+      box-shadow: 0 0 12px rgba(224, 36, 111, 0.6) !important;
+
+      svg path {
+        stroke: #ffffff !important;
+      }
+    }
+  }
+}
+
+// Table row highlight when checked
+.table tbody tr:has(.cell-_select .checkbox-input--checked) {
+  background: rgba(200, 36, 227, 0.1) !important;
+  box-shadow: inset 3px 0 0 var(--mbr-pink);
+}
+
+// =============================================================================
+// Media List View Filter Toolbar (.mbr-media-toolbar)
+// Placed above the documents table via beforeListTable in Media collection.
+// =============================================================================
+
+.mbr-media-toolbar {
+  margin-bottom: 20px;
+  width: 100%;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, rgba(32, 10, 50, 0.85) 0%, rgba(16, 4, 26, 0.92) 100%);
+    border: 1px solid rgba(200, 36, 227, 0.32);
+    border-radius: var(--style-radius-m);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 15px rgba(200, 36, 227, 0.12);
+    backdrop-filter: blur(10px);
+  }
+
+  &__label-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--mbr-pink);
+    box-shadow: 0 0 8px var(--mbr-pink), 0 0 14px var(--mbr-pink);
+    animation: mbr-dash-pulse 2s infinite ease-in-out;
+  }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  &__pills {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 15px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(200, 36, 227, 0.35);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 1.3;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+    &:hover:not(:disabled) {
+      background: rgba(200, 36, 227, 0.22);
+      border-color: var(--mbr-pink);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 0 14px rgba(224, 36, 111, 0.45);
+
+      .mbr-media-toolbar__icon {
+        color: var(--mbr-pink);
+      }
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &.is-active {
+      background: linear-gradient(135deg, #e0246f 0%, #c824e3 100%) !important;
+      border-color: #ff3b94 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      box-shadow: 0 0 18px rgba(224, 36, 111, 0.6), 0 2px 10px rgba(0, 0, 0, 0.4) !important;
+
+      .mbr-media-toolbar__icon {
+        color: #ffffff !important;
+      }
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.2s ease;
+  }
+
+  &__name {
+    letter-spacing: 0.02em;
+  }
+}
+
