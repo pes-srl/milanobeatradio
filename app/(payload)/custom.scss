@@ -103,6 +103,71 @@
   }
 }
 
+// Title action buttons (e.g. "Crea Nuovo" next to City News, Eventi, Staff, Media, ecc.)
+.list-create-new-doc__create-new-button,
+.list-header__title-actions .btn,
+.list-header__title-and-actions .btn--style-pill,
+.drawer-title-actions .btn {
+  background: linear-gradient(135deg, #e0246f 0%, #c824e3 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 0 16px rgba(224, 36, 111, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.03em !important;
+  padding: 6px 16px !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+
+  .btn__label {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+  }
+
+  &::before {
+    content: '+';
+    font-size: 1.15rem;
+    font-weight: 900;
+    line-height: 1;
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, #f02d7d 0%, #d959ec 100%) !important;
+    border-color: #ffffff !important;
+    box-shadow: 0 0 26px rgba(224, 36, 111, 0.85), 0 0 35px rgba(200, 36, 227, 0.6) !important;
+    transform: translateY(-2px) scale(1.06) !important;
+    color: #ffffff !important;
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.97) !important;
+  }
+}
+
+// Secondary action buttons in collection list header
+.list-header__actions .btn,
+.list-header__title-actions .btn:not(.list-create-new-doc__create-new-button) {
+  border: 1.5px solid rgba(200, 36, 227, 0.45) !important;
+  background: rgba(200, 36, 227, 0.16) !important;
+  color: #ffffff !important;
+  border-radius: 9999px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  transition: all 0.2s ease !important;
+
+  &:hover {
+    background: rgba(200, 36, 227, 0.32) !important;
+    border-color: rgba(224, 36, 111, 0.8) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 16px rgba(200, 36, 227, 0.4) !important;
+  }
+}
+
 // Brand mark, shown by src/components/admin/Logo.tsx and Icon.tsx.
 .mbr-brand {
   display: flex;
