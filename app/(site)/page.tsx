@@ -27,7 +27,7 @@ export default async function HomePage() {
     <>
       <HomeHero site={site} />
 
-      <section className="px-4 py-20 sm:px-8">
+      <section className="px-4 py-24 sm:px-8 sm:py-28">
         <SectionTitle>City Events</SectionTitle>
         {events.docs.length > 0 ? (
           <div className="mx-auto mt-10 grid max-w-[1440px] gap-8 sm:grid-cols-2">
@@ -45,7 +45,7 @@ export default async function HomePage() {
 
       <InstagramFeed site={site} feed={instagramFeed} />
 
-      <section className="bg-[#050505] px-4 py-20 sm:px-8">
+      <section className="bg-[#050505] px-4 py-24 sm:px-8 sm:py-28">
         <SectionTitle>City News</SectionTitle>
         {posts.docs.length > 0 ? (
           <>
@@ -63,7 +63,7 @@ export default async function HomePage() {
         )}
       </section>
 
-      <section className="px-4 pt-16 pb-6 sm:px-8 sm:pt-20 sm:pb-6">
+      <section className="px-4 pt-20 pb-8 sm:px-8 sm:pt-24 sm:pb-10">
         <SectionTitle>Partners</SectionTitle>
         <div className="mt-10 sm:mt-12">
           <PartnerLogos partners={partners.docs} />

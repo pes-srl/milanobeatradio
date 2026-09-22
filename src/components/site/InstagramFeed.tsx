@@ -87,7 +87,7 @@ export function InstagramFeed({ site, feed }: Props) {
   const followsCount = profile?.follows_count || 881
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-black via-[#080312] to-black px-4 py-24 sm:px-8">
+    <section className="relative overflow-hidden bg-gradient-to-b from-black via-[#080312] to-black px-4 py-28 sm:px-8 sm:py-32">
       {/* Lightweight ambient glow background */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_15%_25%,rgba(200,36,227,0.12),transparent_70%),radial-gradient(ellipse_70%_50%_at_85%_75%,rgba(224,36,111,0.12),transparent_70%)]" />
 

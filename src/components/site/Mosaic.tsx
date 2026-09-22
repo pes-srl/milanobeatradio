@@ -82,7 +82,7 @@ export function Mosaic({ site }: { site: Site | null }) {
   const activeFullUrl = activeImage ? imageUrl(activeImage, 'hero') || imageUrl(activeImage, 'card') : null
 
   return (
-    <section aria-label="Location" className="relative px-4 pt-6 pb-20 sm:px-8 sm:pt-6 sm:pb-24">
+    <section aria-label="Location" className="relative px-4 pt-8 pb-24 sm:px-8 sm:pt-10 sm:pb-28">
       {/* Background ambient lighting aura */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_50%,rgba(200,36,227,0.12),transparent_70%)]" />
 
