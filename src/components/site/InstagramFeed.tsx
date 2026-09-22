@@ -141,7 +141,7 @@ export function InstagramFeed({ site, feed }: Props) {
                   >
                     @{profile?.username || 'milanobeatradio_mbr'}
                   </a>
-                  <span className="rounded-full bg-pink/20 px-2.5 py-0.5 text-[11px] font-semibold text-pink">
+                  <span className="rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[11px] font-semibold text-white">
                     Official Page
                   </span>
                 </div>
