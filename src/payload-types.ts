@@ -1377,16 +1377,6 @@ export interface Site {
   facebook?: string | null;
   appStoreUrl?: string | null;
   playStoreUrl?: string | null;
-  /**
-   * Configure the image and text of the post displayed in the native Instagram card on the home page.
-   */
-  instagramFeatured?: {
-    image?: (number | null) | Media;
-    postUrl?: string | null;
-    caption?: string | null;
-    likes?: string | null;
-    dateLabel?: string | null;
-  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1422,15 +1412,6 @@ export interface SiteSelect<T extends boolean = true> {
   facebook?: T;
   appStoreUrl?: T;
   playStoreUrl?: T;
-  instagramFeatured?:
-    | T
-    | {
-        image?: T;
-        postUrl?: T;
-        caption?: T;
-        likes?: T;
-        dateLabel?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

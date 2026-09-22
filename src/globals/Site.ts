@@ -71,44 +71,6 @@ export const Site: GlobalConfig = {
             { name: 'facebook', type: 'text', label: 'Facebook', defaultValue: 'https://facebook.com/milanobeatradio' },
             { name: 'appStoreUrl', type: 'text', label: 'App Store URL' },
             { name: 'playStoreUrl', type: 'text', label: 'Google Play URL' },
-            {
-              name: 'instagramFeatured',
-              type: 'group',
-              label: { it: 'Post Instagram in evidenza (Home)', en: 'Featured Instagram Post (Home)' },
-              admin: {
-                description: {
-                  it: 'Configura l’immagine e il testo del post visualizzato nella scheda nativa Instagram in home page.',
-                  en: 'Configure the image and text of the post displayed in the native Instagram card on the home page.',
-                },
-              },
-              fields: [
-                image('image', { it: 'Immagine del post', en: 'Post image' }),
-                {
-                  name: 'postUrl',
-                  type: 'text',
-                  label: { it: 'Link al post Instagram', en: 'Instagram post URL' },
-                  defaultValue: 'https://www.instagram.com/milanobeatradio_mbr/',
-                },
-                {
-                  name: 'caption',
-                  type: 'textarea',
-                  label: { it: 'Didascalia del post', en: 'Post caption' },
-                  defaultValue: '📻 Web City Radio, based Milano. Un partner che amplifica e realizza i tuoi eventi! Eventi aziendali, djset, home parties, soft clubbing. #MBRFRIENDS',
-                },
-                {
-                  name: 'likes',
-                  type: 'text',
-                  label: { it: 'Numero Mi Piace (es. 348)', en: 'Likes count (e.g. 348)' },
-                  defaultValue: '348',
-                },
-                {
-                  name: 'dateLabel',
-                  type: 'text',
-                  label: { it: 'Etichetta data (es. 2 GIORNI FA o RECENTE)', en: 'Date label (e.g. RECENTE)' },
-                  defaultValue: 'IN EVIDENZA',
-                },
-              ],
-            },
           ],
         },
       ],
