@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { Site } from '@/src/payload-types'
 import { IconExternal, IconInstagram } from '@/src/components/icons'
 import { SectionTitle } from './SectionTitle'
@@ -13,43 +13,67 @@ const INSTAGRAM_URL = 'https://www.instagram.com/milanobeatradio_mbr/'
 
 export function InstagramFeed({ site }: Props) {
   const instagramLink = site?.instagram || INSTAGRAM_URL
+  const containerRef = useRef<HTMLElement>(null)
+  const [shouldLoad, setShouldLoad] = useState(false)
 
+  // Lazy load Instagram embed script only when user scrolls near the section
   useEffect(() => {
-    // Process Instagram embeds on mount and whenever script is loaded
-    const processEmbed = () => {
-      const win = typeof window !== 'undefined' ? (window as unknown as { instgrm?: { Embeds?: { process: () => void } } }) : null
-      if (win?.instgrm?.Embeds) {
-        win.instgrm.Embeds.process()
-        return
-      }
+    if (shouldLoad) {
+      const processEmbed = () => {
+        const win = typeof window !== 'undefined' ? (window as unknown as { instgrm?: { Embeds?: { process: () => void } } }) : null
+        if (win?.instgrm?.Embeds) {
+          win.instgrm.Embeds.process()
+          return
+        }
 
-      const existingScript = document.getElementById('instagram-embed-script')
-      if (!existingScript) {
-        const script = document.createElement('script')
-        script.id = 'instagram-embed-script'
-        script.src = 'https://www.instagram.com/embed.js'
-        script.async = true
-        script.onload = () => {
+        const existingScript = document.getElementById('instagram-embed-script')
+        if (!existingScript) {
+          const script = document.createElement('script')
+          script.id = 'instagram-embed-script'
+          script.src = 'https://www.instagram.com/embed.js'
+          script.async = true
+          script.onload = () => {
+            const w = window as unknown as { instgrm?: { Embeds?: { process: () => void } } }
+            w.instgrm?.Embeds?.process()
+          }
+          document.body.appendChild(script)
+        } else {
           const w = window as unknown as { instgrm?: { Embeds?: { process: () => void } } }
           w.instgrm?.Embeds?.process()
         }
-        document.body.appendChild(script)
-      } else {
-        const w = window as unknown as { instgrm?: { Embeds?: { process: () => void } } }
-        w.instgrm?.Embeds?.process()
       }
+
+      processEmbed()
+      return
     }
 
-    processEmbed()
-    const timer = setTimeout(processEmbed, 1000)
-    return () => clearTimeout(timer)
-  }, [])
+    const el = containerRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setShouldLoad(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setShouldLoad(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '300px' },
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [shouldLoad])
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-black via-[#0b0517] to-black px-4 py-24 sm:px-8">
-      {/* Background ambient glowing spheres */}
-      <div className="pointer-events-none absolute -left-40 top-1/4 size-96 rounded-full bg-brand/15 blur-[60px] sm:blur-[140px] transform-gpu" />
-      <div className="pointer-events-none absolute -right-40 bottom-1/4 size-96 rounded-full bg-pink/15 blur-[60px] sm:blur-[140px] transform-gpu" />
+    <section
+      ref={containerRef}
+      className="relative overflow-hidden bg-gradient-to-b from-black via-[#0b0517] to-black px-4 py-24 sm:px-8"
+    >
+      {/* Lightweight GPU-friendly ambient radial background (zero blur shaders) */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_15%_25%,rgba(200,36,227,0.12),transparent_70%),radial-gradient(ellipse_70%_50%_at_85%_75%,rgba(224,36,111,0.12),transparent_70%)]" />
 
       <div className="relative mx-auto max-w-[1440px]">
         {/* Eyebrow badge */}
@@ -73,7 +97,7 @@ export function InstagramFeed({ site }: Props) {
                 href={instagramLink}
                 target="_blank"
                 rel="noreferrer"
-                className="group relative flex size-20 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] p-[3px] shadow-[0_0_25px_rgba(220,39,67,0.4)] transition-transform duration-300 hover:scale-105"
+                className="group relative flex size-20 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] p-[3px] shadow-[0_0_20px_rgba(220,39,67,0.35)] transition-transform duration-300 hover:scale-105"
                 aria-label="Profilo Instagram Milano Beat Radio"
               >
                 <div className="flex size-full items-center justify-center rounded-full bg-black p-2 transition-transform duration-300 group-hover:scale-95">
@@ -149,48 +173,54 @@ export function InstagramFeed({ site }: Props) {
           </div>
         </div>
 
-        {/* Instagram Live Embed Container with Soft Logo Pink Backlight Glow */}
+        {/* Instagram Live Embed Container */}
         <div className="relative mx-auto mt-12 max-w-[540px]">
-          {/* Soft logo pink backlight gradient */}
-          <div className="pointer-events-none absolute -inset-6 rounded-[32px] bg-gradient-to-tr from-pink/35 via-pink/20 to-brand/25 blur-xl sm:blur-3xl opacity-75 transform-gpu" />
-          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-[115%] rounded-full bg-pink/20 blur-[40px] sm:blur-[80px] transform-gpu" />
+          {/* Subtle logo pink backlight ring without expensive blur */}
+          <div className="pointer-events-none absolute -inset-3 rounded-[28px] bg-gradient-to-tr from-pink/20 to-brand/15 opacity-60" />
 
-          {/* Clean Instagram Embed Box */}
-          <div className="ig-embed-wrapper relative z-10 flex min-h-[480px] items-center justify-center overflow-hidden rounded-[22px] transition-transform duration-300 transform-gpu">
-            <blockquote
-              className="instagram-media"
-              data-instgrm-permalink={instagramLink}
-              data-instgrm-version="14"
-              style={{
-                background: 'transparent',
-                border: 0,
-                borderRadius: '20px',
-                margin: '0 auto',
-                maxWidth: '540px',
-                minWidth: '300px',
-                padding: 0,
-                width: '100%',
-              }}
-            >
-              <div style={{ padding: '24px' }} className="text-center text-white/60">
-                <a
-                  href={instagramLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    background: 'transparent',
-                    lineHeight: 0,
-                    padding: '0 0',
-                    textAlign: 'center',
-                    textDecoration: 'none',
-                    width: '100%',
-                  }}
-                  className="font-medium text-white/80"
-                >
-                  Caricamento post da @milanobeatradio_mbr…
-                </a>
+          {/* Clean Instagram Embed Box with touch-pan-y */}
+          <div className="ig-embed-wrapper relative z-10 flex min-h-[480px] items-center justify-center overflow-hidden rounded-[22px] transition-transform duration-300 transform-gpu touch-pan-y">
+            {shouldLoad ? (
+              <blockquote
+                className="instagram-media"
+                data-instgrm-permalink={instagramLink}
+                data-instgrm-version="14"
+                style={{
+                  background: 'transparent',
+                  border: 0,
+                  borderRadius: '20px',
+                  margin: '0 auto',
+                  maxWidth: '540px',
+                  minWidth: '300px',
+                  padding: 0,
+                  width: '100%',
+                }}
+              >
+                <div style={{ padding: '24px' }} className="text-center text-white/60">
+                  <a
+                    href={instagramLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      background: 'transparent',
+                      lineHeight: 0,
+                      padding: '0 0',
+                      textAlign: 'center',
+                      textDecoration: 'none',
+                      width: '100%',
+                    }}
+                    className="font-medium text-white/80"
+                  >
+                    Caricamento post da @milanobeatradio_mbr…
+                  </a>
+                </div>
+              </blockquote>
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-3 p-8 text-center text-white/60">
+                <IconInstagram size={40} className="text-pink/70 animate-pulse" />
+                <p className="text-sm font-medium text-white/80">Caricamento contenuti Instagram…</p>
               </div>
-            </blockquote>
+            )}
           </div>
         </div>
 
@@ -200,7 +230,7 @@ export function InstagramFeed({ site }: Props) {
             href={instagramLink}
             target="_blank"
             rel="noreferrer"
-            className="btn-pill inline-flex items-center gap-3 px-8 py-3.5 shadow-[0_0_30px_rgba(200,36,227,0.4)]"
+            className="btn-pill inline-flex items-center gap-3 px-8 py-3.5 shadow-[0_0_20px_rgba(200,36,227,0.35)]"
           >
             <IconInstagram size={20} />
             <span>Visita il profilo completo @milanobeatradio_mbr</span>
