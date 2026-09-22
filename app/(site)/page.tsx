@@ -13,7 +13,7 @@ import { getInstagramFeed } from '@/src/lib/instagram'
 export const metadata: Metadata = { title: 'Milano Beat Radio — Your Event and Party Station' }
 export const revalidate = 300
 
-/** Home. Section order: hero → CITY EVENTS → INSTAGRAM FEED → CITY NEWS → mosaic → PARTNERS. */
+/** Home. Section order: hero → CITY EVENTS → INSTAGRAM FEED → CITY NEWS → PARTNERS → mosaic. */
 export default async function HomePage() {
   const [site, posts, events, partners, instagramFeed] = await Promise.all([
     getSite().catch(() => null),
@@ -63,14 +63,14 @@ export default async function HomePage() {
         )}
       </section>
 
-      <Mosaic site={site} />
-
       <section className="px-4 py-20 sm:px-8 sm:py-28">
         <SectionTitle>Partners</SectionTitle>
         <div className="mt-16 sm:mt-24">
           <PartnerLogos partners={partners.docs} />
         </div>
       </section>
+
+      <Mosaic site={site} />
     </>
   )
 }
