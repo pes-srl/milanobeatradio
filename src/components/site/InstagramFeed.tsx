@@ -46,15 +46,15 @@ export function InstagramFeed({ site }: Props) {
   }, [])
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-black via-[#0b0517] to-black px-4 py-24 sm:px-8">
+    <section className="relative overflow-hidden bg-gradient-to-b from-black via-[#0b0517] to-black px-4 py-24 sm:px-8 content-auto">
       {/* Background ambient glowing spheres */}
-      <div className="pointer-events-none absolute -left-40 top-1/4 size-96 rounded-full bg-brand/15 blur-[140px]" />
-      <div className="pointer-events-none absolute -right-40 bottom-1/4 size-96 rounded-full bg-pink/15 blur-[140px]" />
+      <div className="pointer-events-none absolute -left-40 top-1/4 size-96 rounded-full bg-brand/15 blur-[60px] sm:blur-[140px] transform-gpu" />
+      <div className="pointer-events-none absolute -right-40 bottom-1/4 size-96 rounded-full bg-pink/15 blur-[60px] sm:blur-[140px] transform-gpu" />
 
       <div className="relative mx-auto max-w-[1440px]">
         {/* Eyebrow badge */}
         <div className="mb-4 flex justify-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-pink/40 bg-pink/10 px-5 py-1.5 backdrop-blur-md shadow-[0_0_20px_rgba(224,36,111,0.25)]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-pink/40 bg-pink/10 px-5 py-1.5 backdrop-blur-sm sm:backdrop-blur-md shadow-[0_0_12px_rgba(224,36,111,0.25)] sm:shadow-[0_0_20px_rgba(224,36,111,0.25)] transform-gpu">
             <span className="size-2 rounded-full bg-pink animate-pulse" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-pink sm:text-sm">
               Live Instagram Feed & Social Hub
@@ -65,7 +65,7 @@ export function InstagramFeed({ site }: Props) {
         <SectionTitle>MBR on Instagram</SectionTitle>
 
         {/* Top Profile Summary Card */}
-        <div className="mx-auto mt-10 max-w-4xl rounded-2xl border border-white/15 bg-white/[0.04] p-6 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_25px_rgba(200,36,227,0.15)] sm:p-8">
+        <div className="mx-auto mt-10 max-w-4xl rounded-2xl border border-white/15 bg-white/[0.04] p-6 backdrop-blur-md sm:backdrop-blur-xl shadow-[0_8px_24px_rgba(0,0,0,0.8)] sm:shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_25px_rgba(200,36,227,0.15)] sm:p-8 transform-gpu">
           <div className="flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left">
             <div className="flex flex-col items-center gap-5 sm:flex-row">
               {/* Instagram Stories Gradient Ring Avatar */}
@@ -152,11 +152,11 @@ export function InstagramFeed({ site }: Props) {
         {/* Instagram Live Embed Container with Soft Logo Pink Backlight Glow */}
         <div className="relative mx-auto mt-12 max-w-[540px]">
           {/* Soft logo pink backlight gradient */}
-          <div className="pointer-events-none absolute -inset-6 rounded-[32px] bg-gradient-to-tr from-pink/35 via-pink/20 to-brand/25 blur-3xl opacity-75" />
-          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-[115%] rounded-full bg-pink/20 blur-[80px]" />
+          <div className="pointer-events-none absolute -inset-6 rounded-[32px] bg-gradient-to-tr from-pink/35 via-pink/20 to-brand/25 blur-xl sm:blur-3xl opacity-75 transform-gpu" />
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-[115%] rounded-full bg-pink/20 blur-[40px] sm:blur-[80px] transform-gpu" />
 
           {/* Clean Instagram Embed Box */}
-          <div className="ig-embed-wrapper relative z-10 flex min-h-[480px] items-center justify-center overflow-hidden rounded-[22px] transition-transform duration-300">
+          <div className="ig-embed-wrapper relative z-10 flex min-h-[480px] items-center justify-center overflow-hidden rounded-[22px] transition-transform duration-300 transform-gpu">
             <blockquote
               className="instagram-media"
               data-instgrm-permalink={instagramLink}

@@ -42,7 +42,7 @@ export function PlayerBar({ logoUrl }: Props) {
     status === 'loading' ? 'CONNESSIONE…' : status === 'error' ? 'STREAM NON DISPONIBILE · RIPROVA' : null
 
   return (
-    <div role="region" aria-label="Player radio" className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#0a0a0f]/95 text-white backdrop-blur-xl shadow-[0_-8px_32px_rgba(0,0,0,0.8)]">
+    <div role="region" aria-label="Player radio" className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#0a0a0f]/95 text-white backdrop-blur-md sm:backdrop-blur-xl shadow-md sm:shadow-[0_-8px_32px_rgba(0,0,0,0.8)] transform-gpu will-change-transform">
       <div className="flex h-[72px] items-center">
         <div className="flex h-full w-[78px] sm:w-[88px] shrink-0 items-center justify-center border-r border-white/10 px-2 sm:px-3">
           <button
@@ -52,8 +52,8 @@ export function PlayerBar({ logoUrl }: Props) {
             aria-pressed={isOn}
             className={`group relative flex size-12 sm:size-13 items-center justify-center rounded-2xl border transition-all duration-300 hover:scale-110 active:scale-95 ${
               isOn
-                ? 'border-brand bg-gradient-to-br from-[#e0246f] via-[#ff2a85] to-brand text-white shadow-[0_0_28px_rgba(200,36,227,0.75)] ring-2 ring-brand/40 ring-offset-2 ring-offset-black'
-                : 'border-white/25 bg-gradient-to-br from-brand/35 via-white/[0.08] to-brand/15 text-white backdrop-blur-md shadow-[0_0_20px_rgba(200,36,227,0.4)] hover:border-brand hover:from-[#e0246f] hover:to-brand hover:shadow-[0_0_30px_rgba(200,36,227,0.7)]'
+                ? 'border-brand bg-gradient-to-br from-[#e0246f] via-[#ff2a85] to-brand text-white shadow-[0_0_20px_rgba(200,36,227,0.6)] sm:shadow-[0_0_28px_rgba(200,36,227,0.75)] ring-2 ring-brand/40 ring-offset-2 ring-offset-black'
+                : 'border-white/25 bg-gradient-to-br from-brand/35 via-white/[0.08] to-brand/15 text-white backdrop-blur-sm sm:backdrop-blur-md shadow-[0_0_12px_rgba(200,36,227,0.35)] sm:shadow-[0_0_20px_rgba(200,36,227,0.4)] hover:border-brand hover:from-[#e0246f] hover:to-brand hover:shadow-[0_0_30px_rgba(200,36,227,0.7)]'
             }`}
           >
             {status === 'loading' ? (

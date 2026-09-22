@@ -81,7 +81,7 @@ export function Mosaic({ site }: { site: Site | null }) {
   const activeFullUrl = activeImage ? imageUrl(activeImage, 'hero') || imageUrl(activeImage, 'card') : null
 
   return (
-    <section aria-label="Galleria foto" className="relative px-4 py-8 sm:px-8 sm:py-14">
+    <section aria-label="Galleria foto" className="relative px-4 py-8 sm:px-8 sm:py-14 content-auto">
       {/* Background ambient lighting aura */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_50%,rgba(200,36,227,0.12),transparent_70%)]" />
 
@@ -97,7 +97,7 @@ export function Mosaic({ site }: { site: Site | null }) {
                 type="button"
                 onClick={() => setActiveIdx(i)}
                 aria-label={`Ingrandisci foto ${i + 1}`}
-                className="group relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/15 bg-zinc-900/80 text-left shadow-[0_10px_30px_rgba(0,0,0,0.7)] transition-all duration-500 hover:-translate-y-1.5 hover:border-brand/70 hover:shadow-[0_0_35px_rgba(200,36,227,0.35)] sm:rounded-3xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                className="group relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/15 bg-zinc-900/80 text-left shadow-[0_6px_20px_rgba(0,0,0,0.7)] sm:shadow-[0_10px_30px_rgba(0,0,0,0.7)] transition-all duration-500 hover:-translate-y-1.5 hover:border-brand/70 hover:shadow-[0_0_35px_rgba(200,36,227,0.35)] sm:rounded-3xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand transform-gpu"
               >
                 <Image
                   src={cardUrl}
@@ -111,7 +111,7 @@ export function Mosaic({ site }: { site: Site | null }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-40 transition-opacity duration-300 group-hover:opacity-15" />
 
                 {/* Expand icon pill appearing on hover */}
-                <div className="absolute right-3.5 top-3.5 flex size-9 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white/90 opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 scale-90 sm:size-10">
+                <div className="absolute right-3.5 top-3.5 flex size-9 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white/90 opacity-0 shadow-lg backdrop-blur-sm sm:backdrop-blur-md transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 scale-90 sm:size-10 transform-gpu">
                   <IconExpand size={18} />
                 </div>
 

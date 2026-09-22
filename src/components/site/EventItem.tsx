@@ -12,7 +12,7 @@ export function EventItem({ event, priority = false }: { event: Event; priority?
   const img = imageUrl(event.cover, 'hero')
 
   return (
-    <article className="group relative flex flex-col w-full max-w-[610px] mx-auto overflow-hidden rounded-2xl bg-[#0f0f0f] border border-white/10 transition-all duration-300 hover:border-brand/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
+    <article className="group relative flex flex-col w-full max-w-[610px] mx-auto overflow-hidden rounded-2xl bg-[#0f0f0f] border border-white/10 transition-all duration-300 hover:border-brand/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)] transform-gpu">
       {/* Poster Image Container */}
       <div className="relative aspect-video w-full overflow-hidden bg-black/40 sm:aspect-[16/10]">
         <Link href={href} className="relative block size-full" aria-label={event.title}>
@@ -43,7 +43,7 @@ export function EventItem({ event, priority = false }: { event: Event; priority?
           target="_blank"
           rel="noreferrer"
           aria-label="Aggiungi al calendario"
-          className="absolute right-3.5 top-3.5 z-10 grid size-10 place-items-center rounded-full border border-white/20 bg-black/60 text-white shadow-md backdrop-blur-md transition duration-200 hover:scale-110 hover:border-brand hover:bg-brand"
+          className="absolute right-3.5 top-3.5 z-10 grid size-10 place-items-center rounded-full border border-white/20 bg-black/75 sm:bg-black/60 text-white shadow-sm sm:shadow-md backdrop-blur-sm sm:backdrop-blur-md transition duration-200 hover:scale-110 hover:border-brand hover:bg-brand transform-gpu"
         >
           <IconCalendarAdd size={17} />
         </a>

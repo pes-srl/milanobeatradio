@@ -15,11 +15,19 @@
 
 html {
   color-scheme: dark;
-  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) and (pointer: fine) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   @apply bg-ink text-white font-sans font-light antialiased;
+  overflow-x: clip;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Section titles: big, uppercase, wide tracking with fashionable glow/shadow. */
@@ -37,25 +45,29 @@ body {
 @layer components {
   /* Fashion glassmorphic button used in header (social · menu) */
   .hdr-btn {
-    @apply inline-flex h-11 min-w-11 items-center justify-center rounded-xl border border-white/20 bg-white/[0.06] text-white/90 backdrop-blur-md shadow-md shadow-black/40 transition-all duration-300 hover:scale-105 hover:border-brand/70 hover:bg-white/[0.12] hover:text-white hover:shadow-[0_0_20px_rgba(200,36,227,0.35)] active:scale-95;
+    @apply inline-flex h-11 min-w-11 items-center justify-center rounded-xl border border-white/20 bg-white/[0.08] sm:bg-white/[0.06] text-white/90 backdrop-blur-sm sm:backdrop-blur-md shadow-sm sm:shadow-md shadow-black/40 transition-all duration-300 hover:scale-105 hover:border-brand/70 hover:bg-white/[0.12] hover:text-white hover:shadow-[0_0_20px_rgba(200,36,227,0.35)] active:scale-95;
+    transform: translateZ(0);
   }
 
   /* Play CTA button styling with fashion neon glow */
   .hdr-btn-play {
-    @apply inline-flex h-11 items-center justify-center gap-2.5 rounded-xl border border-brand/50 bg-gradient-to-r from-brand/25 via-brand/15 to-transparent px-5 font-bold uppercase tracking-wider text-white backdrop-blur-md shadow-[0_4px_20px_rgba(200,36,227,0.25)] transition-all duration-300 hover:scale-105 hover:border-brand hover:from-brand hover:to-[#e0246f] hover:shadow-[0_0_30px_rgba(200,36,227,0.6)] active:scale-95;
+    @apply inline-flex h-11 items-center justify-center gap-2.5 rounded-xl border border-brand/50 bg-gradient-to-r from-brand/25 via-brand/15 to-transparent px-5 font-bold uppercase tracking-wider text-white backdrop-blur-sm sm:backdrop-blur-md shadow-[0_2px_12px_rgba(200,36,227,0.25)] sm:shadow-[0_4px_20px_rgba(200,36,227,0.25)] transition-all duration-300 hover:scale-105 hover:border-brand hover:from-brand hover:to-[#e0246f] hover:shadow-[0_0_30px_rgba(200,36,227,0.6)] active:scale-95;
+    transform: translateZ(0);
   }
   .hdr-btn-play--on {
-    @apply border-brand bg-gradient-to-r from-[#e0246f] to-brand shadow-[0_0_25px_rgba(200,36,227,0.6)] hover:from-[#f02d7d] hover:to-[#d635f0];
+    @apply border-brand bg-gradient-to-r from-[#e0246f] to-brand shadow-[0_0_15px_rgba(200,36,227,0.5)] sm:shadow-[0_0_25px_rgba(200,36,227,0.6)] hover:from-[#f02d7d] hover:to-[#d635f0];
   }
 
   /* Volume toggle button */
   .hdr-btn--solid {
     @apply border-brand/40 bg-gradient-to-br from-brand to-brand-dark text-white shadow-[0_4px_16px_rgba(200,36,227,0.35)] hover:border-brand hover:from-brand-dark hover:to-brand hover:shadow-[0_0_22px_rgba(200,36,227,0.55)];
+    transform: translateZ(0);
   }
 
   /* Vertical volume slider hanging under the volume button */
   .volume-panel {
-    @apply absolute left-1/2 top-full z-50 mt-2 -translate-x-1/2 rounded-2xl border border-white/15 bg-black/90 p-4 backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_25px_rgba(200,36,227,0.25)];
+    @apply absolute left-1/2 top-full z-50 mt-2 -translate-x-1/2 rounded-2xl border border-white/15 bg-black/90 p-4 backdrop-blur-md sm:backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_25px_rgba(200,36,227,0.25)];
+    transform: translateZ(0);
   }
 }
 .volume-range {
@@ -113,23 +125,32 @@ body {
 
 /* Fashion pill button used site-wide (Ascolta · Carica altro · Tutte le news) */
 .btn-pill {
-  @apply inline-flex items-center justify-center gap-2.5 rounded-full border border-white/30 bg-white/[0.08] px-7 py-3 text-sm sm:text-base font-bold uppercase tracking-wider text-white backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)] transition-all duration-300 hover:scale-105 hover:border-brand hover:bg-gradient-to-r hover:from-[#e0246f] hover:to-brand hover:shadow-[0_0_30px_rgba(200,36,227,0.6)] active:scale-95;
+  @apply inline-flex items-center justify-center gap-2.5 rounded-full border border-white/30 bg-white/[0.08] px-7 py-3 text-sm sm:text-base font-bold uppercase tracking-wider text-white backdrop-blur-sm sm:backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.4)] sm:shadow-[0_4px_20px_rgba(0,0,0,0.4)] transition-all duration-300 hover:scale-105 hover:border-brand hover:bg-gradient-to-r hover:from-[#e0246f] hover:to-brand hover:shadow-[0_0_30px_rgba(200,36,227,0.6)] active:scale-95;
+  transform: translateZ(0);
 }
 
 /* Fashion hero caption banners */
 .caption {
-  @apply inline-block rounded-xl sm:rounded-2xl px-5 py-2 sm:px-8 sm:py-3 font-bold uppercase leading-tight text-white backdrop-blur-xl transition-all duration-300;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 30px rgba(200, 36, 227, 0.25);
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+  @apply inline-block rounded-xl sm:rounded-2xl px-5 py-2 sm:px-8 sm:py-3 font-bold uppercase leading-tight text-white backdrop-blur-sm sm:backdrop-blur-xl transition-all duration-300;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.5), 0 0 16px rgba(200, 36, 227, 0.18);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+  transform: translateZ(0);
+}
+@media (min-width: 640px) {
+  .caption {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 30px rgba(200, 36, 227, 0.25);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+  }
 }
 .caption--violet {
-  @apply border border-white/25 bg-gradient-to-r from-[#501b87]/65 via-[#8b14a3]/65 to-[#501b87]/65 shadow-[0_0_30px_rgba(111,45,189,0.35)];
+  @apply border border-white/25 bg-gradient-to-r from-[#501b87]/75 via-[#8b14a3]/75 to-[#501b87]/75 sm:from-[#501b87]/65 sm:via-[#8b14a3]/65 sm:to-[#501b87]/65 shadow-[0_0_16px_rgba(111,45,189,0.35)] sm:shadow-[0_0_30px_rgba(111,45,189,0.35)];
 }
 .caption--pink {
-  @apply border border-white/25 bg-gradient-to-r from-[#d81b60]/60 via-[#e0246f]/65 to-[#d81b60]/60 shadow-[0_4px_20px_rgba(224,36,111,0.35)];
+  @apply border border-white/25 bg-gradient-to-r from-[#d81b60]/75 via-[#e0246f]/75 to-[#d81b60]/75 sm:from-[#d81b60]/60 sm:via-[#e0246f]/65 sm:to-[#d81b60]/60 shadow-[0_2px_12px_rgba(224,36,111,0.35)] sm:shadow-[0_4px_20px_rgba(224,36,111,0.35)];
 }
 .caption--tag {
-  @apply inline-flex items-center gap-2 rounded-full border border-brand/50 bg-black/40 px-5 py-2 text-xs sm:text-sm font-bold tracking-[0.2em] text-brand backdrop-blur-xl shadow-[0_0_25px_rgba(200,36,227,0.35)] transition-all duration-300 hover:scale-105 hover:border-brand hover:bg-brand/20;
+  @apply inline-flex items-center gap-2 rounded-full border border-brand/50 bg-black/60 sm:bg-black/40 px-5 py-2 text-xs sm:text-sm font-bold tracking-[0.2em] text-brand backdrop-blur-sm sm:backdrop-blur-xl shadow-[0_0_14px_rgba(200,36,227,0.35)] sm:shadow-[0_0_25px_rgba(200,36,227,0.35)] transition-all duration-300 hover:scale-105 hover:border-brand hover:bg-brand/20;
+  transform: translateZ(0);
 }
 
 /* Soften Instagram embed brightness to blend seamlessly with dark mode */
@@ -137,11 +158,18 @@ body {
 iframe.instagram-media {
   border-radius: 20px !important;
   border: 1px solid rgba(224, 36, 111, 0.3) !important;
-  box-shadow: 0 12px 45px rgba(0, 0, 0, 0.8), 0 0 45px rgba(224, 36, 111, 0.35) !important;
-  filter: brightness(0.86) contrast(1.08) saturate(1.05) !important;
-  transition: filter 0.35s ease, box-shadow 0.35s ease !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.7), 0 0 24px rgba(224, 36, 111, 0.25) !important;
   max-width: 100% !important;
   margin: 0 auto !important;
+  transform: translateZ(0);
+}
+@media (min-width: 768px) {
+  .ig-embed-wrapper iframe.instagram-media,
+  iframe.instagram-media {
+    box-shadow: 0 12px 45px rgba(0, 0, 0, 0.8), 0 0 45px rgba(224, 36, 111, 0.35) !important;
+    filter: brightness(0.86) contrast(1.08) saturate(1.05) !important;
+    transition: filter 0.35s ease, box-shadow 0.35s ease !important;
+  }
 }
 .ig-embed-wrapper iframe.instagram-media:hover,
 iframe.instagram-media:hover {
@@ -182,10 +210,24 @@ iframe.instagram-media:hover {
   opacity: 0;
   animation: hero-slide var(--slide-total) linear infinite;
   animation-delay: var(--slide-delay);
+  will-change: opacity;
+  transform: translateZ(0);
 }
 .slide > img {
   animation: hero-zoom var(--slide-total) linear infinite;
   animation-delay: var(--slide-delay);
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* GPU hardware layer and off-screen rendering optimization */
+.gpu-layer {
+  transform: translateZ(0);
+  will-change: transform;
+}
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 600px;
 }
 
 /* Partner logos strip. */

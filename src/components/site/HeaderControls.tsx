@@ -143,13 +143,13 @@ export function HeaderControls({ instagram, facebook }: Props) {
         createPortal(
           <div className={`fixed inset-0 z-[100] ${open ? '' : 'pointer-events-none'}`} aria-hidden={!open}>
             <div
-              className={`fixed inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}
+              className={`fixed inset-0 bg-black/40 transition-opacity duration-300 ${open ? 'opacity-100 backdrop-blur-[2px]' : 'opacity-0'}`}
               onClick={() => setOpen(false)}
             />
             <nav
               aria-label="Menu completo"
-              style={{ backgroundColor: 'rgba(28, 6, 54, 0.65)' }}
-              className={`fixed right-0 top-0 flex h-full h-dvh w-84 max-w-[88vw] flex-col overflow-y-auto border-l border-white/15 p-6 backdrop-blur-2xl shadow-[0_0_60px_rgba(0,0,0,0.9),-10px_0_40px_rgba(28,6,54,0.4)] transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}
+              style={{ backgroundColor: 'rgba(28, 6, 54, 0.75)' }}
+              className={`fixed right-0 top-0 flex h-full h-dvh w-84 max-w-[88vw] flex-col overflow-y-auto [-webkit-overflow-scrolling:touch] border-l border-white/15 p-6 backdrop-blur-xl sm:backdrop-blur-2xl shadow-[0_0_40px_rgba(0,0,0,0.9),-10px_0_30px_rgba(28,6,54,0.4)] sm:shadow-[0_0_60px_rgba(0,0,0,0.9),-10px_0_40px_rgba(28,6,54,0.4)] transition-transform duration-300 transform-gpu ${open ? 'translate-x-0' : 'translate-x-full'}`}
             >
               <div className="flex shrink-0 items-center justify-between border-b border-white/10 pb-4">
                 <span className="text-xs font-bold uppercase tracking-widest text-white/50">Menu</span>

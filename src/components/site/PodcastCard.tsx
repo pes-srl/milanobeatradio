@@ -12,7 +12,7 @@ export function PodcastCard({ podcast, priority = false }: { podcast: Podcast; p
   const filter = podcast.filters?.find((f): f is PodcastFilter => typeof f === 'object')
 
   return (
-    <article className="group relative flex flex-col w-full overflow-hidden rounded-2xl bg-[#0f0f0f] border border-white/10 transition-all duration-300 hover:border-brand/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
+    <article className="group relative flex flex-col w-full overflow-hidden rounded-2xl bg-[#0f0f0f] border border-white/10 transition-all duration-300 hover:border-brand/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)] transform-gpu">
       {/* Cover Image Container */}
       <div className="relative aspect-video w-full overflow-hidden bg-black/40 sm:aspect-[16/10]">
         <Link href={href} className="relative block size-full" aria-label={podcast.title}>
@@ -31,7 +31,7 @@ export function PodcastCard({ podcast, priority = false }: { podcast: Podcast; p
           <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/60 via-transparent to-black/20 opacity-80 transition duration-300 group-hover:opacity-40" />
 
           {/* Floating Play Button */}
-          <span className="absolute right-3.5 top-3.5 z-10 grid size-10 place-items-center rounded-full border border-white/20 bg-black/60 text-white shadow-md backdrop-blur-md transition duration-200 group-hover:scale-110 group-hover:border-brand group-hover:bg-brand">
+          <span className="absolute right-3.5 top-3.5 z-10 grid size-10 place-items-center rounded-full border border-white/20 bg-black/75 sm:bg-black/60 text-white shadow-sm sm:shadow-md backdrop-blur-sm sm:backdrop-blur-md transition duration-200 group-hover:scale-110 group-hover:border-brand group-hover:bg-brand transform-gpu">
             <IconPlayOutline size={18} />
           </span>
         </Link>
