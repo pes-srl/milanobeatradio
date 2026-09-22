@@ -26,9 +26,6 @@ importers:
       '@payloadcms/translations':
         specifier: 3.88.0
         version: 3.88.0
-      '@payloadcms/ui':
-        specifier: 3.88.0
-        version: 3.88.0
       graphql:
         specifier: ^16.14.2
         version: 16.14.2
