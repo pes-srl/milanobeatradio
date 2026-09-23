@@ -2,6 +2,7 @@ import type { Access, CollectionConfig } from 'payload'
 import { APIError } from 'payload'
 import type { User } from '@/src/payload-types'
 import { hideForNonAdmin } from '@/src/access'
+import { sendEmail } from '@/src/lib/resend'
 
 /**
  * Admin panel users. Two roles, mirroring the WordPress site:
@@ -126,7 +127,7 @@ export const Users: CollectionConfig = {
               </div>
             `
 
-            await req.payload.sendEmail({
+            await sendEmail({
               to,
               subject,
               text,

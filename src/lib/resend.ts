@@ -1,7 +1,7 @@
 import { env } from './env'
 
 /** Minimal Resend client (no SDK dependency beyond the one Payload already installs). */
-export async function sendEmail(opts: { to: string; subject: string; text: string; replyTo?: string }) {
+export async function sendEmail(opts: { to: string; subject: string; text: string; html?: string; replyTo?: string }) {
   const apiKey = process.env.RESEND_API_KEY
   const from = env(process.env.RESEND_FROM_EMAIL, 'noreply@milanobeatradio.it')
   if (!apiKey) {
@@ -11,7 +11,14 @@ export async function sendEmail(opts: { to: string; subject: string; text: strin
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: `Milano Beat Radio <${from}>`, to: [opts.to], reply_to: opts.replyTo, subject: opts.subject, text: opts.text }),
+    body: JSON.stringify({
+      from: `Milano Beat Radio <${from}>`,
+      to: [opts.to],
+      reply_to: opts.replyTo,
+      subject: opts.subject,
+      text: opts.text,
+      html: opts.html,
+    }),
   })
   if (!res.ok) throw new Error(`Resend error ${res.status}: ${await res.text()}`)
 }
