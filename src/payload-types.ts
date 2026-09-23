@@ -299,6 +299,10 @@ export interface User {
   name: string;
   role: 'admin' | 'editor';
   /**
+   * If disabled, the user cannot sign in to the panel.
+   */
+  active: boolean;
+  /**
    * Used by the migration to attribute posts.
    */
   legacyLogin?: string | null;
@@ -1253,6 +1257,7 @@ export interface TagsSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   role?: T;
+  active?: T;
   legacyLogin?: T;
   updatedAt?: T;
   createdAt?: T;
