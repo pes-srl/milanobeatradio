@@ -14,9 +14,18 @@ const converters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters
     const width = media.sizes?.hero?.width || media.width || 1200
     const height = media.sizes?.hero?.height || media.height || 675
     return (
-      <figure>
-        <Image src={src} alt={media.alt || ''} width={width} height={height} sizes="(max-width: 768px) 100vw, 770px" className="h-auto w-full" />
-        {media.caption && <figcaption>{media.caption}</figcaption>}
+      <figure className="my-8 flex flex-col items-center">
+        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0f0f0f] shadow-2xl max-w-lg w-full flex justify-center">
+          <Image
+            src={src}
+            alt={media.alt || ''}
+            width={width}
+            height={height}
+            sizes="(max-width: 640px) 100vw, 512px"
+            className="h-auto max-h-[520px] w-auto max-w-full object-contain mx-auto"
+          />
+        </div>
+        {media.caption && <figcaption className="mt-2.5 text-center text-sm font-medium text-white/70">{media.caption}</figcaption>}
       </figure>
     )
   },
