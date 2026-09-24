@@ -5,6 +5,7 @@ import * as migration_20260907_101243_drop_show_genre from './20260907_101243_dr
 import * as migration_20260907_212321_stats_counters from './20260907_212321_stats_counters';
 import * as migration_20260921_154421 from './20260921_154421';
 import * as migration_20260923_190500_users_active from './20260923_190500_users_active';
+import * as migration_20260924_132444_add_surname_to_users from './20260924_132444_add_surname_to_users';
 
 export const migrations = [
   {
@@ -35,11 +36,16 @@ export const migrations = [
   {
     up: migration_20260921_154421.up,
     down: migration_20260921_154421.down,
-    name: '20260921_154421'
+    name: '20260921_154421',
   },
   {
     up: migration_20260923_190500_users_active.up,
     down: migration_20260923_190500_users_active.down,
-    name: '20260923_190500_users_active'
+    name: '20260923_190500_users_active',
+  },
+  {
+    up: migration_20260924_132444_add_surname_to_users.up,
+    down: migration_20260924_132444_add_surname_to_users.down,
+    name: '20260924_132444_add_surname_to_users'
   },
 ];

@@ -5,6 +5,7 @@ import { siteUrl } from '@/src/lib/env'
 import { DAY_NAMES_IT, nowInRome, slotIsOn } from '@/src/lib/format'
 import { payloadClient } from '@/src/lib/payload'
 import { AdminPlayButton } from './AdminPlayButton'
+import { CollapsibleGroups } from './CollapsibleGroups'
 
 /**
  * Panel above the collection cards on /admin. Answers the three things an editor
@@ -24,9 +25,9 @@ export async function Dashboard(props?: Partial<ServerProps>) {
     } catch {}
   }
 
-  const userObj = user as { name?: string; email?: string; role?: string } | undefined
+  const userObj = user as { name?: string; surname?: string; email?: string; role?: string } | undefined
   const isAdmin = userObj?.role === 'admin'
-  const title = isAdmin ? 'BEAT DASHBOARD' : 'REDAZIONE'
+  const title = isAdmin ? 'MBR DASHBOARD' : 'REDAZIONE'
   const userName = userObj?.name?.trim() || userObj?.email?.split('@')[0] || ''
 
   const [shows, published, drafts, upcoming] = await Promise.all([
@@ -112,6 +113,7 @@ export async function Dashboard(props?: Partial<ServerProps>) {
           </span>
         </a>
       </div>
+      <CollapsibleGroups />
     </section>
   )
 }

@@ -297,6 +297,7 @@ export interface Category {
 export interface User {
   id: number;
   name: string;
+  surname?: string | null;
   role: 'admin' | 'editor';
   /**
    * If disabled, the user cannot sign in to the panel.
@@ -1256,6 +1257,7 @@ export interface TagsSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  surname?: T;
   role?: T;
   active?: T;
   legacyLogin?: T;

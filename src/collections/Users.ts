@@ -36,7 +36,7 @@ export const Users: CollectionConfig = {
     hidden: hideForNonAdmin,
     useAsTitle: 'email',
     group: { it: 'Sistema', en: 'System' },
-    defaultColumns: ['name', 'email', 'role', 'active'],
+    defaultColumns: ['name', 'surname', 'email', 'role', 'active'],
     description: {
       it: 'Chi può entrare in questo pannello. Amministratore: accesso completo, utenti compresi. Editore: solo i contenuti.',
       en: 'Who can sign in to this panel. Administrator: full access, users included. Editor: content only.',
@@ -80,14 +80,14 @@ export const Users: CollectionConfig = {
               timeZone: 'Europe/Rome',
             }).format(now)
 
-            const userName = u.name || 'N/D'
+            const fullName = [u.name, u.surname].filter(Boolean).join(' ') || 'N/D'
             const userEmail = u.email || 'N/D'
 
-            const subject = `[MBR Admin] Accesso Editor: ${userName}`
+            const subject = `[MBR Admin] Accesso Editor: ${fullName}`
             const text = [
               `È stato registrato un nuovo accesso al pannello di amministrazione:`,
               ``,
-              `• Utente: ${userName}`,
+              `• Utente: ${fullName}`,
               `• Email: ${userEmail}`,
               `• Ruolo: Editore`,
               `• Data e ora: ${formattedDate} (ora italiana)`,
@@ -102,7 +102,7 @@ export const Users: CollectionConfig = {
                 <table style="width: 100%; border-collapse: collapse; margin-top: 16px; margin-bottom: 24px;">
                   <tr>
                     <td style="padding: 8px 12px; border: 1px solid #e5e7eb; font-weight: bold; width: 140px; background: #f9fafb;">Utente</td>
-                    <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">${userName}</td>
+                    <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">${fullName}</td>
                   </tr>
                   <tr>
                     <td style="padding: 8px 12px; border: 1px solid #e5e7eb; font-weight: bold; background: #f9fafb;">Email</td>
@@ -150,6 +150,7 @@ export const Users: CollectionConfig = {
   },
   fields: [
     { name: 'name', type: 'text', label: { it: 'Nome', en: 'Name' }, required: true },
+    { name: 'surname', type: 'text', label: { it: 'Cognome', en: 'Surname' }, required: false },
     {
       name: 'role',
       type: 'select',
