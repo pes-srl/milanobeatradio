@@ -27,23 +27,15 @@ export function CollapsibleGroups() {
           label.appendChild(arrow)
         }
 
-        // Get stored state for this group
-        const parts = (label.textContent || '').trim().split('·')
-        const groupTitle = (parts[0] || '').trim()
-        const storageKey = `mbr_group_collapsed_${groupTitle || index}`
-        const isStoredCollapsed = localStorage.getItem(storageKey) === 'true'
-
-        if (isStoredCollapsed) {
-          group.classList.add('mbr-group--collapsed')
-        }
+        // Always default to collapsed on load
+        group.classList.add('mbr-group--collapsed')
 
         // Toggle click handler
         label.addEventListener('click', (e) => {
           // Avoid triggering when clicking links or buttons inside label if any
           if ((e.target as HTMLElement).tagName === 'A' || (e.target as HTMLElement).tagName === 'BUTTON') return
 
-          const isCollapsed = group.classList.toggle('mbr-group--collapsed')
-          localStorage.setItem(storageKey, isCollapsed ? 'true' : 'false')
+          group.classList.toggle('mbr-group--collapsed')
         })
       })
     }
