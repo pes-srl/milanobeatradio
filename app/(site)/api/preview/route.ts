@@ -1,4 +1,4 @@
-import { draftMode } from 'next/headers'
+import { draftMode, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { payloadClient } from '@/src/lib/payload'
 
@@ -20,7 +20,8 @@ export async function GET(request: Request) {
   }
 
   const payload = await payloadClient()
-  const { user } = await payload.auth({ headers: request.headers })
+  const reqHeaders = await headers()
+  const { user } = await payload.auth({ headers: reqHeaders })
   if (!user) return new Response('Non autorizzato.', { status: 401 })
 
   const draft = await draftMode()

@@ -11,5 +11,5 @@ export const previewFor =
   (doc) => {
     const slug = typeof doc?.slug === 'string' ? doc.slug : null
     if (!slug) return null
-    return `${siteUrl()}/api/preview?path=${encodeURIComponent(path(slug))}`
+    return `/api/preview?path=${encodeURIComponent(path(slug))}`
   }
