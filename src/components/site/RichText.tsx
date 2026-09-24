@@ -13,19 +13,40 @@ const converters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters
     if (!src) return null
     const width = media.sizes?.hero?.width || media.width || 1200
     const height = media.sizes?.hero?.height || media.height || 675
+    const ratio = width > 0 ? height / width : 1
+
+    // Classify into standardized, uniform aspect-ratios
+    const isVertical = ratio >= 1.15
+    const isSquare = ratio >= 0.88 && ratio < 1.15
+
+    const containerClasses = isVertical
+      ? 'w-full max-w-[360px] sm:max-w-[420px] aspect-[4/5]'
+      : isSquare
+        ? 'w-full max-w-[380px] aspect-square'
+        : 'w-full max-w-[700px] aspect-[16/9]'
+
+    const focalX = typeof media.focalX === 'number' ? media.focalX : 50
+    const focalY = typeof media.focalY === 'number' ? media.focalY : 50
+
     return (
       <figure className="my-8 flex flex-col items-center">
-        <div className="relative inline-block max-w-full overflow-hidden rounded-2xl border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.8)]">
+        <div
+          className={`relative overflow-hidden rounded-2xl border border-white/10 bg-[#0f0f0f] shadow-[0_15px_40px_rgba(0,0,0,0.8)] ${containerClasses}`}
+        >
           <Image
             src={src}
             alt={media.alt || ''}
-            width={width}
-            height={height}
-            sizes="(max-width: 768px) 100vw, 600px"
-            className="block h-auto max-h-[580px] w-auto max-w-full object-contain"
+            fill
+            sizes="(max-width: 640px) 100vw, 700px"
+            style={{ objectPosition: `${focalX}% ${focalY}%` }}
+            className="object-cover"
           />
         </div>
-        {media.caption && <figcaption className="mt-2.5 text-center text-sm font-medium text-white/70">{media.caption}</figcaption>}
+        {media.caption && (
+          <figcaption className="mt-2.5 text-center text-sm font-medium text-white/70">
+            {media.caption}
+          </figcaption>
+        )}
       </figure>
     )
   },
