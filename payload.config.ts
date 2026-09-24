@@ -63,6 +63,10 @@ export default buildConfig({
         Logo: '/src/components/admin/Logo#Logo',
         Icon: '/src/components/admin/Icon#Icon',
       },
+      actions: ['/src/components/admin/LogoutButton#LogoutButton'],
+      logout: {
+        Button: '/src/components/admin/LogoutButton#LogoutButton',
+      },
       afterLogin: ['/src/components/admin/PasswordToggle#PasswordToggle'],
       beforeDashboard: ['/src/components/admin/Dashboard#Dashboard'],
       beforeNavLinks: ['/src/components/admin/NavDashboardLink#NavDashboardLink'],

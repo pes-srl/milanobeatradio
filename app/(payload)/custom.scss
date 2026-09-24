@@ -182,7 +182,59 @@
   height: auto;
 }
 
-// Top-right header account badge with pink MBR logo
+// Top-right header account badge & actions with pink MBR logo and Logout button
+.app-header__actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.mbr-logout-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 14px !important;
+  border-radius: 9999px !important;
+  background: rgba(224, 36, 111, 0.16) !important;
+  border: 1.5px solid rgba(224, 36, 111, 0.45) !important;
+  color: #ffffff !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 0 14px rgba(224, 36, 111, 0.3) !important;
+
+  svg {
+    stroke: #ff3b86 !important;
+    transition: transform 0.2s ease !important;
+  }
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #e0246f 0%, #c824e3 100%) !important;
+    border-color: #ff3b94 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 22px rgba(224, 36, 111, 0.75), 0 0 32px rgba(200, 36, 227, 0.4) !important;
+    transform: translateY(-1px) scale(1.04) !important;
+
+    svg {
+      stroke: #ffffff !important;
+      transform: translateX(2px) !important;
+    }
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0) scale(0.97) !important;
+  }
+
+  &:disabled {
+    opacity: 0.6 !important;
+    cursor: wait !important;
+  }
+}
+
 .app-header__account {
   display: flex !important;
   align-items: center !important;
@@ -191,8 +243,28 @@
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 
   &:hover {
-    transform: scale(1.08);
+    transform: scale(1.04);
   }
+}
+
+.mbr-avatar-wrap {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.mbr-avatar__label {
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  transition: color 0.2s ease !important;
+}
+
+.app-header__account:hover .mbr-avatar__label {
+  color: var(--mbr-pink) !important;
+  text-shadow: 0 0 8px rgba(224, 36, 111, 0.6) !important;
 }
 
 .mbr-avatar {

@@ -24,6 +24,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { MediaFilters as MediaFilters_c6e2425a3406decf895752c54fbdfd5e } from '../../../src/components/admin/MediaFilters'
 import { MediaGrid as MediaGrid_62e5c8eefe6e5bfcb6cabcb544f307c2 } from '../../../src/components/admin/MediaGrid'
 import { Avatar as Avatar_45bcf076c49cf82ed6195899c26105d7 } from '../../../src/components/admin/Avatar'
+import { LogoutButton as LogoutButton_c765f3d307b2960b48426b90d0d020e3 } from '../../../src/components/admin/LogoutButton'
 import { Icon as Icon_b04c0db8d89d68ff5dd20d513b3034b9 } from '../../../src/components/admin/Icon'
 import { Logo as Logo_4522c7900ab0b0df414ce3e1574aaee4 } from '../../../src/components/admin/Logo'
 import { PasswordToggle as PasswordToggle_c8083aa13f30af58068af6c85f7e9b56 } from '../../../src/components/admin/PasswordToggle'
@@ -60,6 +61,7 @@ export const importMap = {
   "/src/components/admin/MediaFilters#MediaFilters": MediaFilters_c6e2425a3406decf895752c54fbdfd5e,
   "/src/components/admin/MediaGrid#MediaGrid": MediaGrid_62e5c8eefe6e5bfcb6cabcb544f307c2,
   "/src/components/admin/Avatar#Avatar": Avatar_45bcf076c49cf82ed6195899c26105d7,
+  "/src/components/admin/LogoutButton#LogoutButton": LogoutButton_c765f3d307b2960b48426b90d0d020e3,
   "/src/components/admin/Icon#Icon": Icon_b04c0db8d89d68ff5dd20d513b3034b9,
   "/src/components/admin/Logo#Logo": Logo_4522c7900ab0b0df414ce3e1574aaee4,
   "/src/components/admin/PasswordToggle#PasswordToggle": PasswordToggle_c8083aa13f30af58068af6c85f7e9b56,
