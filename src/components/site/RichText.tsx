@@ -15,14 +15,14 @@ const converters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters
     const height = media.sizes?.hero?.height || media.height || 675
     return (
       <figure className="my-8 flex flex-col items-center">
-        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0f0f0f] shadow-2xl max-w-lg w-full flex justify-center">
+        <div className="relative inline-block max-w-full overflow-hidden rounded-2xl border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.8)]">
           <Image
             src={src}
             alt={media.alt || ''}
             width={width}
             height={height}
-            sizes="(max-width: 640px) 100vw, 512px"
-            className="h-auto max-h-[520px] w-auto max-w-full object-contain mx-auto"
+            sizes="(max-width: 768px) 100vw, 600px"
+            className="block h-auto max-h-[580px] w-auto max-w-full object-contain"
           />
         </div>
         {media.caption && <figcaption className="mt-2.5 text-center text-sm font-medium text-white/70">{media.caption}</figcaption>}
