@@ -38,8 +38,10 @@ export const slugField = (fallbackField = 'title'): Field => ({
     },
   },
   hooks: { beforeValidate: [formatSlug(fallbackField)] },
-  validate: (value: unknown) =>
-    typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)
+  validate: (value: unknown) => {
+    if (!value || typeof value !== 'string') return true
+    return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)
       ? true
-      : 'Slug non valido: usa solo minuscole, numeri e trattini.',
+      : 'Slug non valido: usa solo minuscole, numeri e trattini.'
+  },
 })

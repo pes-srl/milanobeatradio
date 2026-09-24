@@ -45,7 +45,21 @@ const r2PublicUrl = (process.env.R2_PUBLIC_URL ?? '').replace(/\/$/, '')
 
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET ?? '',
-  serverURL: siteUrl(),
+  serverURL: '',
+  csrf: [
+    siteUrl(),
+    'https://milanobeatradio.it',
+    'https://www.milanobeatradio.it',
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '',
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '',
+  ].filter(Boolean),
+  cors: [
+    siteUrl(),
+    'https://milanobeatradio.it',
+    'https://www.milanobeatradio.it',
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '',
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '',
+  ].filter(Boolean),
   typescript: { outputFile: path.resolve(dirname, 'src/payload-types.ts') },
 
   admin: {

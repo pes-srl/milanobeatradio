@@ -22,7 +22,13 @@ export const Events: CollectionConfig = {
       en: 'City events: list at /eventi, detail at /eventi/[slug]. Only upcoming ones appear on the home page.',
     },
   },
-  access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
+  access: {
+    read: publishedOrAuthenticated,
+    readVersions: authenticated,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
+  },
   versions,
   fields: [
     { name: 'title', type: 'text', label: { it: 'Titolo', en: 'Title' }, required: true },

@@ -20,7 +20,13 @@ export const Posts: CollectionConfig = {
       en: 'City News. Each article is published at /flash-news/[slug]; the latest also appear on the home page.',
     },
   },
-  access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
+  access: {
+    read: publishedOrAuthenticated,
+    readVersions: authenticated,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
+  },
   versions,
   fields: [
     { name: 'title', type: 'text', label: { it: 'Titolo', en: 'Title' }, required: true },
