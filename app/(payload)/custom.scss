@@ -509,6 +509,13 @@
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 0 25px rgba(224, 36, 111, 0.45)) drop-shadow(0 0 50px rgba(200, 36, 227, 0.35));
 }
+.mbr-dash__redazione-user {
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, #f0abfc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 16px rgba(240, 171, 252, 0.45));
+}
 
 .mbr-dash__figures {
   display: flex;

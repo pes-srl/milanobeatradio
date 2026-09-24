@@ -24,8 +24,10 @@ export async function Dashboard(props?: Partial<ServerProps>) {
     } catch {}
   }
 
-  const isAdmin = user?.role === 'admin'
+  const userObj = user as { name?: string; email?: string; role?: string } | undefined
+  const isAdmin = userObj?.role === 'admin'
   const title = isAdmin ? 'BEAT DASHBOARD' : 'REDAZIONE'
+  const userName = userObj?.name?.trim() || userObj?.email?.split('@')[0] || ''
 
   const [shows, published, drafts, upcoming] = await Promise.all([
     payload.find({ collection: 'shows', where: { _status: { equals: 'published' } }, limit: 50, depth: 0 }),
@@ -59,7 +61,10 @@ export async function Dashboard(props?: Partial<ServerProps>) {
       </div>
 
       <div className="mbr-dash__redazione">
-        <h1 className="mbr-dash__redazione-title">{title}</h1>
+        <h1 className="mbr-dash__redazione-title">
+          {title}
+          {userName && <span className="mbr-dash__redazione-user"> · {userName}</span>}
+        </h1>
       </div>
 
       <div className="mbr-dash__figures">
