@@ -243,28 +243,8 @@
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 
   &:hover {
-    transform: scale(1.04);
+    transform: scale(1.08);
   }
-}
-
-.mbr-avatar-wrap {
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-}
-
-.mbr-avatar__label {
-  font-size: 0.82rem !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
-  color: rgba(255, 255, 255, 0.9) !important;
-  transition: color 0.2s ease !important;
-}
-
-.app-header__account:hover .mbr-avatar__label {
-  color: var(--mbr-pink) !important;
-  text-shadow: 0 0 8px rgba(224, 36, 111, 0.6) !important;
 }
 
 .mbr-avatar {

@@ -4,34 +4,55 @@ import { useEffect, useState } from 'react'
 
 /**
  * Custom Logout button for Milano Beat Radio admin header.
- * Fixes Next.js router cache retention by calling /api/users/logout,
- * expiring cookies, clearing client storage, and performing a hard page load.
+ * Ensures complete session termination by:
+ * 1. Invoking Payload API with credentials: 'include' so HttpOnly cookies are passed & cleared
+ * 2. Invoking /api/logout to purge Next.js server cookie store
+ * 3. Expiring all possible client cookie path combinations
+ * 4. Navigating to /admin/login via hard page reload
  */
 export function LogoutButton() {
   const [loggingOut, setLoggingOut] = useState(false)
 
   const performLogout = async () => {
+    if (loggingOut) return
     setLoggingOut(true)
+
     try {
+      // 1. Call Payload native logout endpoint with credentials
       await fetch('/api/users/logout', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
       })
-    } catch (err) {
-      console.error('Logout error:', err)
-    }
-
-    // Force expire payload token cookie across all paths
-    document.cookie = 'payload-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-    document.cookie = 'payload-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/admin;'
-
-    try {
-      localStorage.clear()
-      sessionStorage.clear()
     } catch {}
 
-    // Hard page navigation purges Next.js App Router client caches
-    window.location.href = '/admin/login?logout=success'
+    try {
+      // 2. Call Next.js hard cookie purge endpoint
+      await fetch('/api/logout', {
+        method: 'POST',
+        credentials: 'include',
+      })
+    } catch {}
+
+    // 3. Expire any accessible client cookies across all paths and subdomains
+    if (typeof window !== 'undefined') {
+      const cookiesToClear = ['payload-token', 'users-payload-token', 'payload-lng']
+      const paths = ['/', '/admin', '/api']
+      cookiesToClear.forEach((name) => {
+        paths.forEach((path) => {
+          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};`
+          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path}; domain=${window.location.hostname};`
+        })
+      })
+
+      try {
+        localStorage.clear()
+        sessionStorage.clear()
+      } catch {}
+
+      // 4. Hard page navigation purges Next.js App Router client caches
+      window.location.href = '/admin/login?logout=' + Date.now()
+    }
   }
 
   // Auto-trigger hard logout if user lands directly on /admin/logout
