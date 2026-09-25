@@ -33,14 +33,15 @@ export async function getPost(slug: string, draft = false) {
   return bySlug('posts', slug, draft)
 }
 
-export async function getEvents(opts: { upcoming?: boolean; limit?: number; minCount?: number; page?: number } = {}) {
+export async function getEvents(opts: { upcoming?: boolean; past?: boolean; limit?: number; minCount?: number; page?: number } = {}) {
   const payload = await payloadClient()
+  const cutoff = new Date(Date.now() - 12 * 3600_000).toISOString()
 
   if (opts.upcoming) {
     const upcomingWhere: Where = {
       and: [
         live,
-        { startDate: { greater_than_equal: new Date(Date.now() - 12 * 3600_000).toISOString() } },
+        { startDate: { greater_than_equal: cutoff } },
       ],
     }
     const res = await payload.find({
@@ -48,12 +49,13 @@ export async function getEvents(opts: { upcoming?: boolean; limit?: number; minC
       where: upcomingWhere,
       sort: 'startDate',
       limit: opts.limit ?? 20,
+      page: opts.page ?? 1,
       depth: 1,
     })
 
     const min = opts.minCount ?? 0
     const maxLimit = opts.limit ?? 20
-    if (min > 0 && res.docs.length < min) {
+    if (min > 0 && res.docs.length < min && (opts.page ?? 1) === 1) {
       const allRecent = await payload.find({
         collection: 'events',
         where: { and: [live] },
@@ -75,8 +77,25 @@ export async function getEvents(opts: { upcoming?: boolean; limit?: number; minC
     return res
   }
 
+  if (opts.past) {
+    const pastWhere: Where = {
+      and: [
+        live,
+        { startDate: { less_than: cutoff } },
+      ],
+    }
+    return payload.find({
+      collection: 'events',
+      where: pastWhere,
+      sort: '-startDate',
+      limit: opts.limit ?? 20,
+      page: opts.page ?? 1,
+      depth: 1,
+    })
+  }
+
   const where: Where = { and: [live] }
-  return payload.find({ collection: 'events', where, sort: '-startDate', limit: opts.limit ?? 50, page: opts.page ?? 1, depth: 1 })
+  return payload.find({ collection: 'events', where, sort: 'startDate', limit: opts.limit ?? 50, page: opts.page ?? 1, depth: 1 })
 }
 
 export async function getEvent(slug: string, draft = false) {

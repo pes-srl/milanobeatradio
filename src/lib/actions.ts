@@ -11,8 +11,10 @@ export async function loadMorePosts(page: number, tag?: string): Promise<{ docs:
   }
 }
 
-export async function loadMoreEvents(page: number): Promise<{ docs: Event[]; hasNextPage: boolean }> {
-  const res = await getEvents({ limit: 4, page })
+export async function loadMoreEvents(page: number, mode: 'upcoming' | 'past' = 'upcoming'): Promise<{ docs: Event[]; hasNextPage: boolean }> {
+  const res = mode === 'past'
+    ? await getEvents({ past: true, limit: 4, page })
+    : await getEvents({ upcoming: true, limit: 4, page })
   return {
     docs: JSON.parse(JSON.stringify(res.docs)),
     hasNextPage: res.hasNextPage,

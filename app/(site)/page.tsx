@@ -36,7 +36,7 @@ export default async function HomePage() {
             ))}
           </div>
         ) : (
-          <p className="mt-10 text-center text-white/60">Nessun evento in programma.</p>
+          <p className="mt-10 text-center text-white/60">Eventi e party del weekend in arrivo a breve.</p>
         )}
         <div className="mt-10 text-center">
           <Link href="/eventi" className="btn-pill">Tutti gli eventi</Link>
