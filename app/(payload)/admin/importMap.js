@@ -27,6 +27,7 @@ import { Avatar as Avatar_45bcf076c49cf82ed6195899c26105d7 } from '../../../src/
 import { LogoutButton as LogoutButton_c765f3d307b2960b48426b90d0d020e3 } from '../../../src/components/admin/LogoutButton'
 import { Icon as Icon_b04c0db8d89d68ff5dd20d513b3034b9 } from '../../../src/components/admin/Icon'
 import { Logo as Logo_4522c7900ab0b0df414ce3e1574aaee4 } from '../../../src/components/admin/Logo'
+import { AdminHeaderPlayer as AdminHeaderPlayer_32d94ccfd3a78c98e77f0ba1fca640cb } from '../../../src/components/admin/AdminHeaderPlayer'
 import { PasswordToggle as PasswordToggle_c8083aa13f30af58068af6c85f7e9b56 } from '../../../src/components/admin/PasswordToggle'
 import { Dashboard as Dashboard_026e3a3f277e8075edcdbe309e80d973 } from '../../../src/components/admin/Dashboard'
 import { NavDashboardLink as NavDashboardLink_9735dad293e70582e868de0f396373a0 } from '../../../src/components/admin/NavDashboardLink'
@@ -64,6 +65,7 @@ export const importMap = {
   "/src/components/admin/LogoutButton#LogoutButton": LogoutButton_c765f3d307b2960b48426b90d0d020e3,
   "/src/components/admin/Icon#Icon": Icon_b04c0db8d89d68ff5dd20d513b3034b9,
   "/src/components/admin/Logo#Logo": Logo_4522c7900ab0b0df414ce3e1574aaee4,
+  "/src/components/admin/AdminHeaderPlayer#AdminHeaderPlayer": AdminHeaderPlayer_32d94ccfd3a78c98e77f0ba1fca640cb,
   "/src/components/admin/PasswordToggle#PasswordToggle": PasswordToggle_c8083aa13f30af58068af6c85f7e9b56,
   "/src/components/admin/Dashboard#Dashboard": Dashboard_026e3a3f277e8075edcdbe309e80d973,
   "/src/components/admin/NavDashboardLink#NavDashboardLink": NavDashboardLink_9735dad293e70582e868de0f396373a0,

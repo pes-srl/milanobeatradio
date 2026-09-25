@@ -186,7 +186,147 @@
 .app-header__actions {
   display: flex !important;
   align-items: center !important;
-  gap: 12px !important;
+  gap: 14px !important;
+}
+
+// Persistent Live Player in Admin Header
+.mbr-header-player {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  user-select: none !important;
+
+  &__card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 5px 14px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, rgba(30, 8, 48, 0.88) 0%, rgba(14, 4, 24, 0.95) 100%) !important;
+    border: 1.5px solid rgba(200, 36, 227, 0.38) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    max-width: 320px !important;
+    text-decoration: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+
+    &:hover {
+      border-color: rgba(224, 36, 111, 0.6) !important;
+      box-shadow: 0 0 18px rgba(224, 36, 111, 0.25), 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    @media (max-width: 820px) {
+      display: none !important;
+    }
+  }
+
+  &__label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: var(--mbr-pink) !important;
+    line-height: 1.2 !important;
+    margin-bottom: 2px !important;
+  }
+
+  &__dot {
+    display: inline-block !important;
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background: var(--mbr-pink) !important;
+    box-shadow: 0 0 8px var(--mbr-pink) !important;
+    animation: mbr-dash-pulse 2s infinite ease-in-out !important;
+    flex-shrink: 0 !important;
+  }
+
+  &__info {
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+
+  &__title {
+    font-size: 13.5px !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    letter-spacing: 0.01em !important;
+    line-height: 1.2 !important;
+  }
+
+  &__time {
+    font-size: 11.5px !important;
+    font-weight: 500 !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    line-height: 1.2 !important;
+  }
+
+  &__btn-wrap {
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  &__play-btn {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    border: 2px solid var(--mbr-pink) !important;
+    background: linear-gradient(135deg, rgba(35, 10, 56, 0.95) 0%, rgba(18, 4, 30, 0.98) 100%) !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    box-shadow: 0 0 16px rgba(224, 36, 111, 0.4), 0 3px 10px rgba(0, 0, 0, 0.5) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    outline: none !important;
+    flex-shrink: 0 !important;
+
+    &:hover {
+      transform: scale(1.08) !important;
+      border-color: #ff3b86 !important;
+      background: linear-gradient(135deg, rgba(224, 36, 111, 0.3) 0%, rgba(200, 36, 227, 0.4) 100%) !important;
+      box-shadow: 0 0 24px rgba(224, 36, 111, 0.75), 0 0 36px rgba(200, 36, 227, 0.4) !important;
+      color: #ffffff !important;
+    }
+
+    &:active {
+      transform: scale(0.96) !important;
+    }
+
+    &--playing {
+      background: linear-gradient(135deg, var(--mbr-pink) 0%, var(--mbr-brand) 100%) !important;
+      border-color: #ffffff !important;
+      box-shadow: 0 0 25px rgba(224, 36, 111, 0.9), 0 0 45px rgba(200, 36, 227, 0.6) !important;
+      animation: mbr-pulse-ring 2s infinite ease-in-out !important;
+    }
+
+    &--loading {
+      border-color: var(--mbr-brand) !important;
+    }
+  }
+
+  &__icon {
+    display: block !important;
+    color: #ffffff !important;
+    transition: transform 0.2s ease !important;
+
+    &--spin {
+      animation: mbr-spin 1s linear infinite !important;
+    }
+  }
 }
 
 .mbr-logout-btn {

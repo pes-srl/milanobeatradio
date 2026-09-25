@@ -77,7 +77,10 @@ export default buildConfig({
         Logo: '/src/components/admin/Logo#Logo',
         Icon: '/src/components/admin/Icon#Icon',
       },
-      actions: ['/src/components/admin/LogoutButton#LogoutButton'],
+      actions: [
+        '/src/components/admin/AdminHeaderPlayer#AdminHeaderPlayer',
+        '/src/components/admin/LogoutButton#LogoutButton',
+      ],
       logout: {
         Button: '/src/components/admin/LogoutButton#LogoutButton',
       },

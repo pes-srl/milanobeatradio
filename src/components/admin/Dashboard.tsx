@@ -2,19 +2,16 @@ import Link from 'next/link'
 import { headers as getHeaders } from 'next/headers'
 import type { ServerProps } from 'payload'
 import { siteUrl } from '@/src/lib/env'
-import { DAY_NAMES_IT, nowInRome, slotIsOn } from '@/src/lib/format'
 import { payloadClient } from '@/src/lib/payload'
-import { AdminPlayButton } from './AdminPlayButton'
 import { CollapsibleGroups } from './CollapsibleGroups'
 
 /**
- * Panel above the collection cards on /admin. Answers the three things an editor
- * opens the panel to find out: what is on air, what is waiting to be published,
+ * Panel above the collection cards on /admin. Answers the two key things an editor
+ * opens the panel to find out: what is waiting to be published,
  * and where to start writing.
  */
 export async function Dashboard(props?: Partial<ServerProps>) {
   const payload = await payloadClient()
-  const now = nowInRome()
 
   let user = props?.user
   if (!user) {
@@ -30,8 +27,7 @@ export async function Dashboard(props?: Partial<ServerProps>) {
   const title = isAdmin ? 'MBR DASHBOARD' : 'REDAZIONE'
   const userName = userObj?.name?.trim() || userObj?.email?.split('@')[0] || ''
 
-  const [shows, published, drafts, upcoming] = await Promise.all([
-    payload.find({ collection: 'shows', where: { _status: { equals: 'published' } }, limit: 50, depth: 0 }),
+  const [published, drafts, upcoming] = await Promise.all([
     payload.count({ collection: 'posts', where: { _status: { equals: 'published' } } }),
     payload.count({ collection: 'posts', where: { _status: { equals: 'draft' } } }),
     payload.count({
@@ -40,27 +36,8 @@ export async function Dashboard(props?: Partial<ServerProps>) {
     }),
   ])
 
-  const onAir = shows.docs
-    .flatMap((show) => (show.slots ?? []).map((slot) => ({ show, slot })))
-    .find(({ slot }) => slotIsOn(slot, now))
-
   return (
     <section className="mbr-dash">
-      <div className="mbr-dash__air-row">
-        <div className="mbr-dash__air">
-          <p className="mbr-dash__label">Ora in onda · {DAY_NAMES_IT[Number(now.dayOfWeek)]} {now.time}</p>
-          {onAir ? (
-            <p className="mbr-dash__show">
-              <Link href={`/admin/collections/shows/${onAir.show.id}`}>{onAir.show.title}</Link>
-              <span> {onAir.slot.start} – {onAir.slot.end}</span>
-            </p>
-          ) : (
-            <p className="mbr-dash__show mbr-dash__show--empty">Nessun programma in palinsesto a quest’ora.</p>
-          )}
-        </div>
-        <AdminPlayButton />
-      </div>
-
       <div className="mbr-dash__redazione">
         <h1 className="mbr-dash__redazione-title">
           {title}
