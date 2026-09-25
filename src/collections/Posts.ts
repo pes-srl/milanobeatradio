@@ -13,7 +13,7 @@ export const Posts: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
-    defaultColumns: ['title', 'category', 'publishedAt', '_status'],
+    defaultColumns: ['title', 'author', 'category', 'publishedAt', '_status'],
     preview: previewFor((slug) => `/flash-news/${slug}`),
     description: {
       it: 'Le City News. Ogni articolo si pubblica su /flash-news/[slug]; i più recenti appaiono anche in home.',

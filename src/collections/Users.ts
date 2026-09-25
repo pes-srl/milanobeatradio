@@ -34,7 +34,7 @@ export const Users: CollectionConfig = {
   },
   admin: {
     hidden: hideForNonAdmin,
-    useAsTitle: 'email',
+    useAsTitle: 'name',
     group: { it: 'Sistema', en: 'System' },
     defaultColumns: ['name', 'surname', 'email', 'role', 'active'],
     description: {

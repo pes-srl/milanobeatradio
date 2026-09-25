@@ -1,19 +1,22 @@
-/** Main menu (top bar and main off-canvas list). */
-export const MAIN_NAV = [
+export type NavItem = {
+  href: string
+  label: string
+}
+
+/** Full site menu in requested order: HOME, MBR EVENTS, CITY NEWS, CITY EVENTS, INTERVISTE, PROMUOVITI, TEAM. */
+export const SIDE_NAV: readonly NavItem[] = [
+  { href: '/', label: 'Home' },
   { href: '/mbr-events', label: 'MBR Events' },
-  { href: '/eventi', label: 'City Events' },
   { href: '/flash-news', label: 'City News' },
+  { href: '/eventi', label: 'City Events' },
   { href: '/interviste', label: 'Interviste' },
-  { href: '/staff', label: 'Team' },
   { href: '/promuoviti', label: 'Promuoviti' },
+  { href: '/staff', label: 'Team' },
 ] as const
 
-/** Side menu (off-canvas drawer) with Home at the top before MBR Events. */
-export const SIDE_NAV = [
-  { href: '/', label: 'Home' },
-  ...MAIN_NAV,
-] as const
+/** Main menu (excluding Home) for footer */
+export const MAIN_NAV: readonly NavItem[] = SIDE_NAV.filter((item) => item.href !== '/')
 
 /** Secondary links (none currently). */
-export const MORE_NAV: readonly { href: string; label: string }[] = []
+export const MORE_NAV: readonly NavItem[] = []
 
