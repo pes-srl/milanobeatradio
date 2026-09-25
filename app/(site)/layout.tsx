@@ -29,6 +29,13 @@ export const metadata: Metadata = {
       },
     ],
   },
+  icons: {
+    icon: [
+      { url: '/mbr-logo-v2.png', type: 'image/png' },
+    ],
+    shortcut: '/mbr-logo-v2.png',
+    apple: '/mbr-logo-v2.png',
+  },
   twitter: {
     card: 'summary_large_image',
     title: 'Milano Beat Radio — Your Event and Party Station',
