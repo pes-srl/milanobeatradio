@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import type { Post } from '@/src/payload-types'
 import { PostCard } from './PostCard'
 import { loadMorePosts } from '@/src/lib/actions'
@@ -17,19 +17,17 @@ export function FlashNewsGrid({ initialPosts, initialHasNextPage, tag }: Props) 
   const [hasNextPage, setHasNextPage] = useState(initialHasNextPage)
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    setPosts(initialPosts)
-    setPage(1)
-    setHasNextPage(initialHasNextPage)
-  }, [initialPosts, initialHasNextPage, tag])
-
   const handleLoadMore = async () => {
     if (loading || !hasNextPage) return
     setLoading(true)
     try {
       const nextPage = page + 1
       const res = await loadMorePosts(nextPage, tag)
-      setPosts((prev) => [...prev, ...res.docs])
+      setPosts((prev) => {
+        const existingIds = new Set(prev.map((p) => p.id))
+        const newDocs = res.docs.filter((p) => !existingIds.has(p.id))
+        return [...prev, ...newDocs]
+      })
       setPage(nextPage)
       setHasNextPage(res.hasNextPage)
     } catch (err) {

@@ -42,6 +42,7 @@ export default async function FlashNewsPage({
 
         {posts.docs.length > 0 ? (
           <FlashNewsGrid
+            key={tag ?? 'all'}
             initialPosts={posts.docs}
             initialHasNextPage={posts.hasNextPage}
             tag={tag}

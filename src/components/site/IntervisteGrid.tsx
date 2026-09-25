@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import type { Podcast } from '@/src/payload-types'
 import { PodcastCard } from './PodcastCard'
 import { loadMorePodcasts } from '@/src/lib/actions'
@@ -16,19 +16,17 @@ export function IntervisteGrid({ initialPodcasts, initialHasNextPage }: Props) {
   const [hasNextPage, setHasNextPage] = useState(initialHasNextPage)
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    setPodcasts(initialPodcasts)
-    setPage(1)
-    setHasNextPage(initialHasNextPage)
-  }, [initialPodcasts, initialHasNextPage])
-
   const handleLoadMore = async () => {
     if (loading || !hasNextPage) return
     setLoading(true)
     try {
       const nextPage = page + 1
       const res = await loadMorePodcasts(nextPage)
-      setPodcasts((prev) => [...prev, ...res.docs])
+      setPodcasts((prev) => {
+        const existingIds = new Set(prev.map((p) => p.id))
+        const newDocs = res.docs.filter((p) => !existingIds.has(p.id))
+        return [...prev, ...newDocs]
+      })
       setPage(nextPage)
       setHasNextPage(res.hasNextPage)
     } catch (err) {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import type { Event } from '@/src/payload-types'
 import { EventItem } from './EventItem'
 import { loadMoreEvents } from '@/src/lib/actions'
@@ -16,19 +16,17 @@ export function EventsGrid({ initialEvents, initialHasNextPage }: Props) {
   const [hasNextPage, setHasNextPage] = useState(initialHasNextPage)
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    setEvents(initialEvents)
-    setPage(1)
-    setHasNextPage(initialHasNextPage)
-  }, [initialEvents, initialHasNextPage])
-
   const handleLoadMore = async () => {
     if (loading || !hasNextPage) return
     setLoading(true)
     try {
       const nextPage = page + 1
       const res = await loadMoreEvents(nextPage)
-      setEvents((prev) => [...prev, ...res.docs])
+      setEvents((prev) => {
+        const existingIds = new Set(prev.map((e) => e.id))
+        const newDocs = res.docs.filter((e) => !existingIds.has(e.id))
+        return [...prev, ...newDocs]
+      })
       setPage(nextPage)
       setHasNextPage(res.hasNextPage)
     } catch (err) {
@@ -60,7 +58,7 @@ export function EventsGrid({ initialEvents, initialHasNextPage }: Props) {
                 Caricamento...
               </span>
             ) : (
-              'Altro'
+              'Altri eventi'
             )}
           </button>
         </div>
