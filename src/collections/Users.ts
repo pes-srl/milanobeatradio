@@ -1,7 +1,7 @@
 import type { Access, CollectionConfig } from 'payload'
 import { APIError } from 'payload'
 import type { User } from '@/src/payload-types'
-import { hideForNonAdmin } from '@/src/access'
+import { authenticated, hideForNonAdmin } from '@/src/access'
 import { sendEmail } from '@/src/lib/resend'
 
 /**
@@ -13,7 +13,7 @@ export type UserRole = 'admin' | 'editor'
 
 const isAdmin: Access = ({ req }) => req.user?.role === 'admin'
 
-/** Admins see everyone; editors only themselves. */
+/** Admins see everyone; editors only themselves for updates. */
 const selfOrAdmin: Access = ({ req }) => {
   if (!req.user) return false
   if (req.user.role === 'admin') return true
@@ -43,7 +43,7 @@ export const Users: CollectionConfig = {
     },
   },
   access: {
-    read: selfOrAdmin,
+    read: authenticated,
     create: isAdmin,
     update: selfOrAdmin,
     delete: isAdmin,
