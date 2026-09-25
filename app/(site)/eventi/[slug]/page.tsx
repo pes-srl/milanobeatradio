@@ -8,7 +8,7 @@ import { RichText } from '@/src/components/site/RichText'
 import { StatsBar } from '@/src/components/site/StatsBar'
 import { ShareButtons } from '@/src/components/site/ShareButtons'
 import { IconCalendar, IconCalendarAdd, IconClock, IconExternal, IconPin } from '@/src/components/icons'
-import { fmtLong, fmtTime, googleCalendarUrl } from '@/src/lib/format'
+import { fmtDate, fmtLong, fmtTime, googleCalendarUrl } from '@/src/lib/format'
 import { imageAlt, imageUrl } from '@/src/lib/media'
 import { getEvent } from '@/src/lib/queries'
 
@@ -119,6 +119,14 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl leading-tight">
               {event.title}
             </h1>
+
+            {/* Publication Date */}
+            {(event.publishedAt || event.createdAt) && (
+              <div className="flex items-center gap-2 text-sm font-semibold text-white/70">
+                <IconCalendar size={16} className="text-brand" />
+                <span>Pubblicato il {fmtDate(event.publishedAt ?? event.createdAt)}</span>
+              </div>
+            )}
 
             {/* Date & Time Box */}
             <div className="rounded-xl border border-white/10 bg-[#121212] p-4 sm:p-5 space-y-3">

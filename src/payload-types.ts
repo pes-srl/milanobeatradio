@@ -372,6 +372,7 @@ export interface Event {
     [k: string]: unknown;
   } | null;
   cover?: (number | null) | Media;
+  publishedAt?: string | null;
   startDate: string;
   startDate_tz: SupportedTimezones;
   endDate?: string | null;
@@ -967,6 +968,7 @@ export interface EventsSelect<T extends boolean = true> {
   slug?: T;
   content?: T;
   cover?: T;
+  publishedAt?: T;
   startDate?: T;
   startDate_tz?: T;
   endDate?: T;

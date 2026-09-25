@@ -15,7 +15,7 @@ export const Events: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: { it: 'Contenuti', en: 'Content' },
-    defaultColumns: ['title', 'startDate', 'venueName', '_status'],
+    defaultColumns: ['title', 'startDate', 'venueName', 'publishedAt', '_status'],
     preview: previewFor((slug) => `/eventi/${slug}`),
     description: {
       it: 'Gli eventi in città: lista su /eventi, scheda su /eventi/[slug]. In home compaiono solo quelli non ancora passati.',
@@ -40,6 +40,19 @@ export const Events: CollectionConfig = {
       relationTo: 'media',
       label: { it: 'Immagine di copertina', en: 'Cover image' },
       filterOptions: { mimeType: { contains: 'image' } },
+    },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      label: { it: 'Data di pubblicazione', en: 'Published at' },
+      index: true,
+      admin: { position: 'sidebar', date: { pickerAppearance: 'dayAndTime', displayFormat: 'dd/MM/yyyy HH:mm' } },
+      hooks: {
+        beforeChange: [
+          ({ value, siblingData }) =>
+            !value && siblingData?._status === 'published' ? new Date().toISOString() : value,
+        ],
+      },
     },
     {
       type: 'row',

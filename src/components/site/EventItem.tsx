@@ -91,7 +91,7 @@ export function EventItem({ event, priority = false }: { event: Event; priority?
 
         {/* Footer info: Stats & Link */}
         <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3.5">
-          <StatsRow stats={event.stats} />
+          <StatsRow date={event.publishedAt ?? event.createdAt} stats={event.stats} />
           <Link
             href={href}
             className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-white/70 transition hover:text-brand"
