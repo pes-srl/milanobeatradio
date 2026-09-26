@@ -5,6 +5,7 @@ export const contactSchema = z.object({
   email: z.email('Email non valida').max(200),
   oggetto: z.string().trim().max(200).optional().default(''),
   messaggio: z.string().trim().min(1, 'Il messaggio è richiesto').max(5000),
+  privacy: z.literal('on', { message: 'Devi accettare la privacy policy per continuare.' }),
   website: z.string().max(0, 'Richiesta non valida').optional().default(''), // honeypot
 })
 

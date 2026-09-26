@@ -27,6 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/contatti`, changeFrequency: 'yearly', priority: 0.4 },
     { url: `${BASE}/promuoviti`, changeFrequency: 'yearly', priority: 0.4 },
     { url: `${BASE}/privacy-policy`, changeFrequency: 'yearly', priority: 0.2 },
+    { url: `${BASE}/cookie-policy`, changeFrequency: 'yearly', priority: 0.2 },
   ]
 
   const entry = (path: string, updatedAt?: string | null): MetadataRoute.Sitemap[number] => ({

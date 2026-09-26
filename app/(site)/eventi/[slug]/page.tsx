@@ -11,6 +11,7 @@ import { IconCalendar, IconCalendarAdd, IconClock, IconExternal, IconPin } from 
 import { fmtDate, fmtLong, fmtTime, googleCalendarUrl } from '@/src/lib/format'
 import { imageAlt, imageUrl } from '@/src/lib/media'
 import { getEvent } from '@/src/lib/queries'
+import { siteUrl } from '@/src/lib/env'
 
 export const revalidate = 300
 
@@ -54,9 +55,42 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
   const address = [event.venueName, event.address, event.city].filter(Boolean).join(' — ')
   const img = imageUrl(event.cover, 'hero')
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'MusicEvent',
+    name: event.title,
+    startDate: event.startDate,
+    ...(event.endDate ? { endDate: event.endDate } : {}),
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'Place',
+      ...(event.venueName ? { name: event.venueName } : {}),
+      address: {
+        '@type': 'PostalAddress',
+        ...(event.address ? { streetAddress: event.address } : {}),
+        ...(event.city ? { addressLocality: event.city } : {}),
+        addressCountry: 'IT',
+      },
+    },
+    ...(img ? { image: [img] } : {}),
+    url: `${siteUrl()}/eventi/${slug}`,
+    organizer: {
+      '@type': 'Organization',
+      name: 'Milano Beat Radio',
+      url: siteUrl(),
+    },
+    ...(event.artists ? { performer: event.artists.split(',').map((a: string) => ({ '@type': 'PerformingGroup', name: a.trim() })) } : {}),
+    ...(event.externalUrl ? { offers: { '@type': 'Offer', url: event.externalUrl, availability: 'https://schema.org/InStock' } } : {}),
+  }
+
   return (
     <div className="relative min-h-screen bg-black text-white">
       {isDraft && <DraftBanner path={`/eventi/${slug}`} />}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       {/* Ambient background glow */}
       {img && (
@@ -96,6 +130,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
                   width={900}
                   height={1200}
                   priority
+                  sizes="(max-width: 540px) 100vw, (max-width: 1024px) 540px, 576px"
                   className="w-full h-auto object-contain"
                 />
               ) : (

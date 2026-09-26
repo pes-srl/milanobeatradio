@@ -1,16 +1,21 @@
 import Link from 'next/link'
 import { IconFacebook, IconInstagram } from '@/src/components/icons'
 import { getSite } from '@/src/lib/queries'
-import { MAIN_NAV, MORE_NAV } from './nav'
+import { MAIN_NAV, LEGAL_NAV } from './nav'
 
 export async function Footer() {
   const site = await getSite().catch(() => null)
   return (
     <footer className="footer-wedge relative mt-24 pt-40">
       <div className="mx-auto flex max-w-[1440px] flex-col gap-6 px-4 pb-10 sm:px-8 md:flex-row md:items-center md:justify-between">
-        <p className="text-sm font-semibold text-white/80">{site?.licenseText ?? ''}</p>
+        <div>
+          <p className="text-sm font-semibold text-white/80">{site?.licenseText ?? ''}</p>
+          <p className="mt-1 text-xs text-white/50">
+            Progetto non commerciale e senza scopo di lucro
+          </p>
+        </div>
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-          {[...MAIN_NAV, ...MORE_NAV].map((item) => (
+          {MAIN_NAV.map((item) => (
             <Link key={item.href} href={item.href} className="text-xs font-semibold uppercase tracking-wide text-white/90 hover:text-brand">
               {item.label}
             </Link>
@@ -41,8 +46,19 @@ export async function Footer() {
           </span>
         </div>
       </div>
-      <div className="border-t border-white/10 px-4 py-3 text-center text-[11px] text-white/50">
-        © {new Date().getFullYear()} Milano Beat Radio - Agency Radio
+      <div className="border-t border-white/10 px-4 py-4">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-3 text-[11px] text-white/50 sm:flex-row">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            {LEGAL_NAV.map((item) => (
+              <Link key={item.href} href={item.href} className="transition-colors hover:text-brand hover:underline">
+                {item.label}
+              </Link>
+            ))}
+          </div>
+          <div className="text-center sm:text-right">
+            © {new Date().getFullYear()} Milano Beat Radio - Music-City-Events
+          </div>
+        </div>
       </div>
     </footer>
   )

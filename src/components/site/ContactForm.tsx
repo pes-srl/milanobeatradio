@@ -3,6 +3,8 @@
 import { useActionState } from 'react'
 import type { FormState } from '@/src/lib/formSchema'
 
+import Link from 'next/link'
+
 type Props = {
   action: (state: FormState, formData: FormData) => Promise<FormState>
   messageLabel?: string
@@ -39,6 +41,23 @@ export function ContactForm({ action, messageLabel = 'Messaggio', submitLabel = 
       <div>
         <label htmlFor="messaggio" className="mb-1 block text-sm font-medium">{messageLabel}</label>
         <textarea id="messaggio" name="messaggio" required rows={5} className="w-full rounded border border-white/20 bg-white/5 px-3 py-2.5 text-white focus:border-brand focus:outline-none" />
+      </div>
+
+      <div className="flex items-start gap-3 mt-4">
+        <input
+          type="checkbox"
+          id="privacy"
+          name="privacy"
+          required
+          className="mt-1 shrink-0 rounded border-white/20 bg-white/5 text-brand focus:ring-brand"
+        />
+        <label htmlFor="privacy" className="text-xs text-white/70">
+          Dichiaro di aver letto la{' '}
+          <Link href="/privacy-policy" className="text-brand hover:underline" target="_blank">
+            Privacy Policy
+          </Link>{' '}
+          e acconsento al trattamento dei miei dati personali per gestire questa richiesta.
+        </label>
       </div>
 
       {state.status === 'error' && <p className="text-sm text-red-400">{state.message}</p>}

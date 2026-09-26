@@ -20,3 +20,10 @@ export const MAIN_NAV: readonly NavItem[] = SIDE_NAV.filter((item) => item.href 
 /** Secondary links (none currently). */
 export const MORE_NAV: readonly NavItem[] = []
 
+/** Legal & compliance links for footer */
+export const LEGAL_NAV: readonly NavItem[] = [
+  { href: '/privacy-policy', label: 'Privacy Policy' },
+  { href: '/cookie-policy', label: 'Cookie Policy' },
+  { href: '/contatti', label: 'Contatti' },
+] as const
+
