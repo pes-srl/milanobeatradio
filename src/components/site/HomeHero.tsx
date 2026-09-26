@@ -51,7 +51,7 @@ export function HomeHero({ site }: { site: Site | null }) {
         <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/60 sm:bg-white/[0.08] px-5 py-1.5 sm:backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.4)] sm:shadow-[0_4px_20px_rgba(0,0,0,0.4)] transform-gpu">
           <span className="size-2 rounded-full bg-white animate-pulse" />
           <span className="text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.2em] text-white">
-            Event and Party Radio Station
+            Music - City - Events
           </span>
         </div>
 
@@ -62,17 +62,8 @@ export function HomeHero({ site }: { site: Site | null }) {
           <span className="block sm:inline">Beat Radio</span>
         </h1>
 
-        <AscoltaButton className="mt-8" />
+        <AscoltaButton className="mt-10 sm:mt-14" />
 
-        {/* Fashion Caption Badges */}
-        <div className="mt-14 flex flex-col items-center gap-3">
-          <p className="caption caption--violet text-xl sm:text-3xl lg:text-4xl">
-            <span>Ascoltaci anche senza app</span>
-          </p>
-          <p className="caption caption--violet text-xl sm:text-3xl lg:text-4xl">
-            <span>Press Play</span>
-          </p>
-        </div>
       </div>
     </section>
   )

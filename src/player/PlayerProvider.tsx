@@ -148,7 +148,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     navigator.mediaSession.metadata = new MediaMetadata({
       title,
       artist: song?.artist || 'Milano Beat Radio',
-      album: 'Your Event and Party Station',
+      album: 'Your Event & Party Station',
       artwork: song?.art ? [{ src: song.art, sizes: '512x512', type: 'image/jpeg' }] : [],
     })
     navigator.mediaSession.playbackState = status === 'playing' ? 'playing' : status === 'paused' || status === 'idle' ? 'paused' : 'none'

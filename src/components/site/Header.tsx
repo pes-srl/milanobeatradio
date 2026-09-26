@@ -17,7 +17,7 @@ export async function Header() {
         <div className="flex h-12 w-full items-center justify-between px-4 sm:px-6 lg:px-8">
           <p className="flex items-center gap-2 text-sm font-semibold sm:text-base">
             <IconBell size={14} className="text-white/80" />
-            {site?.claim ?? 'Your Event and Party Station'}
+            {site?.claim ?? 'Your Event & Party Station'}
           </p>
           <div className="flex items-center gap-3">
             {site?.instagram && (

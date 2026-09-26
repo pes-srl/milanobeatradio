@@ -36,7 +36,7 @@ export const Site: GlobalConfig = {
               label: { it: 'Slideshow hero (home)', en: 'Hero slideshow (home)' },
               fields: [image('image', { it: 'Immagine', en: 'Image' })],
             },
-            { name: 'claim', type: 'text', label: 'Claim', defaultValue: 'Your Event and Party Station' },
+            { name: 'claim', type: 'text', label: 'Claim', defaultValue: 'Your Event & Party Station' },
             { name: 'hashtag', type: 'text', label: 'Hashtag', defaultValue: '#MBRFRIENDS' },
             { name: 'licenseText', type: 'text', label: { it: 'Testo licenze (footer)', en: 'License text (footer)' } },
           ],

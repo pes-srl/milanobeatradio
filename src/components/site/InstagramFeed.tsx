@@ -336,12 +336,8 @@ export function InstagramFeed({ site, feed }: Props) {
               </a>
             </div>
 
-            {/* Likes & Caption */}
+            {/* Caption */}
             <div className="px-5 pb-5 pt-1 text-left">
-              <p className="text-xs font-bold text-white">
-                Piace a <span className="text-pink">{displayLikes} persone</span>
-              </p>
-
               <p className="mt-2 text-xs sm:text-sm text-white/85 line-clamp-3 leading-relaxed">
                 <span className="font-bold text-white mr-1.5">milanobeatradio_mbr</span>
                 {displayCaption}
