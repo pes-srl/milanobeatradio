@@ -13,17 +13,39 @@ export const revalidate = 300
 
 const WHY_ITEMS = [
   {
-    icon: '📡',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
+        <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
+        <circle cx="12" cy="12" r="2" fill="currentColor" />
+        <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
+        <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19" />
+      </svg>
+    ),
     title: 'Visibilità gratuita',
     desc: 'Gli eventi selezionati vengono pubblicati sul sito e condivisi sui canali social di MBR, senza costi.',
   },
   {
-    icon: '🎯',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="22" y1="12" x2="18" y2="12" />
+        <line x1="6" y1="12" x2="2" y2="12" />
+        <line x1="12" y1="6" x2="12" y2="2" />
+        <line x1="12" y1="22" x2="12" y2="18" />
+        <circle cx="12" cy="12" r="3.5" />
+      </svg>
+    ),
     title: 'Pubblico mirato',
     desc: 'Raggiungi un pubblico appassionato di musica, eventi e nightlife milanese già fidelizzato.',
   },
   {
-    icon: '✅',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="m9 12 2 2 4-4" />
+      </svg>
+    ),
     title: 'Selezione editoriale',
     desc: 'La redazione valuta ogni segnalazione autonomamente. Pubblichiamo solo eventi coerenti con lo spirito MBR.',
   },
@@ -89,14 +111,21 @@ export default async function PromuovitiPage() {
         <div className="mx-auto max-w-5xl px-6">
           <p className="mb-10 text-center text-xs font-bold uppercase tracking-[0.25em] text-brand">Perché segnalarci il tuo evento</p>
           <div className="grid gap-4 sm:grid-cols-3">
-            {WHY_ITEMS.map((item) => (
+            {WHY_ITEMS.map((item, i) => (
               <div
                 key={item.title}
-                className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors duration-300 hover:border-brand/30 hover:bg-white/[0.05]"
+                className="group relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-7 transition-all duration-300 hover:border-brand/40 hover:bg-white/[0.05] hover:shadow-[0_0_30px_rgba(200,36,227,0.12)]"
               >
-                <div className="mb-3 text-3xl">{item.icon}</div>
-                <h3 className="mb-2 text-sm font-bold uppercase tracking-wide text-white">{item.title}</h3>
-                <p className="text-sm leading-relaxed text-white/55">{item.desc}</p>
+                <div className="mb-5 flex items-center justify-between">
+                  <div className="flex size-12 items-center justify-center rounded-xl border border-brand/25 bg-brand/10 text-brand shadow-[0_0_15px_rgba(200,36,227,0.15)] transition-all duration-300 group-hover:scale-105 group-hover:border-brand/50 group-hover:bg-brand/20 group-hover:shadow-[0_0_20px_rgba(200,36,227,0.3)]">
+                    {item.icon}
+                  </div>
+                  <span className="font-mono text-xs font-bold text-white/20 transition-colors group-hover:text-brand/50">
+                    0{i + 1}
+                  </span>
+                </div>
+                <h3 className="mb-2 text-sm font-bold uppercase tracking-wider text-white">{item.title}</h3>
+                <p className="text-sm leading-relaxed text-white/55 transition-colors group-hover:text-white/75">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -114,8 +143,7 @@ export default async function PromuovitiPage() {
               Segnala il tuo evento
             </h2>
             <p className="mb-8 text-white/60">
-              Hai organizzato un evento a Milano o sul territorio? Compila il modulo: la redazione
-              valuterà la tua segnalazione sulla base dell&apos;interesse editoriale.
+              Hai organizzato un evento a Milano, nella città metropolitana o in provincia di Monza e Brianza? Compila il modulo: la redazione valuta ogni proposta con il solo fine di promuovere gratuitamente il territorio e le sue iniziative culturali e di intrattenimento.
             </p>
             <ContactForm
               action={submitPromuoviti}
@@ -156,8 +184,11 @@ export default async function PromuovitiPage() {
             </div>
 
             <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5">
-              <p className="text-xs leading-relaxed text-white/35">
-                Il servizio è completamente gratuito. MBR è un progetto editoriale indipendente e si riserva il diritto di non pubblicare segnalazioni non coerenti con la propria linea editoriale.
+              <p className="text-xs leading-relaxed text-white/40">
+                La promozione è interamente a titolo gratuito. MBR è un progetto amatoriale e indipendente senza scopo di lucro. Marchi, denominazioni di locali e loghi appartengono ai rispettivi proprietari. Per modifiche o rettifiche:{' '}
+                <a href="mailto:info@milanobeatradio.it" className="text-brand hover:underline font-medium">
+                  info@milanobeatradio.it
+                </a>.
               </p>
             </div>
           </aside>

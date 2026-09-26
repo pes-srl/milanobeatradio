@@ -22,7 +22,8 @@ export const MORE_NAV: readonly NavItem[] = []
 
 /** Legal & compliance links for footer */
 export const LEGAL_NAV: readonly NavItem[] = [
-  { href: '/privacy-policy', label: 'Privacy Policy' },
+  { href: '/chi-siamo', label: 'Chi siamo' },
+  { href: '/privacy-policy', label: 'Privacy Policy & Note Legali' },
   { href: '/cookie-policy', label: 'Cookie Policy' },
   { href: '/contatti', label: 'Contatti' },
 ] as const

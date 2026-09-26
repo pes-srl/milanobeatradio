@@ -10,7 +10,10 @@ export async function Footer() {
       <div className="mx-auto flex max-w-[1440px] flex-col gap-6 px-4 pb-10 sm:px-8 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="text-sm font-semibold text-white/80">{site?.licenseText ?? ''}</p>
-          <p className="mt-1 text-xs text-white/50">
+          <p className="mt-1 text-xs text-white/60">
+            Promozione culturale e territoriale a titolo gratuito · Milano, provincia e Monza Brianza
+          </p>
+          <p className="text-[11px] text-white/40">
             Progetto non commerciale e senza scopo di lucro
           </p>
         </div>

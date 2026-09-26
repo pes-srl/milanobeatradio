@@ -256,6 +256,19 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             </article>
           </div>
         )}
+
+        {/* Editorial Disclaimer & Brand Protection */}
+        <div className="mt-16 rounded-xl border border-white/10 bg-white/[0.02] p-4 sm:p-5 text-xs text-white/50 space-y-1.5">
+          <p className="font-semibold text-white/70">
+            Segnalazione editoriale e promozione territoriale gratuita:
+          </p>
+          <p className="leading-relaxed">
+            La segnalazione di questo evento è effettuata a titolo interamente gratuito da Milano Beat Radio per promuovere e divulgare le iniziative culturali, musicali e di nightlife sul territorio di Milano, provincia e Monza Brianza (attività non periodica ex L. 62/2001, svolta nell&apos;esercizio del diritto di cronaca ex Art. 21 Cost.). Marchi, denominazioni di locali, festival e format appartengono ai legittimi titolari e sono utilizzati a solo scopo descrittivo. Per richieste di aggiornamento, rettifica o rimozione:{' '}
+            <a href="mailto:info@milanobeatradio.it" className="text-brand hover:underline font-medium">
+              info@milanobeatradio.it
+            </a>.
+          </p>
+        </div>
       </main>
     </div>
   )

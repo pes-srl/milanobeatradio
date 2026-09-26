@@ -82,12 +82,12 @@ export function Mosaic({ site }: { site: Site | null }) {
   const activeFullUrl = activeImage ? imageUrl(activeImage, 'hero') || imageUrl(activeImage, 'card') : null
 
   return (
-    <section aria-label="Location" className="relative px-4 pt-8 pb-24 sm:px-8 sm:pt-10 sm:pb-28">
+    <section aria-label="MBR live MOODS" className="relative px-4 pt-8 pb-24 sm:px-8 sm:pt-10 sm:pb-28">
       {/* Background ambient lighting aura */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_50%,rgba(200,36,227,0.12),transparent_70%)]" />
 
       <div className="mx-auto max-w-[1440px]">
-        <SectionTitle className="mb-10 sm:mb-12">LOCATION</SectionTitle>
+        <SectionTitle className="mb-10 sm:mb-12">MBR live MOODS</SectionTitle>
 
         {/* Fashion balanced 4-column grid (2 rows of 4 for 8 photos) */}
         <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">

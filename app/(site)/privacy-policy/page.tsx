@@ -139,6 +139,52 @@ export default async function PrivacyPolicyPage() {
             </p>
           </section>
 
+          <section className="rounded-2xl border border-white/10 bg-[#121212] p-6 sm:p-8 space-y-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-white uppercase tracking-wide">
+              6. Note Editoriali: Non Testata Giornalistica (L. 62/2001), Diritto al Racconto (Art. 21 Cost.) e Tutela Marchi
+            </h2>
+            <p>
+              Uno degli scopi fondamentali e fondanti di <strong className="text-white">Milano Beat Radio</strong> è la divulgazione informativa e la valorizzazione culturale a titolo interamente gratuito del territorio, della musica, degli spettacoli, del teatro, della nightlife e delle iniziative che animano la città metropolitana di <strong className="text-white">Milano e la sua provincia</strong>, nonché la provincia di <strong className="text-white">Monza e della Brianza</strong>.
+            </p>
+            <div className="space-y-3 pt-2 text-sm sm:text-base">
+              <div className="rounded-xl border border-brand/20 bg-brand/5 p-4 sm:p-5 space-y-2">
+                <p className="font-bold text-white">
+                  Esonero Legge 62/2001 e Garanzia Costituzionale al Racconto:
+                </p>
+                <p className="text-white/80 leading-relaxed text-sm">
+                  Ai sensi dell&apos;art. 1, comma 3 della <strong className="text-white">Legge 7 marzo 2001, n. 62</strong>, si dichiara espressamente che questo sito web, il canale radiofonico e i relativi canali social <strong className="text-white">non costituiscono una testata giornalistica</strong> e non rientrano nella categoria dei prodotti editoriali periodici, in quanto aggiornati senza alcuna periodicità predeterminata e gestiti su base amatoriale, culturale e volontaria.
+                </p>
+                <p className="text-white/80 leading-relaxed text-sm">
+                  L&apos;attività di racconto di notizie, interviste ad artisti, cronaca degli eventi e divulgazione territoriale è pienamente autorizzata e tutelata dall&apos;<strong className="text-white">Articolo 21 della Costituzione della Repubblica Italiana</strong>, che garantisce a tutti il diritto fondamentale di manifestare liberamente il proprio pensiero con la parola, lo scritto e ogni altro mezzo di diffusione.
+                </p>
+              </div>
+
+              <p>
+                <strong className="text-white">Finalità esclusivamente informativa e non commerciale:</strong> La pubblicazione di notizie, articoli, recensioni, locandine o segnalazioni nel calendario eventi avviene unicamente con fini divulgativi, di intrattenimento e nell&apos;esercizio del diritto di cronaca e di libera manifestazione del pensiero. Milano Beat Radio non percepisce alcun compenso economico da tali segnalazioni, che sono svolte in piena autonomia redazionale a supporto della comunità locale.
+              </p>
+              <p>
+                <strong className="text-white">Titolarità di Marchi, Loghi e Denominazioni:</strong> Tutti i marchi registrati, loghi, denominazioni di locali, discoteche, club, teatri, rassegne, artisti e format citati sul portale o durante le trasmissioni appartengono ai rispettivi e legittimi titolari. La loro menzione ha funzione esclusivamente descrittiva e identificativa dell&apos;evento o dell&apos;attività (fair use ai sensi della normativa sulla proprietà industriale), volta a favorire la fruizione culturale da parte del pubblico.
+              </p>
+              <p>
+                <strong className="text-white">Disponibilità a Rettifiche e Rimozioni:</strong> Nel rispetto della massima collaborazione con organizzatori, locali e titolari di diritti, qualora chiunque desiderasse aggiornare, integrare o richiedere la rimozione di informazioni, immagini o riferimenti riguardanti le proprie attività, può scrivere a{' '}
+                <a
+                  href="mailto:info@milanobeatradio.it"
+                  className="text-brand font-medium hover:underline"
+                >
+                  info@milanobeatradio.it
+                </a>{' '}
+                o{' '}
+                <a
+                  href="mailto:criss.dellorto@milanobeatradio.it"
+                  className="text-brand font-medium hover:underline"
+                >
+                  criss.dellorto@milanobeatradio.it
+                </a>
+                . La redazione accoglierà e processerà la richiesta tempestivamente.
+              </p>
+            </div>
+          </section>
+
           <div className="text-right text-xs text-white/50 pt-4">
             Ultimo aggiornamento: Settembre 2026
           </div>

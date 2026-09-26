@@ -166,6 +166,16 @@ export default async function PodcastPage({ params }: { params: Promise<{ slug: 
             </article>
           </div>
         )}
+
+        {/* Editorial Disclaimer on single interview */}
+        <div className="mt-14 rounded-xl border border-white/10 bg-white/[0.02] p-4 sm:p-5 text-xs text-white/50 space-y-1.5">
+          <p className="font-semibold text-white/70">
+            Promozione artistica a titolo gratuito:
+          </p>
+          <p className="leading-relaxed">
+            Questa intervista è realizzata e diffusa a titolo interamente gratuito da Milano Beat Radio nell&apos;ambito dell&apos;attività di divulgazione musicale e culturale su Milano, provincia e Monza Brianza (attività non periodica ex L. 62/2001, svolta ai sensi dell&apos;Art. 21 Cost.). Brani, marchi e contenuti appartengono ai rispettivi autori e aventi diritto.
+          </p>
+        </div>
       </main>
     </div>
   )
