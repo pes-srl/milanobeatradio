@@ -5,7 +5,6 @@ import { SectionTitle } from '@/src/components/site/SectionTitle'
 import { PostCard } from '@/src/components/site/PostCard'
 import { InstagramFeed } from '@/src/components/site/InstagramFeed'
 import { EventItem } from '@/src/components/site/EventItem'
-import { Mosaic } from '@/src/components/site/Mosaic'
 import { PartnerLogos } from '@/src/components/site/PartnerLogos'
 import { getEvents, getPartners, getPosts, getSite } from '@/src/lib/queries'
 import { getInstagramFeed } from '@/src/lib/instagram'
@@ -13,7 +12,7 @@ import { getInstagramFeed } from '@/src/lib/instagram'
 export const metadata: Metadata = { title: 'Milano Beat Radio — Your Event and Party Station' }
 export const revalidate = 300
 
-/** Home. Section order: hero → CITY EVENTS → INSTAGRAM FEED → CITY NEWS → PARTNERS → mosaic. */
+/** Home. Section order: hero → CITY EVENTS → INSTAGRAM FEED → CITY NEWS → PARTNERS. */
 export default async function HomePage() {
   const [site, posts, events, partners, instagramFeed] = await Promise.all([
     getSite().catch(() => null),
@@ -63,14 +62,12 @@ export default async function HomePage() {
         )}
       </section>
 
-      <section className="px-4 pt-20 pb-8 sm:px-8 sm:pt-24 sm:pb-10">
+      <section className="px-4 pt-20 pb-20 sm:px-8 sm:pt-24 sm:pb-24">
         <SectionTitle>Partners</SectionTitle>
         <div className="mt-10 sm:mt-12">
           <PartnerLogos partners={partners.docs} />
         </div>
       </section>
-
-      <Mosaic site={site} />
     </>
   )
 }
