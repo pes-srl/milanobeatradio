@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { PageHero } from '@/src/components/site/PageHero'
 import { SectionTitle } from '@/src/components/site/SectionTitle'
 import { PartnerLogos } from '@/src/components/site/PartnerLogos'
-import { AppDownload } from '@/src/components/site/AppDownload'
 import { getPartners, getSite } from '@/src/lib/queries'
 import Link from 'next/link'
 
@@ -103,8 +102,6 @@ export default async function ChiSiamoPage() {
           <PartnerLogos partners={partners.docs} variant="grid" />
         </div>
       </section>
-
-      <AppDownload site={site} />
     </>
   )
 }

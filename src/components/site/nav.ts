@@ -17,8 +17,10 @@ export const SIDE_NAV: readonly NavItem[] = [
 /** Main menu (excluding Home) for footer */
 export const MAIN_NAV: readonly NavItem[] = SIDE_NAV.filter((item) => item.href !== '/')
 
-/** Secondary links (none currently). */
-export const MORE_NAV: readonly NavItem[] = []
+/** Secondary links. */
+export const MORE_NAV: readonly NavItem[] = [
+  { href: '/weekend-prescription', label: '🎵 Weekend Prescription' },
+]
 
 /** Legal & compliance links for footer */
 export const LEGAL_NAV: readonly NavItem[] = [

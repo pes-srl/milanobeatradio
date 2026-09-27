@@ -55,33 +55,33 @@ export function PartnerLogos({ partners, variant = 'marquee' }: Props) {
     )
   }
 
-  // Ensure enough items so each half has at least 8 items for a seamless marquee loop
+  // Ensure enough items so each track is comfortably wide (at least 8 items)
   let baseItems = [...items]
   while (baseItems.length < 8) {
     baseItems = [...baseItems, ...items]
   }
-  const trackItems = [...baseItems, ...baseItems]
-  const duration = Math.max(25, baseItems.length * 4)
+  const duration = Math.max(30, baseItems.length * 4)
 
   return (
-    <div className="relative mx-auto max-w-[1070px] overflow-hidden px-4" aria-label="Partner">
-      {/* Side gradient fade masks */}
-      <div
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 sm:w-20 bg-gradient-to-r from-black via-black/80 to-transparent"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 sm:w-20 bg-gradient-to-l from-black via-black/80 to-transparent"
-        aria-hidden="true"
-      />
-
-      <div
-        className="logos__track items-center transform-gpu py-2"
-        style={{ animationDuration: `${duration}s` }}
-      >
-        {trackItems.map((p, i) => (
-          <Logo key={`${p.id}-${i}`} p={p} />
-        ))}
+    <div className="w-full overflow-hidden py-3" aria-label="Partner">
+      <div className="partner-marquee-container">
+        <div
+          className="partner-marquee-track"
+          style={{ animationDuration: `${duration}s` }}
+        >
+          {baseItems.map((p, i) => (
+            <Logo key={`track-a-${p.id}-${i}`} p={p} />
+          ))}
+        </div>
+        <div
+          className="partner-marquee-track"
+          style={{ animationDuration: `${duration}s` }}
+          aria-hidden="true"
+        >
+          {baseItems.map((p, i) => (
+            <Logo key={`track-b-${p.id}-${i}`} p={p} />
+          ))}
+        </div>
       </div>
     </div>
   )

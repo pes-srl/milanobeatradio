@@ -229,15 +229,61 @@ iframe.instagram-media:hover {
   will-change: transform;
 }
 
-/* Partner logos strip. */
-.logos__track {
+/* Partner logos infinite smooth marquee with feather-soft gradient mask */
+.partner-marquee-container {
   display: flex;
-  gap: 2.5rem;
-  width: max-content;
-  animation: marquee 35s linear infinite;
+  width: 100%;
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 5%,
+    rgba(0, 0, 0, 0.8) 12%,
+    black 20%,
+    black 80%,
+    rgba(0, 0, 0, 0.8) 88%,
+    rgba(0, 0, 0, 0.25) 95%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 5%,
+    rgba(0, 0, 0, 0.8) 12%,
+    black 20%,
+    black 80%,
+    rgba(0, 0, 0, 0.8) 88%,
+    rgba(0, 0, 0, 0.25) 95%,
+    transparent 100%
+  );
 }
-.logos__track:hover {
+
+.partner-marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 3.5rem;
+  padding-right: 3.5rem;
+  animation: partner-marquee 35s linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.partner-marquee-container:hover .partner-marquee-track {
   animation-play-state: paused;
+}
+
+@keyframes partner-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
 }
 
 /* Diagonal purple wedge behind the footer. */
@@ -264,7 +310,8 @@ iframe.instagram-media:hover {
 .prose-mbr hr { @apply my-8 border-white/10; }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee__track, .logos__track, .slide, .slide > img { animation: none; }
+  .marquee__track, .logos__track, .partner-marquee-track, .slide, .slide > img { animation: none; }
   .marquee__track > span + span { display: none; }
+  .partner-marquee-container .partner-marquee-track:last-child { display: none; }
   .slide:first-child { opacity: 1; }
 }
