@@ -103,17 +103,18 @@ function PrescriptionCard({ track }: { track: TrackCard }) {
       />
 
       {/* Index + day header */}
-      <div className="mb-7 flex items-baseline justify-between gap-4">
-        <div className="flex items-baseline gap-4">
-          <span className="font-mono text-[11px] font-semibold tracking-[0.25em] text-brand/70 select-none">
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-[11px] font-semibold tracking-[0.25em] text-brand/60 select-none">
             {track.index}
           </span>
-          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-white/35">
+          {/* Day: prominente */}
+          <span className="text-sm font-black uppercase tracking-[0.2em] text-white/80">
             {track.day}
           </span>
         </div>
-        {/* BPM as typographic detail, top-right */}
-        <span className="font-mono text-[11px] tracking-widest text-white/25">
+        {/* BPM: badge visibile */}
+        <span className="font-mono text-xs font-bold tracking-widest text-white/60 border border-white/15 px-2.5 py-0.5">
           {track.bpm}
         </span>
       </div>
@@ -128,8 +129,8 @@ function PrescriptionCard({ track }: { track: TrackCard }) {
         {track.description}
       </p>
 
-      {/* Track block: divider line + artist / title */}
-      <div className="mb-6 border-t border-white/[0.07] pt-6">
+      {/* Track block */}
+      <div className="mb-7 border-t border-white/[0.07] pt-6">
         <p className="mb-1 text-base sm:text-lg font-semibold text-white leading-snug">
           {track.artist}
         </p>
@@ -138,9 +139,9 @@ function PrescriptionCard({ track }: { track: TrackCard }) {
           <span className="ml-2 not-italic font-semibold text-white/25 text-xs">{track.year}</span>
         </p>
 
-        {/* Minimal metadata tags — flat, no filled backgrounds */}
+        {/* Metadata tags */}
         <div className="flex flex-wrap gap-2">
-          <span className="border border-brand/25 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand/70">
+          <span className="border border-brand/30 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand/70">
             {track.genre}
           </span>
           <span className="border border-white/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white/30">
@@ -149,14 +150,14 @@ function PrescriptionCard({ track }: { track: TrackCard }) {
         </div>
       </div>
 
-      {/* Listen links — text links, no pill buttons */}
-      <div className="flex flex-wrap items-center gap-5">
+      {/* Listen links — brand colors, badge style */}
+      <div className="flex flex-wrap items-center gap-3">
         {track.spotifyUrl && (
           <a
             href={track.spotifyUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-white/40 transition-colors duration-200 hover:text-[#1DB954]"
+            className="inline-flex items-center gap-2 bg-[#1DB954]/10 border border-[#1DB954]/35 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[#1DB954] transition-all duration-200 hover:bg-[#1DB954]/20 hover:border-[#1DB954]/70"
           >
             <IconSpotify />
             Spotify
@@ -167,7 +168,7 @@ function PrescriptionCard({ track }: { track: TrackCard }) {
             href={track.youtubeUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-white/40 transition-colors duration-200 hover:text-white/80"
+            className="inline-flex items-center gap-2 bg-[#FF0000]/10 border border-[#FF0000]/35 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[#FF4444] transition-all duration-200 hover:bg-[#FF0000]/20 hover:border-[#FF0000]/70"
           >
             <IconYoutube />
             YouTube
