@@ -45,7 +45,7 @@ export default async function CookiePolicyPage() {
             <p>
               Milano Beat Radio è un progetto non commerciale che rispetta la privacy dei propri ascoltatori. Per questo motivo:{' '}
               <strong className="text-brand font-semibold">
-                questo sito utilizza ESCLUSIVAMENTE Cookie Tecnici e strumenti di memoria locale strettamente necessari.
+                questo sito utilizza ESCLUSIVAMENTE Cookie Tecnici, strumenti di memoria locale e Cookie Analitici anonimizzati assimilati ai tecnici.
               </strong>
             </p>
             <div className="overflow-x-auto pt-2">
@@ -68,6 +68,11 @@ export default async function CookiePolicyPage() {
                     <td className="py-3 pr-4">Riservato esclusivamente alla gestione della redazione e agli amministratori per l&apos;accesso al pannello CMS.</td>
                     <td className="py-3">Sessione / Scadenza token</td>
                   </tr>
+                  <tr>
+                    <td className="py-3 pr-4 font-medium text-white">Google Analytics 4 (_ga, _ga_*)</td>
+                    <td className="py-3 pr-4">Misurazione statistica aggregata e anonima del traffico. Configurato con mascheramento IP, Google Signals e segnali pubblicitari disattivati. Assimilato ai cookie tecnici (Linee Guida Garante Privacy 10/06/2021).</td>
+                    <td className="py-3">Fino a 2 mesi (o durata sessione)</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -75,14 +80,26 @@ export default async function CookiePolicyPage() {
 
           <section className="rounded-2xl border border-white/10 bg-[#121212] p-6 sm:p-8 space-y-4">
             <h2 className="text-xl sm:text-2xl font-bold text-white uppercase tracking-wide">
-              3. Assenza di Cookie di Profilazione o Marketing
+              3. Statistiche Anonime e Assenza di Profilazione Pubblicitaria
             </h2>
-            <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/20 p-4 sm:p-5 space-y-2">
+            <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/20 p-4 sm:p-5 space-y-3">
               <p className="font-semibold text-emerald-300">
-                Nessun tracciamento pubblicitario o profilazione
+                Nessuna profilazione commerciale o cessione dati a terzi
               </p>
-              <p className="text-sm text-white/80">
-                Milano Beat Radio non installa pixel di tracciamento commerciale (come Meta Pixel o Google Ads) e non vende o cede dati ad agenzie terze. Conformemente alle linee guida del Garante Privacy e alla Direttiva ePrivacy, per i soli cookie tecnici non è richiesto il consenso preventivo tramite banner invasivo.
+              <p className="text-sm text-white/80 leading-relaxed">
+                Milano Beat Radio non installa cookie o pixel di profilazione commerciale (come Meta Pixel o Google Ads) e non monetizza né cede i dati degli utenti ad agenzie pubblicitarie.
+              </p>
+              <p className="text-sm text-white/80 leading-relaxed">
+                L&apos;utilizzo di Google Analytics 4 (GA4) è limitato alla sola rilevazione statistica anonima ed aggregata degli accessi:
+              </p>
+              <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm text-white/70 pl-2">
+                <li>L&apos;indirizzo IP dell&apos;utente viene automaticamente mascherato e anonimizzato;</li>
+                <li>La funzionalità Google Signals (tracciamento cross-device) è disattivata;</li>
+                <li>La personalizzazione degli annunci pubblicitari è inibita via codice;</li>
+                <li>I dati raccolti non sono incrociati con altri servizi commerciali di Google.</li>
+              </ul>
+              <p className="text-xs text-white/60 pt-1 leading-relaxed">
+                In conformità alle Linee Guida Cookie del Garante Privacy italiano (provvedimento n. 231 del 10 giugno 2021), i cookie analitici che adottano tali stringenti misure di anonimizzazione e non incrocio sono <strong>pienamente equiparati ai cookie tecnici</strong>: non richiedono pertanto il consenso preventivo né l&apos;installazione di un banner di blocco invasivo.
               </p>
             </div>
           </section>
@@ -103,7 +120,7 @@ export default async function CookiePolicyPage() {
 
           <section className="rounded-2xl border border-white/10 bg-[#121212] p-6 sm:p-8 space-y-4">
             <h2 className="text-xl sm:text-2xl font-bold text-white uppercase tracking-wide">
-              5. Come Disabilitare i Cookie dal Browser
+              5. Come Disabilitare i Cookie dal Browser e Opt-Out
             </h2>
             <p>
               L&apos;utente può gestire o disabilitare i cookie in qualsiasi momento direttamente dalle impostazioni del proprio browser:
@@ -114,6 +131,17 @@ export default async function CookiePolicyPage() {
               <li><strong className="text-white">Apple Safari:</strong> Preferenze &gt; Privacy &gt; Blocca tutti i cookie</li>
               <li><strong className="text-white">Microsoft Edge:</strong> Impostazioni &gt; Cookie e autorizzazioni sito</li>
             </ul>
+            <p className="text-sm text-white/70 pt-2">
+              Per escludere in modo specifico e universale la raccolta statistica di Google Analytics su tutti i siti web visitati, è possibile installare il componente aggiuntivo ufficiale fornito da Google per il proprio browser, scaricabile gratuitamente su:{' '}
+              <a
+                href="https://tools.google.com/dlpage/gaoptout"
+                target="_blank"
+                rel="noreferrer"
+                className="text-brand hover:underline font-semibold"
+              >
+                Google Analytics Opt-out Browser Add-on
+              </a>.
+            </p>
           </section>
 
           <section className="rounded-2xl border border-white/10 bg-[#121212] p-6 sm:p-8 space-y-4">

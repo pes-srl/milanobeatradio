@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { poppins } from '@/src/lib/fonts'
 import { siteUrl } from '@/src/lib/env'
 import { imageUrl } from '@/src/lib/media'
@@ -50,9 +51,32 @@ export const metadata: Metadata = {
  */
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const site = await getSite().catch(() => null)
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-G0XKE9G9L8'
+
   return (
     <html lang="it" className={poppins.variable}>
       <body className="min-h-dvh pb-[70px]">
+        {gaId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaId}', {
+                  anonymize_ip: true,
+                  allow_google_signals: false,
+                  allow_ad_personalization_signals: false,
+                  restricted_data_processing: true
+                });
+              `}
+            </Script>
+          </>
+        )}
         <PlayerProvider>
           <Header />
           <main>{children}</main>

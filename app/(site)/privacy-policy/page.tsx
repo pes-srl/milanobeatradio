@@ -96,7 +96,7 @@ export default async function PrivacyPolicyPage() {
               <strong className="text-white">il sito NON utilizza cookie di profilazione o tracciamento pubblicitario</strong>.
             </p>
             <p>
-              Vengono utilizzati esclusivamente <strong className="text-white">cookie tecnici essenziali</strong> e strumenti di memorizzazione locale (come le preferenze del volume del player radio). Per maggiori dettagli, ti invitiamo a consultare la nostra{' '}
+              Vengono utilizzati esclusivamente <strong className="text-white">cookie tecnici essenziali</strong>, strumenti di memorizzazione locale (come le preferenze del volume del player radio) e <strong className="text-white">cookie analitici aggregati</strong> (Google Analytics 4 configurato con mascheramento IP, senza Google Signals né profilazione pubblicitaria), equiparati ai cookie tecnici ex Linee Guida Garante Privacy 10 giugno 2021. Per maggiori dettagli, ti invitiamo a consultare la nostra{' '}
               <Link href="/cookie-policy" className="text-brand hover:underline font-semibold">
                 Cookie Policy dedicata
               </Link>.
