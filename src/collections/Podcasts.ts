@@ -4,6 +4,7 @@ import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
 import { previewFor } from '@/src/lib/preview'
+import { revalidateAfterChange, revalidateAfterDelete } from '@/src/lib/revalidate'
 import { versions } from './shared'
 
 /**
@@ -30,6 +31,10 @@ export const Podcasts: CollectionConfig = {
   },
   access: { read: publishedOrAuthenticated, create: isAdmin, update: isAdmin, delete: isAdmin },
   versions,
+  hooks: {
+    afterChange: [revalidateAfterChange({ detailBase: '/podcast', lists: ['/interviste', '/'] })],
+    afterDelete: [revalidateAfterDelete({ detailBase: '/podcast', lists: ['/interviste', '/'] })],
+  },
   fields: [
     { name: 'title', type: 'text', label: { it: 'Titolo', en: 'Title' }, required: true },
     slugField(),

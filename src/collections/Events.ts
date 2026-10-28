@@ -4,6 +4,7 @@ import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
 import { previewFor } from '@/src/lib/preview'
+import { revalidateAfterChange, revalidateAfterDelete } from '@/src/lib/revalidate'
 import { versions } from './shared'
 
 const rome = { pickerAppearance: 'dayAndTime' as const, displayFormat: 'dd/MM/yyyy HH:mm' }
@@ -30,6 +31,10 @@ export const Events: CollectionConfig = {
     delete: authenticated,
   },
   versions,
+  hooks: {
+    afterChange: [revalidateAfterChange({ detailBase: '/eventi', lists: ['/eventi', '/mbr-events', '/mbr-events-v2', '/'] })],
+    afterDelete: [revalidateAfterDelete({ detailBase: '/eventi', lists: ['/eventi', '/mbr-events', '/mbr-events-v2', '/'] })],
+  },
   fields: [
     { name: 'title', type: 'text', label: { it: 'Titolo', en: 'Title' }, required: true },
     slugField(),

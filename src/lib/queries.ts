@@ -16,6 +16,23 @@ async function bySlug<T extends CollectionSlug>(collection: T, slug: string, dra
   return res.docs[0] ?? null
 }
 
+/**
+ * Slugs of every published document in a collection, for `generateStaticParams`:
+ * the detail pages are pre-rendered at build time and served from the CDN.
+ */
+export async function getPublishedSlugs(collection: 'posts' | 'events' | 'podcasts') {
+  const payload = await payloadClient()
+  const res = await payload.find({
+    collection,
+    where: live,
+    limit: 1000,
+    depth: 0,
+    pagination: false,
+    select: { slug: true },
+  })
+  return res.docs.map((d) => d.slug).filter((s): s is string => typeof s === 'string' && s.length > 0)
+}
+
 export async function getSite() {
   const payload = await payloadClient()
   return payload.findGlobal({ slug: 'site', depth: 1 })

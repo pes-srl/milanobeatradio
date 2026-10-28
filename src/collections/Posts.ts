@@ -4,6 +4,7 @@ import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
 import { previewFor } from '@/src/lib/preview'
+import { revalidateAfterChange, revalidateAfterDelete } from '@/src/lib/revalidate'
 import { versions } from './shared'
 
 /** CITY NEWS. Public URL: /flash-news/[slug]. */
@@ -28,6 +29,10 @@ export const Posts: CollectionConfig = {
     delete: authenticated,
   },
   versions,
+  hooks: {
+    afterChange: [revalidateAfterChange({ detailBase: '/flash-news', lists: ['/flash-news', '/'] })],
+    afterDelete: [revalidateAfterDelete({ detailBase: '/flash-news', lists: ['/flash-news', '/'] })],
+  },
   fields: [
     { name: 'title', type: 'text', label: { it: 'Titolo', en: 'Title' }, required: true },
     slugField(),

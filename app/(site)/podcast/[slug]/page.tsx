@@ -11,9 +11,17 @@ import { ShareButtons } from '@/src/components/site/ShareButtons'
 import { IconCalendar } from '@/src/components/icons'
 import { fmtDate } from '@/src/lib/format'
 import { imageAlt, imageUrl } from '@/src/lib/media'
-import { getPodcast } from '@/src/lib/queries'
+import { getPodcast, getPublishedSlugs } from '@/src/lib/queries'
 
-export const revalidate = 300
+// Pre-rendered at build time and served from the CDN. Long revalidate as a safety net: the
+// real refresh is on-demand, triggered by the collection's afterChange/afterDelete hooks.
+export const revalidate = 86400
+export const dynamicParams = true
+
+export async function generateStaticParams() {
+  const slugs = await getPublishedSlugs('podcasts').catch(() => [])
+  return slugs.map((slug) => ({ slug }))
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
