@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { anyone, authenticated, isAdminField } from '@/src/access'
+import { anyone, authenticated, isAdmin, isAdminField } from '@/src/access'
 
 const webp = (quality: number) => ({ format: 'webp' as const, options: { quality } })
 
@@ -30,7 +30,7 @@ export const Media: CollectionConfig = {
   // Newest first: an editor almost always wants the file just uploaded, not the oldest
   // one migrated from WordPress.
   defaultSort: '-createdAt',
-  access: { read: anyone, create: authenticated, update: authenticated, delete: authenticated },
+  access: { read: anyone, create: authenticated, update: authenticated, delete: isAdmin },
   upload: {
     // Local fallback dir (git-ignored). Ignored when the S3 adapter is enabled.
     staticDir: 'media',

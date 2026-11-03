@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import type { CollectionSlug, Where } from 'payload'
 import { payloadClient } from './payload'
 
@@ -20,7 +21,7 @@ async function bySlug<T extends CollectionSlug>(collection: T, slug: string, dra
  * Slugs of every published document in a collection, for `generateStaticParams`:
  * the detail pages are pre-rendered at build time and served from the CDN.
  */
-export async function getPublishedSlugs(collection: 'posts' | 'events' | 'podcasts') {
+export const getPublishedSlugs = cache(async (collection: 'posts' | 'events' | 'podcasts') => {
   const payload = await payloadClient()
   const res = await payload.find({
     collection,
@@ -31,12 +32,12 @@ export async function getPublishedSlugs(collection: 'posts' | 'events' | 'podcas
     select: { slug: true },
   })
   return res.docs.map((d) => d.slug).filter((s): s is string => typeof s === 'string' && s.length > 0)
-}
+})
 
-export async function getSite() {
+export const getSite = cache(async () => {
   const payload = await payloadClient()
   return payload.findGlobal({ slug: 'site', depth: 1 })
-}
+})
 
 export async function getPosts(opts: { limit?: number; page?: number; category?: string; tag?: string } = {}) {
   const payload = await payloadClient()
@@ -46,9 +47,9 @@ export async function getPosts(opts: { limit?: number; page?: number; category?:
   return payload.find({ collection: 'posts', where, sort: '-publishedAt', limit: opts.limit ?? 12, page: opts.page ?? 1, depth: 1 })
 }
 
-export async function getPost(slug: string, draft = false) {
+export const getPost = cache(async (slug: string, draft = false) => {
   return bySlug('posts', slug, draft)
-}
+})
 
 export async function getEvents(opts: { upcoming?: boolean; past?: boolean; limit?: number; minCount?: number; page?: number } = {}) {
   const payload = await payloadClient()
@@ -115,9 +116,9 @@ export async function getEvents(opts: { upcoming?: boolean; past?: boolean; limi
   return payload.find({ collection: 'events', where, sort: 'startDate', limit: opts.limit ?? 50, page: opts.page ?? 1, depth: 1 })
 }
 
-export async function getEvent(slug: string, draft = false) {
+export const getEvent = cache(async (slug: string, draft = false) => {
   return bySlug('events', slug, draft)
-}
+})
 
 export async function getPodcasts(opts: { filter?: string; limit?: number; page?: number } = {}) {
   const payload = await payloadClient()
@@ -126,38 +127,38 @@ export async function getPodcasts(opts: { filter?: string; limit?: number; page?
   return payload.find({ collection: 'podcasts', where, sort: '-publishedAt', limit: opts.limit ?? 12, page: opts.page ?? 1, depth: 1 })
 }
 
-export async function getPodcast(slug: string, draft = false) {
+export const getPodcast = cache(async (slug: string, draft = false) => {
   return bySlug('podcasts', slug, draft)
-}
+})
 
-export async function getShows() {
+export const getShows = cache(async () => {
   const payload = await payloadClient()
   return payload.find({ collection: 'shows', where: live, sort: 'title', limit: 50, depth: 1 })
-}
+})
 
-export async function getShow(slug: string, draft = false) {
+export const getShow = cache(async (slug: string, draft = false) => {
   return bySlug('shows', slug, draft)
-}
+})
 
-export async function getStaff() {
+export const getStaff = cache(async () => {
   const payload = await payloadClient()
   return payload.find({ collection: 'staff', where: live, sort: 'createdAt', limit: 50, depth: 1 })
-}
+})
 
-export async function getStaffMember(slug: string, draft = false) {
+export const getStaffMember = cache(async (slug: string, draft = false) => {
   return bySlug('staff', slug, draft)
-}
+})
 
-export async function getPartners() {
+export const getPartners = cache(async () => {
   const payload = await payloadClient()
   return payload.find({ collection: 'partners', where: { and: [live, { active: { equals: true } }] }, sort: '_order', limit: 50, depth: 1 })
-}
+})
 
-export async function getPage(slug: string, draft = false) {
+export const getPage = cache(async (slug: string, draft = false) => {
   return bySlug('pages', slug, draft)
-}
+})
 
-export async function getMediaByFilename(filename: string) {
+export const getMediaByFilename = cache(async (filename: string) => {
   const payload = await payloadClient()
   const res = await payload.find({
     collection: 'media',
@@ -171,4 +172,4 @@ export async function getMediaByFilename(filename: string) {
     depth: 1,
   })
   return res.docs[0] ?? null
-}
+})

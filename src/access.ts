@@ -18,6 +18,20 @@ export const isAdmin: Access = ({ req }) => req.user?.role === 'admin'
 /** Admin-only: field-level read/write access (FieldAccess has a wider id type than Access). */
 export const isAdminField: FieldAccess = ({ req }) => req.user?.role === 'admin'
 
+/**
+ * Admin can delete any document; editors can only delete documents they authored.
+ */
+export const isSelfAuthorOrAdmin: Access = ({ req }) => {
+  if (!req.user) return false
+  if (req.user.role === 'admin') return true
+  return {
+    author: {
+      equals: req.user.id,
+    },
+  }
+}
+
 /** Exclude entity from admin navigation if the user is not an admin. */
-export const hideForNonAdmin = ({ user }: { user?: any }): boolean => user?.role !== 'admin'
+export const hideForNonAdmin = ({ user }: { user?: unknown }): boolean =>
+  (user as { role?: string } | null | undefined)?.role !== 'admin'
 

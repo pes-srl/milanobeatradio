@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { authenticated, isAdminField, publishedOrAuthenticated } from '@/src/access'
+import { authenticated, isAdminField, isSelfAuthorOrAdmin, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
@@ -26,10 +26,18 @@ export const Posts: CollectionConfig = {
     readVersions: authenticated,
     create: authenticated,
     update: authenticated,
-    delete: authenticated,
+    delete: isSelfAuthorOrAdmin,
   },
   versions,
   hooks: {
+    beforeChange: [
+      ({ req, operation, data }) => {
+        if (operation === 'create' && req.user && !data?.author) {
+          return { ...data, author: req.user.id }
+        }
+        return data
+      },
+    ],
     afterChange: [revalidateAfterChange({ detailBase: '/flash-news', lists: ['/flash-news', '/'] })],
     afterDelete: [revalidateAfterDelete({ detailBase: '/flash-news', lists: ['/flash-news', '/'] })],
   },
@@ -63,7 +71,11 @@ export const Posts: CollectionConfig = {
       type: 'relationship',
       relationTo: 'users',
       label: { it: 'Autore', en: 'Author' },
+      defaultValue: ({ user }) => user?.id,
       admin: { position: 'sidebar' },
+      access: {
+        update: isAdminField,
+      },
     },
     {
       name: 'tags',

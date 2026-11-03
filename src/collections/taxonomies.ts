@@ -23,7 +23,7 @@ const taxonomy = (
     description,
     ...admin,
   },
-  access: access ?? { read: anyone, create: authenticated, update: authenticated, delete: authenticated },
+  access: access ?? { read: anyone, create: authenticated, update: authenticated, delete: isAdmin },
   fields: [
     { name: 'name', type: 'text', label: { it: 'Nome', en: 'Name' }, required: true },
     slugField('name'),

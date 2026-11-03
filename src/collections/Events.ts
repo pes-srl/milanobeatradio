@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { authenticated, isAdminField, publishedOrAuthenticated } from '@/src/access'
+import { authenticated, isAdmin, isAdminField, publishedOrAuthenticated } from '@/src/access'
 import { seoField } from '@/src/fields/seo'
 import { slugField } from '@/src/fields/slug'
 import { statsField } from '@/src/fields/stats'
@@ -28,12 +28,12 @@ export const Events: CollectionConfig = {
     readVersions: authenticated,
     create: authenticated,
     update: authenticated,
-    delete: authenticated,
+    delete: isAdmin,
   },
   versions,
   hooks: {
-    afterChange: [revalidateAfterChange({ detailBase: '/eventi', lists: ['/eventi', '/mbr-events', '/mbr-events-v2', '/'] })],
-    afterDelete: [revalidateAfterDelete({ detailBase: '/eventi', lists: ['/eventi', '/mbr-events', '/mbr-events-v2', '/'] })],
+    afterChange: [revalidateAfterChange({ detailBase: '/eventi', lists: ['/eventi', '/mbr-events', '/'] })],
+    afterDelete: [revalidateAfterDelete({ detailBase: '/eventi', lists: ['/eventi', '/mbr-events', '/'] })],
   },
   fields: [
     { name: 'title', type: 'text', label: { it: 'Titolo', en: 'Title' }, required: true },

@@ -20,18 +20,20 @@ export function MbrEventsDeck({ posters }: Props) {
   const touchStartX = useRef<number | null>(null)
 
   const total = posters.length
-  if (total === 0) return null
 
   const prev = useCallback(() => {
+    if (total === 0) return
     setCurrent((c) => (c === 0 ? total - 1 : c - 1))
   }, [total])
 
   const next = useCallback(() => {
+    if (total === 0) return
     setCurrent((c) => (c === total - 1 ? 0 : c + 1))
   }, [total])
 
   // Keyboard navigation
   useEffect(() => {
+    if (total === 0) return
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') prev()
       if (e.key === 'ArrowRight') next()
@@ -39,7 +41,7 @@ export function MbrEventsDeck({ posters }: Props) {
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [prev, next, lightboxOpen])
+  }, [prev, next, lightboxOpen, total])
 
   // Touch swipe support
   const onTouchStart = (e: React.TouchEvent) => {
@@ -54,6 +56,8 @@ export function MbrEventsDeck({ posters }: Props) {
     else if (diff < -50) prev()
     touchStartX.current = null
   }
+
+  if (total === 0) return null
 
   const prevIndex = current === 0 ? total - 1 : current - 1
   const nextIndex = current === total - 1 ? 0 : current + 1
