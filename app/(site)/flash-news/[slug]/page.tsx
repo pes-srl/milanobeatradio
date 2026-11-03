@@ -11,7 +11,7 @@ import { ShareButtons } from '@/src/components/site/ShareButtons'
 import { IconCalendar, IconPerson } from '@/src/components/icons'
 import { fmtDate } from '@/src/lib/format'
 import { imageAlt, imageUrl } from '@/src/lib/media'
-import { getPost, getPublishedSlugs } from '@/src/lib/queries'
+import { getPost, getPosts, getPublishedSlugs } from '@/src/lib/queries'
 
 // Pre-rendered at build time and served from the CDN. Long revalidate as a safety net: the
 // real refresh is on-demand, triggered by the collection's afterChange/afterDelete hooks.
@@ -54,8 +54,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const isDraft = (await draftMode()).isEnabled
-  const post = await getPost(slug, isDraft)
+  const [post, relatedRes] = await Promise.all([
+    getPost(slug, isDraft),
+    getPosts({ limit: 4 }).catch(() => null),
+  ])
   if (!post) notFound()
+
+  const relatedPosts = (relatedRes?.docs ?? []).filter((p) => p.id !== post.id).slice(0, 3)
 
   const cat = post.category?.find((c): c is Extract<typeof post.category[number], object> => typeof c === 'object')
   const author = post.author && typeof post.author === 'object' ? post.author : null
@@ -183,54 +188,174 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </div>
         </div>
 
-        {/* Article Content Section */}
-        {post.content && (
-          <div className="mt-14 border-t border-white/10 pt-10">
-            <article className="prose prose-invert max-w-none text-white/90">
-              <RichText data={post.content} />
-            </article>
-          </div>
-        )}
+        {/* Article Content + Editorial Sticky Hub Layout */}
+        <div className="mt-16 border-t border-white/15 pt-12 sm:pt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            
+            {/* Left Column: Editorial Content (lg:col-span-8) */}
+            <div className="lg:col-span-8 space-y-10 min-w-0">
+              {post.content && (
+                <article>
+                  <RichText data={post.content} />
+                </article>
+              )}
 
-        {/* Author + Tags Footer */}
-        {(author?.name || tags.length > 0) && (
-          <div className="mt-12 border-t border-white/10 pt-10 space-y-6">
-            {/* Author */}
-            {author?.name && (
-              <p className="text-sm font-semibold text-white/70">
-                Scritto da:{' '}
-                <span className="font-bold text-brand">{author.name}</span>
-              </p>
-            )}
+              {/* Author + Tags Footer */}
+              {(author?.name || tags.length > 0) && (
+                <div className="border-t border-white/10 pt-8 space-y-5">
+                  {author?.name && (
+                    <div className="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand/20 text-brand font-bold text-sm">
+                        {author.name.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="text-xs text-white/50 uppercase font-bold tracking-wider">Articolo a cura di</p>
+                        <p className="text-sm font-bold text-white">{author.name}</p>
+                      </div>
+                    </div>
+                  )}
 
-            {/* Tag Pills */}
-            {tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <Link
-                    key={tag.id}
-                    href={`/flash-news?tag=${tag.slug}`}
-                    className="inline-block rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white/80 transition hover:border-brand hover:bg-brand/10 hover:text-brand"
-                  >
-                    {tag.name}
-                  </Link>
-                ))}
+                  {tags.length > 0 && (
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-wider text-white/50 mb-3">Argomenti correlati</p>
+                      <div className="flex flex-wrap gap-2">
+                        {tags.map((tag) => (
+                          <Link
+                            key={tag.id}
+                            href={`/flash-news?tag=${tag.slug}`}
+                            className="inline-block rounded-full border border-white/15 bg-white/5 px-3.5 py-1 text-xs font-semibold text-white/80 transition hover:border-brand hover:bg-brand/10 hover:text-brand"
+                          >
+                            #{tag.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Editorial Disclaimer & Brand Protection */}
+              <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 sm:p-5 text-xs text-white/50 space-y-1.5">
+                <p className="font-semibold text-white/70">
+                  Nota editoriale e promozione territoriale:
+                </p>
+                <p className="leading-relaxed">
+                  Questo contenuto è pubblicato a titolo interamente gratuito nell&apos;ambito dell&apos;attività di divulgazione informativa e culturale di Milano Beat Radio su Milano, provincia e Monza Brianza (non costituisce testata giornalistica ai sensi della L. 62/2001, attività svolta ai sensi dell&apos;Art. 21 Cost.). Marchi, loghi, denominazioni di locali, teatri, spettacoli e format citati appartengono ai rispettivi proprietari e sono menzionati a solo scopo descrittivo (diritto di cronaca). Per richieste di integrazione, rettifica o rimozione:{' '}
+                  <a href="mailto:info@milanobeatradio.it" className="text-brand hover:underline font-medium">
+                    info@milanobeatradio.it
+                  </a>.
+                </p>
               </div>
-            )}
-          </div>
-        )}
+            </div>
 
-        {/* Editorial Disclaimer & Brand Protection */}
-        <div className="mt-12 rounded-xl border border-white/10 bg-white/[0.02] p-4 sm:p-5 text-xs text-white/50 space-y-1.5">
-          <p className="font-semibold text-white/70">
-            Nota editoriale e promozione territoriale:
-          </p>
-          <p className="leading-relaxed">
-            Questo contenuto è pubblicato a titolo interamente gratuito nell&apos;ambito dell&apos;attività di divulgazione informativa e culturale di Milano Beat Radio su Milano, provincia e Monza Brianza (non costituisce testata giornalistica ai sensi della L. 62/2001, attività svolta ai sensi dell&apos;Art. 21 Cost.). Marchi, loghi, denominazioni di locali, teatri, spettacoli e format citati appartengono ai rispettivi proprietari e sono menzionati a solo scopo descrittivo (diritto di cronaca). Per richieste di integrazione, rettifica o rimozione:{' '}
-            <a href="mailto:info@milanobeatradio.it" className="text-brand hover:underline font-medium">
-              info@milanobeatradio.it
-            </a>.
-          </p>
+            {/* Right Column: Sticky Hub (lg:col-span-4) */}
+            <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
+              
+              {/* Card 1: Scheda Rapida Flash News */}
+              <div className="rounded-2xl border border-white/10 bg-[#121212] p-5 shadow-xl space-y-4">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <span className="text-xs font-bold uppercase tracking-wider text-brand flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-brand animate-pulse" />
+                    In Evidenza
+                  </span>
+                  {post.publishedAt && (
+                    <span className="text-xs font-medium text-white/50">{fmtDate(post.publishedAt)}</span>
+                  )}
+                </div>
+
+                {cat && (
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-white/50">Canale</p>
+                    <p className="text-sm font-bold text-white mt-0.5">{cat.name}</p>
+                  </div>
+                )}
+
+                {post.excerpt && (
+                  <div className="rounded-xl border-l-2 border-brand/80 bg-brand/5 p-3 text-xs leading-relaxed text-white/85">
+                    {post.excerpt}
+                  </div>
+                )}
+
+                <div className="pt-1">
+                  <a
+                    href="#top"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-brand/50 bg-brand/15 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-brand hover:shadow-[0_0_20px_rgba(200,36,227,0.4)]"
+                  >
+                    Torna all&apos;inizio ↑
+                  </a>
+                </div>
+              </div>
+
+              {/* Card 2: City Events Hub */}
+              <div className="rounded-2xl border border-brand/30 bg-gradient-to-br from-[#1c0636] to-[#0a0a0a] p-5 shadow-xl space-y-3">
+                <div className="flex items-center gap-2 text-brand">
+                  <span className="text-lg">🎉</span>
+                  <p className="text-xs font-bold uppercase tracking-wider text-white">Milano Beat Radio</p>
+                </div>
+                <p className="text-xs text-white/75 leading-relaxed">
+                  Concerti, party esclusivi, festival e tutti i migliori appuntamenti dal vivo a Milano e Lombardia.
+                </p>
+                <div className="pt-2">
+                  <Link
+                    href="/eventi"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand to-[#e0246f] py-2.5 px-4 text-xs font-bold uppercase tracking-wider text-white shadow-lg transition hover:opacity-95"
+                  >
+                    ▶ Esplora City Events
+                  </Link>
+                </div>
+              </div>
+
+              {/* Card 3: Ultime Notizie Correlate */}
+              {relatedPosts.length > 0 && (
+                <div className="rounded-2xl border border-white/10 bg-[#121212] p-5 shadow-xl">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-white/60 mb-4 flex items-center justify-between">
+                    <span>Ultime Notizie</span>
+                    <Link href="/flash-news" className="text-brand hover:underline text-[11px] font-semibold">
+                      Tutte →
+                    </Link>
+                  </h4>
+                  <div className="divide-y divide-white/5 space-y-3">
+                    {relatedPosts.map((rel) => {
+                      const relImg = imageUrl(rel.cover, 'thumb')
+                      return (
+                        <Link
+                          key={rel.id}
+                          href={`/flash-news/${rel.slug}`}
+                          className="group block pt-3 first:pt-0 transition"
+                        >
+                          <div className="flex gap-3 items-center">
+                            {relImg && (
+                              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-black">
+                                <Image
+                                  src={relImg}
+                                  alt={rel.title}
+                                  fill
+                                  sizes="56px"
+                                  className="object-cover transition duration-300 group-hover:scale-105"
+                                />
+                              </div>
+                            )}
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs font-bold text-white group-hover:text-brand line-clamp-2 transition">
+                                {rel.title}
+                              </p>
+                              {rel.publishedAt && (
+                                <p className="text-[11px] text-white/40 mt-1">
+                                  {fmtDate(rel.publishedAt)}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </Link>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
+            </aside>
+
+          </div>
         </div>
       </main>
     </div>
