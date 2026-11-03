@@ -17,14 +17,26 @@ export function EventItem({ event, priority = false }: { event: Event; priority?
       <div className="relative aspect-video w-full overflow-hidden bg-black/40 sm:aspect-[16/10]">
         <Link href={href} className="relative block size-full" aria-label={event.title}>
           {img ? (
-            <Image
-              src={img}
-              alt={imageAlt(event.cover, event.title)}
-              fill
-              priority={priority}
-              sizes="(max-width: 640px) 100vw, 610px"
-              className="object-cover transition duration-500 group-hover:scale-105"
-            />
+            <>
+              {/* Sfondo sfumato d'ambiente per riempire i lati senza bande nere */}
+              <Image
+                src={img}
+                alt=""
+                aria-hidden="true"
+                fill
+                sizes="(max-width: 640px) 100vw, 610px"
+                className="pointer-events-none object-cover blur-xl scale-125 opacity-40 brightness-75 transition duration-500 group-hover:scale-150"
+              />
+              {/* Locandina intera senza ritagli */}
+              <Image
+                src={img}
+                alt={imageAlt(event.cover, event.title)}
+                fill
+                priority={priority}
+                sizes="(max-width: 640px) 100vw, 610px"
+                className="z-[1] object-contain transition duration-500 group-hover:scale-105"
+              />
+            </>
           ) : (
             <div className="size-full bg-gradient-to-br from-brand-dark/40 to-black" />
           )}

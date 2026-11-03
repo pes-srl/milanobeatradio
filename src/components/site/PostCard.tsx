@@ -21,25 +21,37 @@ export function PostCard({ post, priority = false, variant = 'grid' }: Props) {
 
   return (
     <article className={`group relative overflow-hidden rounded-2xl bg-[#0f0f0f] border border-white/10 transition-all duration-300 hover:border-brand/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)] transform-gpu ${overlay ? 'h-full' : ''}`}>
-      <Link href={href} className={`block ${overlay ? 'absolute inset-0' : 'relative aspect-video'}`} aria-label={post.title}>
+      <Link href={href} className={`block overflow-hidden ${overlay ? 'absolute inset-0' : 'relative aspect-video bg-black/60'}`} aria-label={post.title}>
         {img ? (
-          <Image
-            src={img}
-            alt={imageAlt(post.cover, post.title)}
-            fill
-            priority={priority}
-            sizes={variant === 'feature' ? '(max-width: 1024px) 100vw, 640px' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'}
-            className="object-cover transition duration-500 group-hover:scale-105"
-          />
+          <>
+            {/* Sfondo sfumato d'ambiente per riempire i lati senza bande nere */}
+            <Image
+              src={img}
+              alt=""
+              aria-hidden="true"
+              fill
+              sizes={variant === 'feature' ? '(max-width: 1024px) 100vw, 640px' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'}
+              className="pointer-events-none object-cover blur-xl scale-125 opacity-40 brightness-75 transition duration-500 group-hover:scale-150"
+            />
+            {/* Foto / locandina intera senza ritagli */}
+            <Image
+              src={img}
+              alt={imageAlt(post.cover, post.title)}
+              fill
+              priority={priority}
+              sizes={variant === 'feature' ? '(max-width: 1024px) 100vw, 640px' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'}
+              className="z-[1] object-contain transition duration-500 group-hover:scale-105"
+            />
+          </>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-brand-dark to-black" />
         )}
-        {overlay && <div className="overlay absolute inset-0" />}
-        <span className="absolute right-4 top-4 grid size-11 place-items-center rounded-full border-2 border-white bg-black/40 text-white transition group-hover:bg-brand">
+        {overlay && <div className="overlay absolute inset-0 z-[2]" />}
+        <span className="absolute right-4 top-4 z-10 grid size-11 place-items-center rounded-full border-2 border-white bg-black/40 text-white transition group-hover:bg-brand">
           <IconLink size={18} />
         </span>
       </Link>
-      <div className={overlay ? 'pointer-events-none absolute inset-x-0 bottom-0 p-5' : 'p-5'}>
+      <div className={overlay ? 'pointer-events-none absolute inset-x-0 bottom-0 p-5 z-[3]' : 'p-5'}>
         {cat && <span className="tag">{cat.name}</span>}
         <h3 className={`mt-2 font-medium leading-snug ${variant === 'feature' ? 'text-2xl sm:text-3xl' : 'text-lg'}`}>
           <Link href={href} className="pointer-events-auto hover:text-brand">

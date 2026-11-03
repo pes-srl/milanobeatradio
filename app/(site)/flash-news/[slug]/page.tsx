@@ -98,14 +98,26 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <div className="mx-auto w-full max-w-[540px] lg:max-w-none">
             <div className="relative aspect-video sm:aspect-[16/10] lg:aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-[#0f0f0f] shadow-[0_15px_50px_rgba(0,0,0,0.9)]">
               {img ? (
-                <Image
-                  src={img}
-                  alt={imageAlt(post.cover, post.title)}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 600px"
-                  className="object-cover"
-                />
+                <>
+                  {/* Sfondo sfumato d'ambiente per riempire i lati senza bande nere */}
+                  <Image
+                    src={img}
+                    alt=""
+                    aria-hidden="true"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 600px"
+                    className="pointer-events-none object-cover blur-xl scale-125 opacity-40 brightness-75"
+                  />
+                  {/* Foto / locandina intera senza ritagli */}
+                  <Image
+                    src={img}
+                    alt={imageAlt(post.cover, post.title)}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 600px"
+                    className="z-[1] object-contain"
+                  />
+                </>
               ) : (
                 <div className="size-full bg-gradient-to-br from-brand-dark to-black" />
               )}
