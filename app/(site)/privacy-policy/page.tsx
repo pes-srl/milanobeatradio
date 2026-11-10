@@ -168,10 +168,10 @@ export default async function PrivacyPolicyPage() {
               <p>
                 <strong className="text-white">Disponibilità a Rettifiche e Rimozioni:</strong> Nel rispetto della massima collaborazione con organizzatori, locali e titolari di diritti, qualora chiunque desiderasse aggiornare, integrare o richiedere la rimozione di informazioni, immagini o riferimenti riguardanti le proprie attività, può scrivere a{' '}
                 <a
-                  href="mailto:info@milanobeatradio.it"
+                  href="mailto:redazione@milanobeatradio.it"
                   className="text-brand font-medium hover:underline"
                 >
-                  info@milanobeatradio.it
+                  redazione@milanobeatradio.it
                 </a>{' '}
                 o{' '}
                 <a

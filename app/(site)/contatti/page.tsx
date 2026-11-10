@@ -59,10 +59,10 @@ export default async function ContattiPage() {
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-wider text-white/50">Email</p>
                   <a
-                    href="mailto:info@milanobeatradio.it"
+                    href="mailto:redazione@milanobeatradio.it"
                     className="text-sm font-medium text-white hover:text-brand transition-colors"
                   >
-                    info@milanobeatradio.it
+                    redazione@milanobeatradio.it
                   </a>
                 </div>
               </div>

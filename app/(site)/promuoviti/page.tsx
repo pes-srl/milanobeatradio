@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ContactForm } from '@/src/components/site/ContactForm'
+import { PromuovitiForm } from '@/src/components/site/PromuovitiForm'
 import { getMediaByFilename } from '@/src/lib/queries'
 import { submitPromuoviti } from './actions'
 import Image from 'next/image'
@@ -145,11 +145,7 @@ export default async function PromuovitiPage() {
             <p className="mb-8 text-white/60">
               Hai organizzato un evento a Milano, nella città metropolitana o in provincia di Monza e Brianza? Compila il modulo: la redazione valuta ogni proposta con il solo fine di promuovere gratuitamente il territorio e le sue iniziative culturali e di intrattenimento.
             </p>
-            <ContactForm
-              action={submitPromuoviti}
-              messageLabel="Raccontaci il tuo evento (data, luogo, artisti, link...)"
-              submitLabel="Invia segnalazione"
-            />
+            <PromuovitiForm action={submitPromuoviti} />
           </div>
 
           {/* Colonna info */}
@@ -159,11 +155,11 @@ export default async function PromuovitiPage() {
               <ol className="space-y-3 text-sm text-white/70">
                 <li className="flex gap-3">
                   <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand/20 text-xs font-bold text-brand">1</span>
-                  <span>Compili il modulo con i dettagli del tuo evento.</span>
+                  <span>Compili il modulo con i dettagli e la locandina del tuo evento.</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand/20 text-xs font-bold text-brand">2</span>
-                  <span>La redazione MBR valuta la segnalazione in autonomia.</span>
+                  <span>Ricevi subito un&apos;email di conferma e la redazione valuta la proposta.</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand/20 text-xs font-bold text-brand">3</span>
@@ -178,6 +174,7 @@ export default async function PromuovitiPage() {
                 <li>• Nome e data dell&apos;evento</li>
                 <li>• Location e città</li>
                 <li>• Artisti / line-up</li>
+                <li>• Locandina o grafica ufficiale</li>
                 <li>• Link biglietti o pagina ufficiale</li>
                 <li>• Contatto per eventuali domande</li>
               </ul>
@@ -186,8 +183,8 @@ export default async function PromuovitiPage() {
             <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5">
               <p className="text-xs leading-relaxed text-white/40">
                 La promozione è interamente a titolo gratuito. MBR è un progetto amatoriale e indipendente senza scopo di lucro. Marchi, denominazioni di locali e loghi appartengono ai rispettivi proprietari. Per modifiche o rettifiche:{' '}
-                <a href="mailto:info@milanobeatradio.it" className="text-brand hover:underline font-medium">
-                  info@milanobeatradio.it
+                <a href="mailto:redazione@milanobeatradio.it" className="text-brand hover:underline font-medium">
+                  redazione@milanobeatradio.it
                 </a>.
               </p>
             </div>

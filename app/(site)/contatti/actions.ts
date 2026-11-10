@@ -13,8 +13,7 @@ export async function submitContact(_prev: FormState, formData: FormData): Promi
   const ip = (await headers()).get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
   if (rateLimited(`contatti:${ip}`)) return { status: 'error', message: 'Troppe richieste. Riprova tra qualche minuto.' }
 
-  const to = process.env.CONTACT_TO_EMAIL
-  if (!to) return { status: 'error', message: 'Modulo non configurato. Riprova più tardi.' }
+  const to = process.env.CONTACT_TO_EMAIL || 'redazione@milanobeatradio.it'
 
   const { nome, email, oggetto, messaggio } = parsed.data
   try {

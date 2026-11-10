@@ -241,8 +241,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 </p>
                 <p className="leading-relaxed">
                   Questo contenuto è pubblicato a titolo interamente gratuito nell&apos;ambito dell&apos;attività di divulgazione informativa e culturale di Milano Beat Radio su Milano, provincia e Monza Brianza (non costituisce testata giornalistica ai sensi della L. 62/2001, attività svolta ai sensi dell&apos;Art. 21 Cost.). Marchi, loghi, denominazioni di locali, teatri, spettacoli e format citati appartengono ai rispettivi proprietari e sono menzionati a solo scopo descrittivo (diritto di cronaca). Per richieste di integrazione, rettifica o rimozione:{' '}
-                  <a href="mailto:info@milanobeatradio.it" className="text-brand hover:underline font-medium">
-                    info@milanobeatradio.it
+                  <a href="mailto:redazione@milanobeatradio.it" className="text-brand hover:underline font-medium">
+                    redazione@milanobeatradio.it
                   </a>.
                 </p>
               </div>

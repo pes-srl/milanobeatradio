@@ -66,7 +66,7 @@ export const Users: CollectionConfig = {
         // Send email alert only for editor logins
         if (u && u.role === 'editor') {
           try {
-            const to = process.env.CONTACT_TO_EMAIL || 'info@milanobeatradio.it'
+            const to = process.env.CONTACT_TO_EMAIL || 'redazione@milanobeatradio.it'
             const ip =
               req.headers?.get('x-forwarded-for')?.split(',')[0]?.trim() ||
               req.headers?.get('x-real-ip') ||
