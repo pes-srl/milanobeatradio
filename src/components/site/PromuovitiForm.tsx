@@ -13,6 +13,7 @@ const MAX_FILE_SIZE = 8 * 1024 * 1024 // 8 MB
 
 export function PromuovitiForm({ action }: Props) {
   const [state, formAction, pending] = useActionState(action, initialState)
+  const [isSuccessDismissed, setIsSuccessDismissed] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [fileError, setFileError] = useState<string | null>(null)
@@ -65,10 +66,11 @@ export function PromuovitiForm({ action }: Props) {
 
   const handleResetForm = () => {
     handleRemoveFile()
+    setIsSuccessDismissed(true)
     setClientResetKey((k) => k + 1)
   }
 
-  if (state.status === 'success') {
+  if (state.status === 'success' && !isSuccessDismissed) {
     return (
       <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-8 text-center space-y-4">
         <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
