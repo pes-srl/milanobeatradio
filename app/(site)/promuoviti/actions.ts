@@ -118,27 +118,29 @@ export async function submitPromuoviti(_prev: FormState, formData: FormData): Pr
 
   // 2. Invio email di conferma automatica all'utente
   try {
-    const userSubject = `Ricevuta segnalazione evento: "${oggetto || 'Nuovo Evento'}" — Milano Beat Radio`
+    const userSubject = `Abbiamo ricevuto la tua richiesta! — Milano Beat Radio`
+    const locandinaTextLine = hasLocandina ? `Locandina: ✓ ${locandinaName} (ricevuta)` : `Locandina: Nessuna locandina allegata`
+    const locandinaHtmlBadge = hasLocandina ? `<span style="color: #c824e3; font-weight: 600;">✓ ${escapeHtml(locandinaName)}</span> (ricevuta)` : `<em>Nessuna locandina allegata</em>`
+    const recapitoLocandinaPhrase = hasLocandina ? ' insieme alla locandina.' : '.'
+
     const userText = [
+      `Abbiamo ricevuto la tua richiesta!`,
+      `Conferma di avvenuta ricezione della tua segnalazione`,
+      ``,
       `Ciao ${nome},`,
+      `grazie per aver condiviso la tua iniziativa con noi. Ti confermiamo che la segnalazione per ${oggetto || 'il tuo evento'} è stata recapitata correttamente alla redazione${recapitoLocandinaPhrase}`,
       ``,
-      `grazie per aver segnalato il tuo evento a Milano Beat Radio!`,
-      `Abbiamo ricevuto la tua proposta${hasLocandina ? ' e la relativa locandina' : ''}.`,
-      ``,
-      `Riepilogo della segnalazione:`,
-      `- Evento: ${oggetto || 'Non specificato'}`,
-      `- Locandina: ${hasLocandina ? `${locandinaName} (ricevuta con successo)` : 'Nessuna locandina allegata'}`,
-      `- Dettagli:`,
+      `Titolo: ${oggetto || 'Non specificato'}`,
+      locandinaTextLine,
+      `Dettagli inviati:`,
       messaggio,
       ``,
-      `Cosa succede adesso?`,
-      `La redazione valuta periodicamente tutte le proposte ricevute. Se l'iniziativa risulterà coerente con lo spirito e la linea editoriale di MBR, l'evento verrà inserito gratuitamente nel nostro calendario sul sito e/o rilanciato sui canali social della radio.`,
+      `Come procediamo:`,
+      `La redazione valuta periodicamente tutte le segnalazioni. Se la proposta sarà coerente con la nostra programmazione, l'evento verrà inserito gratuitamente nella sezione eventi del sito e/o rilanciato sui canali social di MBR.`,
       ``,
-      `Per qualsiasi modifica, rettifica o integrazione, puoi rispondere direttamente a questa email oppure scriverci a ${to}.`,
+      `Hai bisogno di fare una rettifica o integrare info? Rispondi direttamente a questa email o scrivi a ${to}`,
       ``,
-      `A presto e viva la musica!`,
-      `La Redazione di Milano Beat Radio`,
-      `https://milanobeatradio.it`,
+      `Milano Beat Radio — Your Event & Party Station`,
     ].join('\n')
 
     const userHtml = `
@@ -149,19 +151,19 @@ export async function submitPromuoviti(_prev: FormState, formData: FormData): Pr
           
           <div style="text-align: center; margin-bottom: 24px;">
             <span style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #c824e3; background: rgba(200,36,227,0.12); padding: 6px 14px; border-radius: 999px;">Milano Beat Radio</span>
-            <h1 style="color: #ffffff; font-size: 22px; margin: 16px 0 8px; font-weight: 800; letter-spacing: -0.5px;">Abbiamo ricevuto il tuo evento!</h1>
+            <h1 style="color: #ffffff; font-size: 22px; margin: 16px 0 8px; font-weight: 800; letter-spacing: -0.5px;">Abbiamo ricevuto la tua richiesta!</h1>
             <p style="color: rgba(255,255,255,0.65); font-size: 14px; margin: 0;">Conferma di avvenuta ricezione della tua segnalazione</p>
           </div>
 
           <div style="background-color: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; margin-bottom: 24px;">
             <p style="color: rgba(255,255,255,0.9); font-size: 15px; margin-top: 0;">Ciao <strong>${escapeHtml(nome)}</strong>,</p>
             <p style="color: rgba(255,255,255,0.75); font-size: 14px; line-height: 1.6;">
-              grazie per aver condiviso la tua iniziativa con noi. Ti confermiamo che la segnalazione per <strong>${escapeHtml(oggetto || 'il tuo evento')}</strong> è stata recapitata correttamente alla redazione${hasLocandina ? ' <strong>insieme alla locandina</strong>' : ''}.
+              grazie per aver condiviso la tua iniziativa con noi. Ti confermiamo che la segnalazione per <strong>${escapeHtml(oggetto || 'il tuo evento')}</strong> è stata recapitata correttamente alla redazione${hasLocandina ? ' <strong>insieme alla locandina</strong>.' : '.'}
             </p>
             
             <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: rgba(255,255,255,0.65);">
               <p style="margin: 4px 0;"><strong style="color: rgba(255,255,255,0.9);">Titolo:</strong> ${escapeHtml(oggetto || 'Non specificato')}</p>
-              <p style="margin: 4px 0;"><strong style="color: rgba(255,255,255,0.9);">Locandina:</strong> ${hasLocandina ? `<span style="color: #c824e3; font-weight: 600;">✓ ${escapeHtml(locandinaName)}</span> (ricevuta)` : 'Nessuna locandina allegata'}</p>
+              <p style="margin: 4px 0;"><strong style="color: rgba(255,255,255,0.9);">Locandina:</strong> ${locandinaHtmlBadge}</p>
               <p style="margin: 12px 0 4px;"><strong style="color: rgba(255,255,255,0.9);">Dettagli inviati:</strong></p>
               <blockquote style="margin: 4px 0; padding: 10px 14px; background: rgba(0,0,0,0.5); border-left: 3px solid #c824e3; border-radius: 4px; font-style: normal; white-space: pre-wrap; color: rgba(255,255,255,0.85);">${escapeHtml(messaggio)}</blockquote>
             </div>
@@ -176,7 +178,7 @@ export async function submitPromuoviti(_prev: FormState, formData: FormData): Pr
 
           <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; font-size: 12px; color: rgba(255,255,255,0.45);">
             <p style="margin: 0 0 6px;">Hai bisogno di fare una rettifica o integrare info? Rispondi direttamente a questa email o scrivi a <a href="mailto:${to}" style="color: #c824e3; text-decoration: none;">${to}</a></p>
-            <p style="margin: 0;">Milano Beat Radio — Musica ed Eventi a Milano e Brianza</p>
+            <p style="margin: 0; font-weight: 500;">Milano Beat Radio — Your Event &amp; Party Station</p>
           </div>
 
         </div>
